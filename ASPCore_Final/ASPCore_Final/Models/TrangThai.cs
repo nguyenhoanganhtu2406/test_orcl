@@ -3,16 +3,16 @@ using System.Collections.Generic;
 
 namespace ASPCore_Final.Models
 {
-    public partial class TrangThai
+    public partial class Trangthai
     {
-        public TrangThai()
+        public Trangthai()
         {
-            HoaDon = new HashSet<HoaDon>();
+            Hoadon = new HashSet<Hoadon>();
         }
 
-        public int MaTrangThai { get; set; }
-        public string TenTrangThai { get; set; }
+        public int Matrangthai { get; set; }
+        public string Tentrangthai { get; set; }
 
-        public ICollection<HoaDon> HoaDon { get; set; }
+        public ICollection<Hoadon> Hoadon { get; set; }
     }
 }

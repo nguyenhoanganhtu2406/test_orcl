@@ -9,8 +9,8 @@ namespace ASPCore_Final.Controllers
 {
     public class ChangePasswordController : Controller
     {
-        private readonly ESHOPContext db;
-        public ChangePasswordController(ESHOPContext context)
+        private readonly ModelContext db;
+        public ChangePasswordController(ModelContext context)
         {
             db = context;
         }
@@ -22,7 +22,7 @@ namespace ASPCore_Final.Controllers
         {
             if (ModelState.IsValid)
             {
-                KhachHang kh = HttpContext.Session.Get<KhachHang>("user");
+                Khachhang kh = HttpContext.Session.Get<Khachhang>("user");
                 if (model.MatKhauMoi != model.XacNhanMatKhauMoi)
                 {
                     ModelState.AddModelError("Lỗi", "Mật khẩu xác nhận không khớp");
@@ -30,7 +30,7 @@ namespace ASPCore_Final.Controllers
                 }
                 else
                 {
-                    kh.MatKhau = Encryptor.MD5Hash(model.MatKhauMoi);
+                    kh.Matkhau = Encryptor.MD5Hash(model.MatKhauMoi);
                     db.Update(kh);
                     db.SaveChangesAsync();
                     HttpContext.Session.Remove("user");

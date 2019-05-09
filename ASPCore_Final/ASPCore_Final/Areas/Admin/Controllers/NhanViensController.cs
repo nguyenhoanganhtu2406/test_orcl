@@ -15,9 +15,9 @@ namespace ASPCore_Final.Areas.Admin.Controllers
     
     public class NhanViensController : CheckLoginController
     {
-        private readonly ESHOPContext _context;
+        private readonly ModelContext _context;
 
-        public NhanViensController(ESHOPContext context)
+        public NhanViensController(ModelContext context)
         {
             _context = context;
         }
@@ -26,10 +26,10 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         [HttpGet("/admin/NhanViens")]
         public async Task<IActionResult> Index(string searchString, int page = 1, string sortExpression = "Email")
         {
-            var eSHOPContext = _context.NhanVien.AsNoTracking().Include(n => n.MaPqNavigation).AsQueryable();
+            var eSHOPContext = _context.Nhanvien.AsNoTracking().Include(n => n.MapqNavigation).AsQueryable();
             if (!string.IsNullOrEmpty(searchString))
             {
-                eSHOPContext = eSHOPContext.Where(p => p.Email.Contains(searchString) || p.HoTen.Contains(searchString));
+                eSHOPContext = eSHOPContext.Where(p => p.Email.Contains(searchString) || p.Hoten.Contains(searchString));
             }
             var model = await PagingList.CreateAsync(eSHOPContext, 5, page, sortExpression, "Email");
             model.RouteValue = new RouteValueDictionary {
@@ -49,9 +49,9 @@ namespace ASPCore_Final.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var nhanVien = await _context.NhanVien
-                .Include(n => n.MaPqNavigation)
-                .FirstOrDefaultAsync(m => m.MaNv == id);
+            var nhanVien = await _context.Nhanvien
+                .Include(n => n.MapqNavigation)
+                .FirstOrDefaultAsync(m => m.Manv == id);
             if (nhanVien == null)
             {
                 return NotFound();
@@ -64,7 +64,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         [HttpGet("/admin/NhanViens/Create")]
         public IActionResult Create()
         {
-            ViewData["MaPq"] = new SelectList(_context.PhanQuyen, "MaPq", "MaPq");
+            ViewData["MaPq"] = new SelectList(_context.Phanquyen, "Mapq", "Mapq");
             return View();
         }
 
@@ -73,16 +73,16 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaNv,HoTen,Email,MatKhau,MaPq,TrangThaiHd")] NhanVien nhanVien)
+        public async Task<IActionResult> Create([Bind("MaNv,HoTen,Email,MatKhau,MaPq,TrangThaiHd")] Nhanvien nhanVien)
         {
             if (ModelState.IsValid)
             {
-                nhanVien.MatKhau = Encryptor.MD5Hash(nhanVien.MatKhau);
+                nhanVien.Matkhau = Encryptor.MD5Hash(nhanVien.Matkhau);
                 _context.Add(nhanVien);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaPq"] = new SelectList(_context.PhanQuyen, "MaPq", "MaPq", nhanVien.MaPq);
+            ViewData["MaPq"] = new SelectList(_context.Phanquyen, "Mapq", "Mapq", nhanVien.Mapq);
             return View(nhanVien);
         }
 
@@ -95,12 +95,12 @@ namespace ASPCore_Final.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var nhanVien = await _context.NhanVien.FindAsync(id);
+            var nhanVien = await _context.Nhanvien.FindAsync(id);
             if (nhanVien == null)
             {
                 return NotFound();
             }
-            ViewData["MaPq"] = new SelectList(_context.PhanQuyen, "MaPq", "MaPq", nhanVien.MaPq);
+            ViewData["MaPq"] = new SelectList(_context.Phanquyen, "Mapq", "Mapq", nhanVien.Mapq);
             return View(nhanVien);
         }
 
@@ -109,7 +109,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaNv,HoTen,Email,MatKhau,MaPq,TrangThaiHd")] NhanVien nhanVien)
+        public async Task<IActionResult> Edit(int id, [Bind("MaNv,HoTen,Email,MatKhau,MaPq,TrangThaiHd")] Nhanvien nhanVien)
         {
 
             
@@ -117,13 +117,13 @@ namespace ASPCore_Final.Areas.Admin.Controllers
             {
                 try
                 {
-                    nhanVien.MatKhau = Encryptor.MD5Hash(nhanVien.MatKhau);
+                    nhanVien.Matkhau = Encryptor.MD5Hash(nhanVien.Matkhau);
                     _context.Update(nhanVien);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!NhanVienExists(nhanVien.MaNv))
+                    if (!NhanVienExists(nhanVien.Manv))
                     {
                         return NotFound();
                     }
@@ -134,7 +134,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaPq"] = new SelectList(_context.PhanQuyen, "MaPq", "MaPq", nhanVien.MaPq);
+            ViewData["MaPq"] = new SelectList(_context.Phanquyen, "Mapq", "Mapq", nhanVien.Mapq);
             return View(nhanVien);
         }
 
@@ -147,13 +147,13 @@ namespace ASPCore_Final.Areas.Admin.Controllers
                 return BadRequest(ModelState);
             }
 
-            var nhanVien = await _context.NhanVien.FindAsync(id);
+            var nhanVien = await _context.Nhanvien.FindAsync(id);
             if (nhanVien == null)
             {
                 return NotFound();
             }
 
-            _context.NhanVien.Remove(nhanVien);
+            _context.Nhanvien.Remove(nhanVien);
             await _context.SaveChangesAsync();
 
             return Ok(nhanVien);
@@ -162,17 +162,17 @@ namespace ASPCore_Final.Areas.Admin.Controllers
        [HttpGet("/admin/NhanViens/ChangeStatus")]
         public IActionResult ChangeStatus(int id)
         {
-            var nhanvien = _context.NhanVien.Find(id);
+            var nhanvien = _context.Nhanvien.Find(id);
             if(nhanvien != null)
             {
-                nhanvien.TrangThaiHd = !nhanvien.TrangThaiHd;
+                nhanvien.Trangthaihd = !nhanvien.Trangthaihd;
                 _context.SaveChanges();
             }
             return RedirectToAction("Index");
         }
         private bool NhanVienExists(int id)
         {
-            return _context.NhanVien.Any(e => e.MaNv == id);
+            return _context.Nhanvien.Any(e => e.Manv == id);
         }
     }
 }

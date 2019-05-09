@@ -9,8 +9,8 @@ namespace ASPCore_Final.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly ESHOPContext db;
-        public LoginController(ESHOPContext context)
+        private readonly ModelContext db;
+        public LoginController(ModelContext context)
         {
             db = context;
         }
@@ -23,7 +23,7 @@ namespace ASPCore_Final.Controllers
         {
             if (ModelState.IsValid)
             {
-                KhachHang kh = db.KhachHang.SingleOrDefault(p => p.TaiKhoan == model.Username && p.MatKhau == Encryptor.MD5Hash(model.Password));
+                Khachhang kh = db.Khachhang.SingleOrDefault(p => p.Taikhoan == model.Username && p.Matkhau == Encryptor.MD5Hash(model.Password));
                 if (kh == null)
                 {
                     ModelState.AddModelError("Lỗi", "Tên đăng nhập hoặc mật khẩu không hợp lệ.");
@@ -31,7 +31,7 @@ namespace ASPCore_Final.Controllers
                 }
                 else
                 {
-                    if (kh.TrangThaiHd == true)
+                    if (kh.Trangthaihd == true)
                     {
                         HttpContext.Session.Set("user", kh);
                         return RedirectToAction("Index", "Home");

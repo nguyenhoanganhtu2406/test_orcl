@@ -1,45 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace ASPCore_Final.Models
 {
-    public partial class HangHoa
+    public partial class Hanghoa
     {
-        public HangHoa()
+        public Hanghoa()
         {
-            BinhLuanSp = new HashSet<BinhLuanSp>();
-            ChiTietHd = new HashSet<ChiTietHd>();
-            ChiTietPhieuNhap = new HashSet<ChiTietPhieuNhap>();
-            SanPhamKhoNavigation = new HashSet<SanPhamKho>();
-            YeuThich = new HashSet<YeuThich>();
+            Chitiethd = new HashSet<Chitiethd>();
         }
-        [Display(Name = "Mã HH")]
-        public int MaHh { get; set; }
-        [Display(Name = "Tên HH")]
-        public string TenHh { get; set; }
-        [Display(Name = "Mã Loại")]
-        public string MaLoai { get; set; }
-        [Display(Name = "Hình")]
+
+        public int Mahh { get; set; }
+        public string Tenhh { get; set; }
+        public string Maloai { get; set; }
         public string Hinh { get; set; }
-        [Display(Name = "Đơn Giá")]
-        public double DonGia { get; set; }
-        [Display(Name = "Giảm Giá")]
-        public double GiamGia { get; set; }
-        [Display(Name = "Mô Tả")]
-        public string MoTa { get; set; }
-        [Display(Name = "Mã NCC")]
-        public string MaNcc { get; set; }
-        [Display(Name = "SP kho")]
-        public int? SanPhamKho { get; set; }
-        [Display(Name = "Mã Loại")]
-        public Loai MaLoaiNavigation { get; set; }
-        [Display(Name = "Mã NCC")]
-        public NhaCungCap MaNccNavigation { get; set; }
-        public ICollection<BinhLuanSp> BinhLuanSp { get; set; }
-        public ICollection<ChiTietHd> ChiTietHd { get; set; }
-        public ICollection<ChiTietPhieuNhap> ChiTietPhieuNhap { get; set; }
-        public ICollection<SanPhamKho> SanPhamKhoNavigation { get; set; }
-        public ICollection<YeuThich> YeuThich { get; set; }
+        public decimal Dongia { get; set; }
+        public decimal Giamgia { get; set; }
+        public string Mota { get; set; }
+        public string Mancc { get; set; }
+
+        public Loai MaloaiNavigation { get; set; }
+        public Nhacungcap ManccNavigation { get; set; }
+        public ICollection<Chitiethd> Chitiethd { get; set; }
     }
 }

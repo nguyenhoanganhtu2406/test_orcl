@@ -13,9 +13,9 @@ namespace ASPCore_Final.Controllers
 {
     public class EditProfileController : Controller
     {
-        private readonly ESHOPContext _context;
+        private readonly ModelContext _context;
 
-        public EditProfileController(ESHOPContext context)
+        public EditProfileController(ModelContext context)
         {
             _context = context;
         }
@@ -23,7 +23,7 @@ namespace ASPCore_Final.Controllers
         // GET: EditProfile
         public async Task<IActionResult> Index()
         {
-            return View(await _context.KhachHang.ToListAsync());
+            return View(await _context.Khachhang.ToListAsync());
         }
 
         // GET: EditProfile/Details/5
@@ -34,8 +34,8 @@ namespace ASPCore_Final.Controllers
                 return NotFound();
             }
 
-            var khachHang = await _context.KhachHang
-                .FirstOrDefaultAsync(m => m.MaKh == id);
+            var khachHang = await _context.Khachhang
+                .FirstOrDefaultAsync(m => m.Makh == id);
             if (khachHang == null)
             {
                 return NotFound();
@@ -55,7 +55,7 @@ namespace ASPCore_Final.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaKh,TaiKhoan,MatKhau,HoTen,GioiTinh,NgaySinh,DiaChi,DienThoai,Email,Hinh,TrangThaiHd")] KhachHang khachHang)
+        public async Task<IActionResult> Create([Bind("MaKh,TaiKhoan,MatKhau,HoTen,GioiTinh,NgaySinh,DiaChi,DienThoai,Email,Hinh,TrangThaiHd")] Khachhang khachHang)
         {
             if (ModelState.IsValid)
             {
@@ -74,7 +74,7 @@ namespace ASPCore_Final.Controllers
                 return NotFound();
             }
 
-            var khachHang = await _context.KhachHang.FindAsync(id);
+            var khachHang = await _context.Khachhang.FindAsync(id);
             if (khachHang == null)
             {
                 return NotFound();
@@ -87,13 +87,13 @@ namespace ASPCore_Final.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaKh,TaiKhoan,MatKhau,HoTen,GioiTinh,NgaySinh,DiaChi,DienThoai,Email,Hinh,TrangThaiHd")] KhachHang khachHang, IFormFile fHinh)
+        public async Task<IActionResult> Edit(int id, [Bind("MaKh,TaiKhoan,MatKhau,HoTen,GioiTinh,NgaySinh,DiaChi,DienThoai,Email,Hinh,TrangThaiHd")] Khachhang khachHang, IFormFile fHinh)
         {
-            if (id != khachHang.MaKh)
+            if (id != khachHang.Makh)
             {
                 return NotFound();
             }
-            KhachHang k = HttpContext.Session.Get<KhachHang>("user");
+            Khachhang k = HttpContext.Session.Get<Khachhang>("user");
             if (ModelState.IsValid)
             {
                 if (fHinh != null)
@@ -122,8 +122,8 @@ namespace ASPCore_Final.Controllers
                 return NotFound();
             }
 
-            var khachHang = await _context.KhachHang
-                .FirstOrDefaultAsync(m => m.MaKh == id);
+            var khachHang = await _context.Khachhang
+                .FirstOrDefaultAsync(m => m.Makh == id);
             if (khachHang == null)
             {
                 return NotFound();
@@ -137,15 +137,15 @@ namespace ASPCore_Final.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var khachHang = await _context.KhachHang.FindAsync(id);
-            _context.KhachHang.Remove(khachHang);
+            var khachHang = await _context.Khachhang.FindAsync(id);
+            _context.Khachhang.Remove(khachHang);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool KhachHangExists(int id)
         {
-            return _context.KhachHang.Any(e => e.MaKh == id);
+            return _context.Khachhang.Any(e => e.Makh == id);
         }
     }
 }

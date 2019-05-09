@@ -1,47 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace ASPCore_Final.Models
 {
-    public partial class HoaDon
+    public partial class Hoadon
     {
-        public HoaDon()
+        public Hoadon()
         {
-            ChiTietHd = new HashSet<ChiTietHd>();
+            Chitiethd = new HashSet<Chitiethd>();
         }
-        [Display(Name = "Mã HĐ")]
-        public int MaHd { get; set; }
-        [Display(Name = "Mã KH")]
-        public int MaKh { get; set; }
-        [Display(Name = "Ngày Đặt")]
-        public DateTime NgayDat { get; set; }
-        [Display(Name = "Ngày Giao")]
-        public DateTime? NgayGiao { get; set; }
-        [Display(Name = "Họ Tên")]
-        public string HoTen { get; set; }
-        [Display(Name = "Địa chỉ")]
-        public string DiaChi { get; set; }
-        [Display(Name = "SĐT")]
+
+        public int Mahd { get; set; }
+        public int Makh { get; set; }
+        public DateTime Ngaydat { get; set; }
+        public DateTime? Ngaygiao { get; set; }
+        public string Hoten { get; set; }
+        public string Diachi { get; set; }
         public string SdtNguoinhan { get; set; }
-        [Display(Name = "Ghi chú")]
-        public string GhiChu { get; set; }
-        [Display(Name = "Phí vận chuyển")]
-        public double PhiVanChuyen { get; set; }
-        [Display(Name = "Mã trạng thái")]
-        public int MaTrangThai { get; set; }
-        [Display(Name = "Mã NV")]
-        public string MaNv { get; set; }
-        [Display(Name = "Tổng tiền")]
-        public double? TongTienHang { get; set; }
-        [Display(Name = "Mã voucher")]
-        public string MaVoucher { get; set; }
-        [Display(Name = "Tổng tiền thu")]
-        public double? TongThucThu { get; set; }
-        [Display(Name = "Mã KH")]
-        public KhachHang MaKhNavigation { get; set; }
-        [Display(Name = "Mã TT")]
-        public TrangThai MaTrangThaiNavigation { get; set; }
-        public ICollection<ChiTietHd> ChiTietHd { get; set; }
+        public string Ghichu { get; set; }
+        public int Phivanchuyen { get; set; }
+        public int? Matrangthai { get; set; }
+        public int? Manv { get; set; }
+        public decimal? Tongtienhang { get; set; }
+        public decimal? Tongthucthu { get; set; }
+
+        public Khachhang MakhNavigation { get; set; }
+        public Trangthai MatrangthaiNavigation { get; set; }
+        public ICollection<Chitiethd> Chitiethd { get; set; }
     }
 }

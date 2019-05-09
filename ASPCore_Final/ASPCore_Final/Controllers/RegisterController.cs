@@ -14,9 +14,9 @@ namespace ASPCore_Final.Controllers
 {
     public class RegisterController : Controller
     {
-        private readonly ESHOPContext _context;
+        private readonly ModelContext _context;
 
-        public RegisterController(ESHOPContext context)
+        public RegisterController(ModelContext context)
         {
             _context = context;
         }
@@ -24,7 +24,7 @@ namespace ASPCore_Final.Controllers
         // GET: Register
         public async Task<IActionResult> Index()
         {
-            return View(await _context.KhachHang.ToListAsync());
+            return View(await _context.Khachhang.ToListAsync());
         }
 
         // GET: Register/Details/5
@@ -35,8 +35,8 @@ namespace ASPCore_Final.Controllers
                 return NotFound();
             }
 
-            var khachHang = await _context.KhachHang
-                .FirstOrDefaultAsync(m => m.MaKh == id);
+            var khachHang = await _context.Khachhang
+                .FirstOrDefaultAsync(m => m.Makh == id);
             if (khachHang == null)
             {
                 return NotFound();
@@ -56,12 +56,12 @@ namespace ASPCore_Final.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("MaKh,TaiKhoan,MatKhau,HoTen,GioiTinh,DiaChi,DienThoai,Email")] KhachHang khachHang)
+        public IActionResult Create([Bind("MaKh,TaiKhoan,MatKhau,HoTen,GioiTinh,DiaChi,DienThoai,Email")] Khachhang khachHang)
         {
             if (ModelState.IsValid)
             {
-                KhachHang kh = _context.KhachHang.SingleOrDefault(p => p.Email == khachHang.Email);
-                KhachHang khh = _context.KhachHang.SingleOrDefault(p => p.TaiKhoan == khachHang.TaiKhoan);
+                Khachhang kh = _context.Khachhang.SingleOrDefault(p => p.Email == khachHang.Email);
+                Khachhang khh = _context.Khachhang.SingleOrDefault(p => p.Taikhoan == khachHang.Taikhoan);
                 if (khh != null)
                 {
                     TempData["FailUser"] = "Tên đăng nhập đã tồn tại!";
@@ -80,14 +80,13 @@ namespace ASPCore_Final.Controllers
                     }
                 }
             
-                khachHang.MatKhau = Encryptor.MD5Hash(khachHang.MatKhau);
-                khachHang.TrangThaiHd = false;
-                khachHang.LoaiKH = false;
+                khachHang.Matkhau = Encryptor.MD5Hash(khachHang.Matkhau);
+                khachHang.Trangthaihd = false;
                 _context.Add(khachHang);
                 _context.SaveChanges();
                 MailMessage mm = new MailMessage("eshoppingmanager@gmail.com", khachHang.Email);
                 mm.Subject = "Kích hoạt tài khoản Eshop";
-                mm.Body = string.Format("Xin chào: <h1>{0}</h1> <br/> <h3>Click vào <a href='https://localhost:44318/activate/index'>link</a> này để kích hoạt tài khoản.</h3>", khachHang.HoTen);
+                mm.Body = string.Format("Xin chào: <h1>{0}</h1> <br/> <h3>Click vào <a href='https://localhost:44318/activate/index'>link</a> này để kích hoạt tài khoản.</h3>", khachHang.Hoten);
                 mm.IsBodyHtml = true;
                 SmtpClient smtp = new SmtpClient();
                 smtp.Host = "smtp.gmail.com";
@@ -109,7 +108,7 @@ namespace ASPCore_Final.Controllers
                 return NotFound();
             }
 
-            var khachHang = await _context.KhachHang.FindAsync(id);
+            var khachHang = await _context.Khachhang.FindAsync(id);
             if (khachHang == null)
             {
                 return NotFound();
@@ -122,9 +121,9 @@ namespace ASPCore_Final.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaKh,TaiKhoan,MatKhau,HoTen,GioiTinh,NgaySinh,DiaChi,DienThoai,Email,Hinh,TrangThaiHd")] KhachHang khachHang)
+        public async Task<IActionResult> Edit(int id, [Bind("MaKh,TaiKhoan,MatKhau,HoTen,GioiTinh,NgaySinh,DiaChi,DienThoai,Email,Hinh,TrangThaiHd")] Khachhang khachHang)
         {
-            if (id != khachHang.MaKh)
+            if (id != khachHang.Makh)
             {
                 return NotFound();
             }
@@ -138,7 +137,7 @@ namespace ASPCore_Final.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!KhachHangExists(khachHang.MaKh))
+                    if (!KhachHangExists(khachHang.Makh))
                     {
                         return NotFound();
                     }
@@ -160,8 +159,8 @@ namespace ASPCore_Final.Controllers
                 return NotFound();
             }
 
-            var khachHang = await _context.KhachHang
-                .FirstOrDefaultAsync(m => m.MaKh == id);
+            var khachHang = await _context.Khachhang
+                .FirstOrDefaultAsync(m => m.Makh == id);
             if (khachHang == null)
             {
                 return NotFound();
@@ -175,15 +174,15 @@ namespace ASPCore_Final.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var khachHang = await _context.KhachHang.FindAsync(id);
-            _context.KhachHang.Remove(khachHang);
+            var khachHang = await _context.Khachhang.FindAsync(id);
+            _context.Khachhang.Remove(khachHang);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool KhachHangExists(int id)
         {
-            return _context.KhachHang.Any(e => e.MaKh == id);
+            return _context.Khachhang.Any(e => e.Makh == id);
         }
     }
 }

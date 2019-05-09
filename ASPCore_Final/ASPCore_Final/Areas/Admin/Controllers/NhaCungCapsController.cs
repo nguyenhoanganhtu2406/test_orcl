@@ -15,9 +15,9 @@ namespace ASPCore_Final.Areas.Admin.Controllers
 
     public class NhaCungCapsController : CheckLoginController
     {
-        private readonly ESHOPContext _context;
+        private readonly ModelContext _context;
 
-        public NhaCungCapsController(ESHOPContext context)
+        public NhaCungCapsController(ModelContext context)
         {
             _context = context;
         }
@@ -26,10 +26,10 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         [HttpGet("/admin/NhaCungCaps")]
         public async Task<IActionResult> Index(string searchString, int page = 1, string sortExpression = "Email")
         {
-            var eSHOPContext = _context.NhaCungCap.AsNoTracking().AsQueryable();
+            var eSHOPContext = _context.Nhacungcap.AsNoTracking().AsQueryable();
             if (!string.IsNullOrEmpty(searchString))
             {
-                eSHOPContext = eSHOPContext.Where(p => p.Email.Contains(searchString) || p.TenCongTy.Contains(searchString) || p.DienThoai.Contains(searchString));
+                eSHOPContext = eSHOPContext.Where(p => p.Email.Contains(searchString) || p.Tencongty.Contains(searchString) || p.Dienthoai.Contains(searchString));
             }
             var model = await PagingList.CreateAsync(eSHOPContext, 5, page, sortExpression, "Email");
             model.RouteValue = new RouteValueDictionary {
@@ -47,8 +47,8 @@ namespace ASPCore_Final.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var nhaCungCap = await _context.NhaCungCap
-                .FirstOrDefaultAsync(m => m.MaNcc == id);
+            var nhaCungCap = await _context.Nhacungcap
+                .FirstOrDefaultAsync(m => m.Mancc == id);
             if (nhaCungCap == null)
             {
                 return NotFound();
@@ -69,7 +69,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaNcc,TenCongTy,Email,DienThoai,DiaChi,MoTa")] NhaCungCap nhaCungCap)
+        public async Task<IActionResult> Create([Bind("MaNcc,TenCongTy,Email,DienThoai,DiaChi,MoTa")] Nhacungcap nhaCungCap)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var nhaCungCap = await _context.NhaCungCap.FindAsync(id);
+            var nhaCungCap = await _context.Nhacungcap.FindAsync(id);
             if (nhaCungCap == null)
             {
                 return NotFound();
@@ -101,7 +101,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("MaNcc,TenCongTy,Email,DienThoai,DiaChi,MoTa")] NhaCungCap nhaCungCap)
+        public async Task<IActionResult> Edit(string id, [Bind("MaNcc,TenCongTy,Email,DienThoai,DiaChi,MoTa")] Nhacungcap nhaCungCap)
         {
          
 
@@ -114,7 +114,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!NhaCungCapExists(nhaCungCap.MaNcc))
+                    if (!NhaCungCapExists(nhaCungCap.Mancc))
                     {
                         return NotFound();
                     }
@@ -136,13 +136,13 @@ namespace ASPCore_Final.Areas.Admin.Controllers
                 return BadRequest(ModelState);
             }
 
-            var ncc = await _context.NhaCungCap.FindAsync(id);
+            var ncc = await _context.Nhacungcap.FindAsync(id);
             if (ncc == null)
             {
                 return NotFound();
             }
 
-            _context.NhaCungCap.Remove(ncc);
+            _context.Nhacungcap.Remove(ncc);
             await _context.SaveChangesAsync();
 
             return Ok(ncc);
@@ -150,7 +150,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
     
         private bool NhaCungCapExists(string id)
         {
-            return _context.NhaCungCap.Any(e => e.MaNcc == id);
+            return _context.Nhacungcap.Any(e => e.Mancc == id);
         }
     }
 }

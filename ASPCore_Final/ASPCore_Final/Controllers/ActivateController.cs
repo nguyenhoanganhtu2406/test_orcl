@@ -9,8 +9,8 @@ namespace ASPCore_Final.Controllers
 {
     public class ActivateController : Controller
     {
-        private readonly ESHOPContext db;
-        public ActivateController(ESHOPContext context)
+        private readonly ModelContext db;
+        public ActivateController(ModelContext context)
         {
             db = context;
         }
@@ -21,10 +21,10 @@ namespace ASPCore_Final.Controllers
 
         public IActionResult Activate()
         {
-            KhachHang k = HttpContext.Session.Get<KhachHang>("kh");
+            Khachhang k = HttpContext.Session.Get<Khachhang>("kh");
             if (k != null)
             {
-                k.TrangThaiHd = true;
+                k.Trangthaihd = true;
                 db.Update(k);
                 db.SaveChangesAsync();
                 HttpContext.Session.Remove("kh");

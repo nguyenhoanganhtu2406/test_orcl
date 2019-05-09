@@ -14,9 +14,9 @@ namespace ASPCore_Final.Areas.Admin.Controllers
     [Area("Admin")]
     public class LoaisController : CheckLoginController
     {
-        private readonly ESHOPContext _context;
+        private readonly ModelContext _context;
 
-        public LoaisController(ESHOPContext context)
+        public LoaisController(ModelContext context)
         {
             _context = context;
         }
@@ -28,7 +28,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
             var eSHOPContext = _context.Loai.AsNoTracking().AsQueryable();
             if (!string.IsNullOrEmpty(searchString))
             {
-                eSHOPContext = eSHOPContext.Where(p => p.TenLoai.Contains(searchString) || p.MaLoai.Contains(searchString));
+                eSHOPContext = eSHOPContext.Where(p => p.Tenloai.Contains(searchString) || p.Maloai.Contains(searchString));
             }
             var model = await PagingList.CreateAsync(eSHOPContext, 5, page, sortExpression, "ID");
             model.RouteValue = new RouteValueDictionary {
@@ -47,7 +47,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
             }
 
             var loai = await _context.Loai
-                .FirstOrDefaultAsync(m => m.MaLoai == id);
+                .FirstOrDefaultAsync(m => m.Maloai == id);
             if (loai == null)
             {
                 return NotFound();
@@ -103,7 +103,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("MaLoai,GioiTinh,TenLoai")] Loai loai)
         {
-            if (id != loai.MaLoai)
+            if (id != loai.Maloai)
             {
                 return NotFound();
             }
@@ -117,7 +117,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!LoaiExists(loai.MaLoai))
+                    if (!LoaiExists(loai.Maloai))
                     {
                         return NotFound();
                     }
@@ -141,7 +141,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
                 return BadRequest(ModelState);
             }
 
-            var loai = await _context.Loai.FirstOrDefaultAsync(m => m.MaLoai == id);
+            var loai = await _context.Loai.FirstOrDefaultAsync(m => m.Maloai == id);
             if (loai == null)
             {
                 return NotFound();
@@ -155,7 +155,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
 
         private bool LoaiExists(string id)
         {
-            return _context.Loai.Any(e => e.MaLoai == id);
+            return _context.Loai.Any(e => e.Maloai == id);
         }
     }
 }

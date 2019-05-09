@@ -14,9 +14,9 @@ namespace ASPCore_Final.Areas.Admin.Controllers
     [Area("Admin")]
     public class KhachHangsController : CheckLoginController
     {
-        private readonly ESHOPContext _context;
+        private readonly ModelContext _context;
 
-        public KhachHangsController(ESHOPContext context)
+        public KhachHangsController(ModelContext context)
         {
             _context = context;
         }
@@ -25,10 +25,10 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         [HttpGet("/admin/KhachHangs")]
         public async Task<IActionResult> Index(string searchString, int page = 1, string sortExpression = "Email")
         {
-            var eSHOPContext = _context.KhachHang.AsNoTracking().AsQueryable();
+            var eSHOPContext = _context.Khachhang.AsNoTracking().AsQueryable();
             if (!string.IsNullOrEmpty(searchString))
             {
-                eSHOPContext = eSHOPContext.Where(p => p.Email.Contains(searchString) || p.HoTen.Contains(searchString) || p.TaiKhoan.Contains(searchString));
+                eSHOPContext = eSHOPContext.Where(p => p.Email.Contains(searchString) || p.Hoten.Contains(searchString) || p.Taikhoan.Contains(searchString));
             }
             var model = await PagingList.CreateAsync(eSHOPContext, 5, page, sortExpression, "Email");
             model.RouteValue = new RouteValueDictionary {
@@ -46,8 +46,8 @@ namespace ASPCore_Final.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var khachHang = await _context.KhachHang
-                .FirstOrDefaultAsync(m => m.MaKh == id);
+            var khachHang = await _context.Khachhang
+                .FirstOrDefaultAsync(m => m.Makh == id);
             if (khachHang == null)
             {
                 return NotFound();
@@ -68,11 +68,11 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaKh,TaiKhoan,MatKhau,HoTen,GioiTinh,NgaySinh,DiaChi,DienThoai,Email,Hinh,TrangThaiHd")] KhachHang khachHang)
+        public async Task<IActionResult> Create([Bind("MaKh,TaiKhoan,MatKhau,HoTen,GioiTinh,NgaySinh,DiaChi,DienThoai,Email,Hinh,TrangThaiHd")] Khachhang khachHang)
         {
             if (ModelState.IsValid)
             {
-                khachHang.MatKhau = Encryptor.MD5Hash(khachHang.MatKhau);
+                khachHang.Matkhau = Encryptor.MD5Hash(khachHang.Matkhau);
                 _context.Add(khachHang);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -89,7 +89,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var khachHang = await _context.KhachHang.FindAsync(id);
+            var khachHang = await _context.Khachhang.FindAsync(id);
             if (khachHang == null)
             {
                 return NotFound();
@@ -102,20 +102,20 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaKh,TaiKhoan,MatKhau,HoTen,GioiTinh,NgaySinh,DiaChi,DienThoai,Email,Hinh,TrangThaiHd")] KhachHang khachHang)
+        public async Task<IActionResult> Edit(int id, [Bind("MaKh,TaiKhoan,MatKhau,HoTen,GioiTinh,NgaySinh,DiaChi,DienThoai,Email,Hinh,TrangThaiHd")] Khachhang khachHang)
         {
            
             if (ModelState.IsValid)
             {
                 try
                 {
-                    khachHang.MatKhau = Encryptor.MD5Hash(khachHang.MatKhau);
+                    khachHang.Matkhau = Encryptor.MD5Hash(khachHang.Matkhau);
                     _context.Update(khachHang);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!KhachHangExists(khachHang.MaKh))
+                    if (!KhachHangExists(khachHang.Makh))
                     {
                         return NotFound();
                     }
@@ -137,13 +137,13 @@ namespace ASPCore_Final.Areas.Admin.Controllers
                 return BadRequest(ModelState);
             }
 
-            var kh = await _context.KhachHang.FindAsync(id);
+            var kh = await _context.Khachhang.FindAsync(id);
             if (kh == null)
             {
                 return NotFound();
             }
 
-            _context.KhachHang.Remove(kh);
+            _context.Khachhang.Remove(kh);
             await _context.SaveChangesAsync();
 
             return Ok(kh);
@@ -152,10 +152,10 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         [HttpGet("/admin/KhachHangs/ChangeStatus")]
         public IActionResult ChangeStatus(int id)
         {
-            var kh = _context.KhachHang.Find(id);
+            var kh = _context.Khachhang.Find(id);
             if (kh != null)
             {
-                kh.TrangThaiHd = !kh.TrangThaiHd;
+                kh.Trangthaihd = !kh.Trangthaihd;
                 _context.SaveChanges();
             }
             return RedirectToAction("Index");
@@ -163,7 +163,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
 
         private bool KhachHangExists(int id)
         {
-            return _context.KhachHang.Any(e => e.MaKh == id);
+            return _context.Khachhang.Any(e => e.Makh == id);
         }
     }
 }

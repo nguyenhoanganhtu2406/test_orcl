@@ -16,23 +16,23 @@ namespace ASPCore_Final.Areas.Admin.Controllers
     [Area("Admin")]
     public class HangHoasController : CheckLoginController
     {
-        private readonly ESHOPContext _context;
+        private readonly ModelContext _context;
 
-        public HangHoasController(ESHOPContext context)
+        public HangHoasController(ModelContext context)
         {
             _context = context;
         }
 
         // GET: Admin/HangHoas
         [HttpGet("/admin/HangHoas")]
-        public async Task<IActionResult> Index(string searchString, int page = 1, string sortExpression = "MaHh")
+        public async Task<IActionResult> Index(string searchString, int page = 1, string sortExpression = "Mahh")
         {
-            var eSHOPContext = _context.HangHoa.AsNoTracking().Include(h => h.MaLoaiNavigation).Include(h => h.MaNccNavigation).AsQueryable();
+            var eSHOPContext = _context.Hanghoa.AsNoTracking().Include(h => h.MaloaiNavigation).Include(h => h.ManccNavigation).AsQueryable();
             if (!string.IsNullOrEmpty(searchString))
             {
-                eSHOPContext = eSHOPContext.Where(p => p.TenHh.Contains(searchString) || p.MaNcc.Contains(searchString) || p.MaLoai.Contains(searchString));
+                eSHOPContext = eSHOPContext.Where(p => p.Tenhh.Contains(searchString) || p.Mancc.Contains(searchString) || p.Maloai.Contains(searchString));
             }
-            var model = await PagingList.CreateAsync(eSHOPContext, 5, page, sortExpression, "MaHh");
+            var model = await PagingList.CreateAsync(eSHOPContext, 5, page, sortExpression, "Mahh");
             model.RouteValue = new RouteValueDictionary {
                 { "searchString", searchString}
             };
@@ -49,10 +49,10 @@ namespace ASPCore_Final.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var hangHoa = await _context.HangHoa
-                .Include(h => h.MaLoaiNavigation)
-                .Include(h => h.MaNccNavigation)
-                .FirstOrDefaultAsync(m => m.MaHh == id);
+            var hangHoa = await _context.Hanghoa
+                .Include(h => h.MaloaiNavigation)
+                .Include(h => h.ManccNavigation)
+                .FirstOrDefaultAsync(m => m.Mahh == id);
             if (hangHoa == null)
             {
                 return NotFound();
@@ -65,8 +65,8 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         [HttpGet("/admin/HangHoas/Create")]
         public IActionResult Create()
         {
-            ViewData["MaLoai"] = new SelectList(_context.Loai, "MaLoai", "MaLoai");
-            ViewData["MaNcc"] = new SelectList(_context.NhaCungCap, "MaNcc", "MaNcc");
+            ViewData["MaLoai"] = new SelectList(_context.Loai, "Maloai", "Maloai");
+            ViewData["MaNcc"] = new SelectList(_context.Nhacungcap, "Mancc", "Mancc");
             return View();
         }
 
@@ -75,7 +75,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaHh,TenHh,MaLoai,Hinh,DonGia,GiamGia,MoTa,MaNcc,SoLuongHang")] HangHoa hangHoa, IFormFile fHinh)
+        public async Task<IActionResult> Create([Bind("MaHh,TenHh,MaLoai,Hinh,DonGia,GiamGia,MoTa,MaNcc,SoLuongHang")] Hanghoa hangHoa, IFormFile fHinh)
         {
             if (ModelState.IsValid)
             {
@@ -92,8 +92,8 @@ namespace ASPCore_Final.Areas.Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaLoai"] = new SelectList(_context.Loai, "MaLoai", "MaLoai", hangHoa.MaLoai);
-            ViewData["MaNcc"] = new SelectList(_context.NhaCungCap, "MaNcc", "MaNcc", hangHoa.MaNcc);
+            ViewData["MaLoai"] = new SelectList(_context.Loai, "Maloai", "Maloai", hangHoa.Maloai);
+            ViewData["MaNcc"] = new SelectList(_context.Nhacungcap, "Mancc", "Mancc", hangHoa.Mancc);
             return View(hangHoa);
         }
 
@@ -106,13 +106,13 @@ namespace ASPCore_Final.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var hangHoa = await _context.HangHoa.FindAsync(id);
+            var hangHoa = await _context.Hanghoa.FindAsync(id);
             if (hangHoa == null)
             {
                 return NotFound();
             }
-            ViewData["MaLoai"] = new SelectList(_context.Loai, "MaLoai", "MaLoai", hangHoa.MaLoai);
-            ViewData["MaNcc"] = new SelectList(_context.NhaCungCap, "MaNcc", "MaNcc", hangHoa.MaNcc);
+            ViewData["MaLoai"] = new SelectList(_context.Loai, "Maloai", "Maloai", hangHoa.Maloai);
+            ViewData["MaNcc"] = new SelectList(_context.Nhacungcap, "Mancc", "Mancc", hangHoa.Mancc);
             return View(hangHoa);
         }
 
@@ -121,7 +121,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaHh,TenHh,MaLoai,Hinh,DonGia,GiamGia,MoTa,MaNcc,SoLuongHang")] HangHoa hangHoa, IFormFile fHinh)
+        public async Task<IActionResult> Edit(int id, [Bind("MaHh,TenHh,MaLoai,Hinh,DonGia,GiamGia,MoTa,MaNcc,SoLuongHang")] Hanghoa hangHoa, IFormFile fHinh)
         {
           
             if (ModelState.IsValid)
@@ -142,7 +142,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!HangHoaExists(hangHoa.MaHh))
+                    if (!HangHoaExists(hangHoa.Mahh))
                     {
                         return NotFound();
                     }
@@ -153,8 +153,8 @@ namespace ASPCore_Final.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaLoai"] = new SelectList(_context.Loai, "MaLoai", "MaLoai", hangHoa.MaLoai);
-            ViewData["MaNcc"] = new SelectList(_context.NhaCungCap, "MaNcc", "MaNcc", hangHoa.MaNcc);
+            ViewData["MaLoai"] = new SelectList(_context.Loai, "Maloai", "Maloai", hangHoa.Maloai);
+            ViewData["MaNcc"] = new SelectList(_context.Nhacungcap, "Mancc", "Mancc", hangHoa.Mancc);
             return View(hangHoa);
         }
         // DELETE: api/HangHoas/5
@@ -166,20 +166,20 @@ namespace ASPCore_Final.Areas.Admin.Controllers
                 return BadRequest(ModelState);
             }
 
-            var hh = await _context.HangHoa.FindAsync(id);
+            var hh = await _context.Hanghoa.FindAsync(id);
             if (hh == null)
             {
                 return NotFound();
             }
 
-            _context.HangHoa.Remove(hh);
+            _context.Hanghoa.Remove(hh);
             await _context.SaveChangesAsync();
 
             return Ok(hh);
         }
         private bool HangHoaExists(int id)
         {
-            return _context.HangHoa.Any(e => e.MaHh == id);
+            return _context.Hanghoa.Any(e => e.Mahh == id);
         }
     }
 }

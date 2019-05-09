@@ -15,23 +15,23 @@ namespace ASPCore_Final.Areas.Admin.Controllers
     [Area("Admin")]
     public class HoaDonsController : Controller
     {
-        private readonly ESHOPContext _context;
+        private readonly ModelContext _context;
 
-        public HoaDonsController(ESHOPContext context)
+        public HoaDonsController(ModelContext context)
         {
             _context = context;
         }
 
         // GET: Admin/HoaDons
         [HttpGet("/admin/HoaDons")]
-        public async Task<IActionResult> Index(string searchString, int page = 1, string sortExpression = "MaTrangThaiNavigation")
+        public async Task<IActionResult> Index(string searchString, int page = 1, string sortExpression = "MatrangthaiNavigation")
         {
-            var eSHOPContext = _context.HoaDon.AsNoTracking().Include(h => h.MaKhNavigation).Include(h => h.MaTrangThaiNavigation).AsQueryable();
+            var eSHOPContext = _context.Hoadon.AsNoTracking().Include(h => h.MakhNavigation).Include(h => h.MatrangthaiNavigation).AsQueryable();
             if (!string.IsNullOrEmpty(searchString))
             {
-                eSHOPContext = eSHOPContext.Where(p => p.HoTen.Contains(searchString) || p.SdtNguoinhan.Contains(searchString) || p.MaHd.ToString().Contains(searchString));
+                eSHOPContext = eSHOPContext.Where(p => p.Hoten.Contains(searchString) || p.SdtNguoinhan.Contains(searchString) || p.Mahd.ToString().Contains(searchString));
             }
-            var model = await PagingList.CreateAsync(eSHOPContext, 5, page, sortExpression, "MaHd");
+            var model = await PagingList.CreateAsync(eSHOPContext, 5, page, sortExpression, "Mahd");
             model.RouteValue = new RouteValueDictionary {
                 { "searchString", searchString}
             };
@@ -48,7 +48,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var ct = _context.ChiTietHd.Where(p => p.MaHd == id).ToList();
+            var ct = _context.Chitiethd.Where(p => p.Mahd == id).ToList();
             if (ct == null)
             {
                 return NotFound();
@@ -60,43 +60,39 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         [HttpGet("/admin/HoaDons/ChangeStatus")]
         public IActionResult ChangeStatus(int id)
         {
-            var hd = _context.HoaDon.Find(id);
+            var hd = _context.Hoadon.Find(id);
             if (hd != null)
             {
-                hd.MaTrangThai = 1;
+                hd.Matrangthai = 1;
                 _context.SaveChanges();
-                KhachHang kh = _context.KhachHang.SingleOrDefault(p=>p.MaKh==hd.MaKh);
+                Khachhang kh = _context.Khachhang.SingleOrDefault(p=>p.Makh==hd.Makh);
                 MailMessage mm = new MailMessage("eshoppingmanager@gmail.com", kh.Email);
                 mm.Subject = "Thông báo đơn hàng";
                 string content = "<h1>{0}</h1> <br/> <div class='text text-success'><h2>Chào mừng bạn đến với ESHOP.</h2></div> <br> <h5>Bạn vừa tạo một đơn hàng ở ESHOP. Đơn hàng của bạn đã được gửi tới cửa hàng : <br/> Thông tin đơn hàng : <br/>";
                 content = content + "<table border='1px' style='font-size:15px;border-collapse: collapse;text-align:center'><tr><th>Tên sản phẩm</th><th>Kích cở</th><th>Số lượng</th><th>Đơn giá</th><th>Thành tiền</th></tr>";
                 double tongtien = 0;
-                List<ChiTietHd> cthd = _context.ChiTietHd.Where(p => p.MaHd == hd.MaHd).ToList();
+                List<Chitiethd> cthd = _context.Chitiethd.Where(p => p.Mahd == hd.Mahd).ToList();
                 foreach (var item in cthd)
                 {
-                    HangHoa hangHoa = _context.HangHoa.SingleOrDefault(p => p.MaHh == item.MaHh);
-                    var giamgia = item.DonGia - item.DonGia * item.GiamGia;
+                    Hanghoa hangHoa = _context.Hanghoa.SingleOrDefault(p => p.Mahh == item.Mahh);
+                    var giamgia = item.Dongia - item.Dongia * item.Giamgia;
                     CartItem ct = new CartItem
                     {
-                        MaHh = hangHoa.MaHh,
-                        TenHh = hangHoa.TenHh,
+                        MaHh = hangHoa.Mahh,
+                        TenHh = hangHoa.Tenhh,
                         Hinh = hangHoa.Hinh,
-                        KichCo = item.KichCo,
+                        KichCo = item.Kichco,
                         GiaBan = Convert.ToDouble(giamgia),
-                        SoLuong = item.SoLuong
+                        SoLuong = item.Soluong
                     };
 
                     tongtien += ct.ThanhTien;
-                    content = content + "<tr><td>" + hangHoa.TenHh + "</td><td>" + item.KichCo + "</td><td>" + item.SoLuong + "</td><td>" + ct.GiaBan.ToString("#,##0") +"</td><td>" + ct.ThanhTien.ToString("#,##0") + "</td></tr>";
-                }
-                if(tongtien >= 100000)
-                {
-                    kh.LoaiKH = true;
+                    content = content + "<tr><td>" + hangHoa.Tenhh + "</td><td>" + item.Kichco + "</td><td>" + item.Soluong + "</td><td>" + ct.GiaBan.ToString("#,##0") +"</td><td>" + ct.ThanhTien.ToString("#,##0") + "</td></tr>";
                 }
                 _context.SaveChanges();
                 content = content + "<tr><td colspan='4'>Tông thanh toán : </td><td>" + tongtien.ToString("#,##0") + "</td></tr></table><br />";
                 content = content + "<div>Đơn hàng của bạn sẽ được chuyển đến trong vài ngày tới . Cảm ơn bạn đã ủng hộ ESHOP. Thân</div>";
-                mm.Body = string.Format(content, kh.HoTen);
+                mm.Body = string.Format(content, kh.Hoten);
                 mm.IsBodyHtml = true;
                 SmtpClient smtp = new SmtpClient();
                 smtp.Host = "smtp.gmail.com";
@@ -111,7 +107,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
 
         private bool HoaDonExists(int id)
         {
-            return _context.HoaDon.Any(e => e.MaHd == id);
+            return _context.Hoadon.Any(e => e.Mahd == id);
         }
     }
 }

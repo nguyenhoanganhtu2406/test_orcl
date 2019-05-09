@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace ASPCore_Final.Models
 {
@@ -8,15 +7,13 @@ namespace ASPCore_Final.Models
     {
         public Loai()
         {
-            HangHoa = new HashSet<HangHoa>();
+            Hanghoa = new HashSet<Hanghoa>();
         }
-        [Display(Name = "Mã Loại")]
-        public string MaLoai { get; set; }
-        [Display(Name = "Giới Tính")]
-        public bool GioiTinh { get; set; }
-        [Display(Name = "Tên Loại")]
-        public string TenLoai { get; set; }
 
-        public ICollection<HangHoa> HangHoa { get; set; }
+        public string Maloai { get; set; }
+        public bool Gioitinh { get; set; }
+        public string Tenloai { get; set; }
+
+        public ICollection<Hanghoa> Hanghoa { get; set; }
     }
 }

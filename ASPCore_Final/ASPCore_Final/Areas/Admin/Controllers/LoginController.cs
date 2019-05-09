@@ -12,8 +12,8 @@ namespace ASPCore_Final.Areas.Admin.Controllers
     [Area("admin")]
     public class LoginController : Controller
     {
-        private readonly ESHOPContext db;
-        public LoginController(ESHOPContext context)
+        private readonly ModelContext db;
+        public LoginController(ModelContext context)
         {
             db = context;
         }
@@ -27,14 +27,14 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                NhanVien nv = db.NhanVien.SingleOrDefault(p => p.Email == loginModel.Email && p.MatKhau == Encryptor.MD5Hash(loginModel.matKhau));
+                Nhanvien nv = db.Nhanvien.SingleOrDefault(p => p.Email == loginModel.Email && p.Matkhau == Encryptor.MD5Hash(loginModel.matKhau));
                 if (nv == null)
                 {
 
                     ModelState.AddModelError("loi", "Sai email hoặc password");
 
                 }
-                else if (nv.TrangThaiHd == false)
+                else if (nv.Trangthaihd == false)
                 {
                     ModelState.AddModelError("loi", "Tài khoản của bạn đã bị khóa");
                 }

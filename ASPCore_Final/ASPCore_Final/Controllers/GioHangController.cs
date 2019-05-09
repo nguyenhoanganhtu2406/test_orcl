@@ -10,8 +10,8 @@ namespace ASPCore_Final.Controllers
 {
     public class GioHangController : Controller
     {
-        private readonly ESHOPContext db;
-        public GioHangController(ESHOPContext ctx)
+        private readonly ModelContext db;
+        public GioHangController(ModelContext ctx)
         {
             db = ctx;
         }
@@ -47,15 +47,15 @@ namespace ASPCore_Final.Controllers
             }
             else
             {
-                HangHoa hh = db.HangHoa.SingleOrDefault(p => p.MaHh == mahh);
+                Hanghoa hh = db.Hanghoa.SingleOrDefault(p => p.Mahh == mahh);
                 item = new CartItem
                 {
-                    MaHh = hh.MaHh,
-                    TenHh = hh.TenHh,
+                    MaHh = hh.Mahh,
+                    TenHh = hh.Tenhh,
                     Hinh = hh.Hinh,
                     SoLuong = soluongsp,
                     KichCo = size,
-                    GiaBan = hh.DonGia * (1 - hh.GiamGia)
+                    GiaBan = Convert.ToDouble(hh.Dongia * (1 - hh.Giamgia))
                 };
                 gioHang.Add(item);
             }
@@ -86,31 +86,30 @@ namespace ASPCore_Final.Controllers
         public IActionResult TaoHoaDonBT(string email,string hoten_ngnhan, string dc_nguoinhan, string ghichu, string sdt, string magiamgia)
         {
 
-            KhachHang kh = new KhachHang();
-            kh.HoTen = hoten_ngnhan;
-            kh.DiaChi = dc_nguoinhan;
-            kh.DienThoai = sdt;
+            Khachhang kh = new Khachhang();
+            kh.Hoten = hoten_ngnhan;
+            kh.Diachi = dc_nguoinhan;
+            kh.Dienthoai = sdt;
 
             kh.Email = email;
-            db.KhachHang.Add(kh);
+            db.Khachhang.Add(kh);
             db.SaveChanges();
             // tạo hóa đơn
-            var getKH = db.KhachHang.Where(p => p.Email == email).OrderByDescending(p => p.MaKh).Take(1); 
+            var getKH = db.Khachhang.Where(p => p.Email == email).OrderByDescending(p => p.Makh).Take(1); 
             foreach(var titem in getKH)
             {
-                HoaDon hd = new HoaDon
+                Hoadon hd = new Hoadon
                 {
-                    MaKh = titem.MaKh,
-                    HoTen = hoten_ngnhan,
-                    DiaChi = dc_nguoinhan,
-                    NgayDat = DateTime.Now,
-                    GhiChu = ghichu,
+                    Makh = titem.Makh,
+                    Hoten = hoten_ngnhan,
+                    Diachi = dc_nguoinhan,
+                    Ngaydat = DateTime.Now,
+                    Ghichu = ghichu,
                     SdtNguoinhan = sdt,
-                    MaTrangThai = 0,
-                    PhiVanChuyen = 35000,
-                    MaVoucher = magiamgia
+                    Matrangthai = 0,
+                    Phivanchuyen = 35000
                 };
-                db.HoaDon.Add(hd);
+                db.Hoadon.Add(hd);
                 // tạo chi tiết hóa đơn
                 //  double tt = 0;
                 double tongtienhang = 0;
@@ -119,52 +118,24 @@ namespace ASPCore_Final.Controllers
                 foreach (var item in Carts)
                 {
                     tongtienhang += item.ThanhTien;
-                    HangHoa hh = db.HangHoa.SingleOrDefault(p => p.MaHh == item.MaHh);
+                    Hanghoa hh = db.Hanghoa.SingleOrDefault(p => p.Mahh == item.MaHh);
                     //   tt = item.SoLuong * hh.DonGia * (1 - hh.GiamGia);
-                    ChiTietHd cthd = new ChiTietHd
+                    Chitiethd cthd = new Chitiethd
                     {
-                        MaHd = hd.MaHd,
-                        MaHh = item.MaHh,
-                        DonGia = hh.DonGia,
-                        GiamGia = hh.GiamGia,
-                        SoLuong = item.SoLuong,
-                        KichCo = item.KichCo
+                        Mahd = hd.Mahd,
+                        Mahh = item.MaHh,
+                        Dongia = hh.Dongia,
+                        Giamgia = hh.Giamgia,
+                        Soluong = item.SoLuong,
+                        Kichco = item.KichCo
                     };
 
-                    db.ChiTietHd.Add(cthd);
+                    db.Chitiethd.Add(cthd);
                     db.SaveChanges();
-                    // trừ sản phẩm từ kho
-                    SanPhamKho spk = db.SanPhamKho.SingleOrDefault(p => p.MaHh == cthd.MaHh && p.KichCo == cthd.KichCo);
-                    if (spk.SoLuong >= cthd.SoLuong)
-                    {
-                        if (HttpContext.Session.Get<string>("ErrorGH") != null)
-                        {
-                            HttpContext.Session.Remove("ErrorGH");
-                        }
-                        spk.SoLuong = spk.SoLuong - cthd.SoLuong;
-                    }
-                    else
-                    {
-                        HangHoa hangHoa = db.HangHoa.SingleOrDefault(p => p.MaHh == cthd.MaHh);
-                        string loi = "Hàng hóa có mã " + hangHoa.TenHh + " chỉ còn : " + spk.SoLuong + " sản phẩm";
-                        HttpContext.Session.Set("ErrorGH", loi);
-                        db.ChiTietHd.Remove(cthd);
-                        db.HoaDon.Remove(hd);
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
-                    }
+                    
                 }
-                Voucher v = db.Voucher.Find(magiamgia);
-                if (v != null)
-                {
-                    tongthucthu = tongtienhang + 35000 - Convert.ToDouble(tongtienhang * v.GiamGia);
-                }
-                else
-                {
-                    tongthucthu = tongtienhang + 35000;
-                }
-                hd.TongTienHang = tongtienhang;
-                hd.TongThucThu = tongthucthu;
+                hd.Tongtienhang = Convert.ToDecimal(tongtienhang);
+                hd.Tongthucthu = Convert.ToDecimal(tongthucthu);
                 db.SaveChanges();
                 HttpContext.Session.Set<string>("mess", "Hóa đơn của bạn đã được gửi tới cửa hàng vui lòng chờ kiểm tra mail để biết trạng thái đơn hàng của bạn . ESHOP");
                 HttpContext.Session.Remove("GioHang");
@@ -179,74 +150,44 @@ namespace ASPCore_Final.Controllers
         public IActionResult TaoHoaDon(int makh,string hotenkh,string diachi,string hoten_ngnhan,string dc_nguoinhan,string ghichu,string sdt,string magiamgia)
         {
             // tạo hóa đơn
-            HoaDon hd = new HoaDon
+            Hoadon hd = new Hoadon
             {
-                MaKh = makh,
-                HoTen = hoten_ngnhan,
-                DiaChi = dc_nguoinhan,
-                NgayDat = DateTime.Now,
-                GhiChu = ghichu,
+                Makh = makh,
+                Hoten = hoten_ngnhan,
+                Diachi = dc_nguoinhan,
+                Ngaydat = DateTime.Now,
+                Ghichu = ghichu,
                 SdtNguoinhan = sdt,
-                MaTrangThai = 0,
-                PhiVanChuyen = 35000,
-                MaVoucher = magiamgia
+                Matrangthai = 0,
+                Phivanchuyen = 35000
             };
             
-            db.HoaDon.Add(hd);
+            db.Hoadon.Add(hd);
             // tạo chi tiết hóa đơn
             //  double tt = 0;
             double tongtienhang = 0;
             double tongthucthu = 0;
-            KhachHang kh = db.KhachHang.SingleOrDefault(p => p.MaKh == makh);
+            Khachhang kh = db.Khachhang.SingleOrDefault(p => p.Makh == makh);
             foreach (var item in Carts)
             {
                 tongtienhang += item.ThanhTien;
-                HangHoa hh = db.HangHoa.SingleOrDefault(p => p.MaHh == item.MaHh);
+                Hanghoa hh = db.Hanghoa.SingleOrDefault(p => p.Mahh == item.MaHh);
              //   tt = item.SoLuong * hh.DonGia * (1 - hh.GiamGia);
-                ChiTietHd cthd = new ChiTietHd
+                Chitiethd cthd = new Chitiethd
                 {
-                    MaHd = hd.MaHd,
-                    MaHh = item.MaHh,
-                    DonGia = hh.DonGia,
-                    GiamGia = hh.GiamGia,
-                    SoLuong = item.SoLuong,
-                    KichCo = item.KichCo
+                    Mahd = hd.Mahd,
+                    Mahh = item.MaHh,
+                    Dongia = hh.Dongia,
+                    Giamgia = hh.Giamgia,
+                    Soluong = item.SoLuong,
+                    Kichco = item.KichCo
                 };
               
-                db.ChiTietHd.Add(cthd);
+                db.Chitiethd.Add(cthd);
                 db.SaveChanges();
-                // trừ sản phẩm từ kho
-                SanPhamKho spk = db.SanPhamKho.SingleOrDefault(p => p.MaHh == cthd.MaHh && p.KichCo == cthd.KichCo);
-                if(spk.SoLuong >= cthd.SoLuong)
-                {
-                    if (HttpContext.Session.Get<string>("ErrorGH") != null)
-                    {
-                        HttpContext.Session.Remove("ErrorGH");
-                    }
-                    spk.SoLuong = spk.SoLuong - cthd.SoLuong;
-                }
-                else
-                {
-                    HangHoa hangHoa = db.HangHoa.SingleOrDefault(p => p.MaHh == cthd.MaHh);
-                    string loi = "Hàng hóa có mã " + hangHoa.TenHh + " chỉ còn : " + spk.SoLuong + " sản phẩm";
-                    HttpContext.Session.Set("ErrorGH",loi);
-                    db.ChiTietHd.Remove(cthd);
-                    db.HoaDon.Remove(hd);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
             }
-            Voucher v = db.Voucher.Find(magiamgia);
-            if(v != null)
-            {
-                tongthucthu = tongtienhang + 35000 - Convert.ToDouble(tongtienhang * v.GiamGia);
-            }
-            else
-            {
-                tongthucthu = tongtienhang + 35000;
-            }
-            hd.TongTienHang = tongtienhang;
-            hd.TongThucThu = tongthucthu;
+            hd.Tongtienhang = Convert.ToDecimal(tongtienhang);
+            hd.Tongthucthu = Convert.ToDecimal(tongthucthu);
             db.SaveChanges();
             HttpContext.Session.Set<string>("mess", "Hóa đơn của bạn đã được gửi tới cửa hàng vui lòng chờ kiểm tra mail để biết trạng thái đơn hàng của bạn . ESHOP");
             HttpContext.Session.Remove("GioHang");
@@ -256,42 +197,6 @@ namespace ASPCore_Final.Controllers
         public IActionResult HoaDon()
         {
             return View();
-        }
-        [HttpPost]
-        public IActionResult CheckVoucher(string magiamgia,double tongtien)
-        {
-            Voucher v = db.Voucher.SingleOrDefault(p=>p.TrangThai == true && p.NgayHetHan >= DateTime.Now && p.MaVc == magiamgia);
-            if(v != null)
-            {
-                if(v.NgayHetHan >= DateTime.Now)
-                {
-                    if (tongtien >= v.TongTienDk)
-                    {
-
-                        double tiengiam = Convert.ToDouble(tongtien * v.GiamGia);
-                        HttpContext.Session.Set("SoTienGiam", tiengiam);
-                        HttpContext.Session.Set("PhanTramGiam", v.GiamGia);
-                        HttpContext.Session.Set("mavc", magiamgia);
-                        HttpContext.Session.Remove("voucherIf");
-                    }
-                    else
-                    {
-                        HttpContext.Session.Set("voucherIf", "Mã voucher không áp dụng với đơn hàng dưới " + Convert.ToDouble(v.TongTienDk).ToString("#,##0") + "đ");
-                        HttpContext.Session.Set("mavc", magiamgia);
-                    }
-                }
-                else
-                {
-                    HttpContext.Session.Set("voucherIf", "Mã voucher đã hết hạn");
-                    HttpContext.Session.Set("mavc", magiamgia);
-                }
-            }
-            else
-            {
-                HttpContext.Session.Set("voucherIf", "Mã voucher không tồn tại");
-                HttpContext.Session.Set("mavc", magiamgia);
-            }
-            return RedirectToAction("Index");
         }
     }
 }
