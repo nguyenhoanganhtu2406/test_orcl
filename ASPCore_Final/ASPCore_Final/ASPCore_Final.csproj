@@ -287,6 +287,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+    <PackageReference Include="Oracle.EntityFrameworkCore" Version="2.18.0-beta3" />
     <PackageReference Include="ReflectionIT.Mvc.Paging" Version="3.0.0" />
     <PackageReference Include="Stimulsoft.Reports.Web.NetCore" Version="2018.3.5" />
   </ItemGroup>
