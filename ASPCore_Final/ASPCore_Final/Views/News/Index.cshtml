@@ -1,0 +1,37 @@
+﻿@model IEnumerable<ASPCore_Final.Models.TinTuc>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_frontEnd.cshtml";
+}
+
+<!-- breadcrumbs -->
+<div class="breadcrumbs">
+    <div class="container">
+        <ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
+            <li><a asp-action="Index" asp-controller="Home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Trang chủ</a></li>
+            <li class="active">Tin tức</li>
+        </ol>
+    </div>
+</div>
+<!-- //breadcrumbs -->
+<br />
+<div class="content">
+    @foreach (var item in Model)
+    {
+        <div class="container-fluid">
+            <div class="row align-content-center">
+                <div class="col-sm-3">
+                    <img src="~/HangHoa/@item.Hinh" style="width:230px;height:230px;" alt="Alternate Text" />
+                </div>
+                <div class="col-sm-8 align-content-between">
+                    <h3><a href="/News/Details/@item.MaTt">@item.TieuDe.ToUpper() </a></h3>
+                    <h4>Posted on @item.NgayTao </h4>
+                    @item.LoaiTt
+                </div>
+            </div>
+        </div>
+        <br/>
+        <hr>
+    }
+</div>

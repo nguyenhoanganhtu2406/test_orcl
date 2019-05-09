@@ -1,0 +1,104 @@
+﻿@model IEnumerable<ASPCore_Final.Models.HangHoaBanChayModel>
+@{
+    ESHOPContext db = new ESHOPContext();
+    int tongSoLuong = (int)ViewData["TongSoLuong"];
+    int pageSize = 6;
+    var totalPage = 0;
+    if (tongSoLuong % pageSize == 0)
+    {
+        totalPage = tongSoLuong / pageSize;
+    }
+    else
+    {
+        totalPage = tongSoLuong / pageSize;
+        totalPage += 1;
+    }
+}
+<input type="hidden" name="tongsotrang" value="@totalPage" />
+@foreach (var item in Model)
+{
+    <div class="col-md-4 products-right-grids-bottom-grid" style="margin-bottom:15px;">
+        <div class="new-collections-grid1 products-right-grid1 animated wow" data-wow-delay=".5s" style="padding:10px;">
+            <div class="new-collections-grid1-image">
+                <a asp-action="ChiTiet" asp-controller="HangHoa" asp-route-id="@item.MaHH" class="product-image" style="padding:10px;"><img src="~/HangHoa/@item.HAnh" alt=" " class="img-responsive"></a>
+                <div class="new-collections-grid1-image-pos products-right-grids-pos" style="text-align:center">
+                    <a asp-action="ChiTiet" asp-controller="HangHoa" asp-route-mahh="@item.MaHH">Xem chi tiết</a>
+                </div>
+                @{
+                    List<SanPhamKho> sanPhamKhos = db.SanPhamKho.Where(p => p.MaHh == item.MaHH).ToList();
+                    var soluong = sanPhamKhos.Sum(x => x.SoLuong);
+                    if (soluong > 10)
+                    {
+                        double gg = item.GGia * 100;
+                        <div class="new-one">
+                            <p>-@gg%</p>
+                        </div>
+                    }
+                    else if (soluong > 0)
+                    {
+                        <div class="new-one">
+                            <p>Sắp hết hàng</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="new-one">
+                            <p>Tạm hết hàng</p>
+                        </div>
+                    }
+                }
+
+                <div class="new-collections-grid1-right products-right-grids-pos-right">
+                    <div class="rating">
+                        @{
+                            List<YeuThich> yts = db.YeuThich.Where(p => p.MaHh == item.MaHH).ToList();
+                            double diemyt = 0;
+                            if (yts.Count > 0)
+                            {
+                                double tongdiem = 0;
+                                foreach (var y in yts)
+                                {
+                                    tongdiem = tongdiem + y.DiemDanhGia;
+                                }
+                                diemyt = tongdiem / yts.Count();
+                                int diem = int.Parse(diemyt.ToString().Split(".")[0]);
+                                if (diem < 3)
+                                {
+                                    diem = 3;
+                                }
+                                for (int i = 1; i <= 5; i++)
+                                {
+                                    if (i <= diem)
+                                    {
+                                        <img src="~/images/2.png" style="opacity:1">
+                                    }
+                                    else if (i > diem)
+                                    {
+                                        <img src="~/images/1.png" style="opacity:1">
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    <img src="~/images/2.png" style="opacity:1">
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <h4><a asp-action="ChiTiet" asp-controller="HangHoa" asp-route-mahh="@item.MaHH">@item.TenHH</a></h4>
+            <p>@item.MTa</p>
+            <div class="simpleCart_shelfItem products-right-grid1-add-cart">
+                @{
+                    double dongiaban = item.DGIa * (1 - item.GGia);
+                    double giamgia = item.GGia * 100;
+                }
+                <p><i>@item.DGIa.ToString("#,##0") đ</i> <span class="item_price">@dongiaban.ToString("#,##0") đ</span></p>
+            </div>
+        </div>
+    </div>
+}
+<div class="clearfix"></div>

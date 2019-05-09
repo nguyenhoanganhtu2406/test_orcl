@@ -1,0 +1,111 @@
+﻿
+@model ReflectionIT.Mvc.Paging.PagingList<ASPCore_Final.Models.TinTuc>
+@using ReflectionIT.Mvc.Paging;
+@addTagHelper *, ReflectionIT.Mvc.Paging
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="outer-w3-agile mt-3">
+    <h4 class="tittle-w3-agileits mb-4">Danh sách nhân viên</h4>
+    <form method="get" class="form-inline">
+        <input name="searchString" class="form-control" placeholder="Search..."
+               value="@Model.RouteValue["searchString"]" />
+        <button type="submit" class="btn btn-info">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
+        </button>
+    </form>
+    <hr />
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Tạo mới</a>
+    </p>
+
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+               
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.NgayTao)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.TrangThai)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.LoaiTtNavigation)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.TieuDe)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.MaNvNavigation)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr onclick="_delete(@item.MaTt, event)">
+               
+                <td scope="row">
+                    @Html.DisplayFor(modelItem => item.NgayTao)
+                </td>
+                <td scope="row">
+                    @Html.DisplayFor(modelItem => item.TrangThai)
+                </td>
+                <td scope="row">
+                    @Html.DisplayFor(modelItem => item.LoaiTtNavigation.LoaiTt)
+                </td>
+                <td scope="row">
+                    @Html.DisplayFor(modelItem => item.TieuDe)
+                </td>
+                <td scope="row">
+                    @Html.DisplayFor(modelItem => item.MaNvNavigation.Email)
+                </td>
+                <td scope="row">
+                    <a asp-action="Edit" asp-route-id="@item.MaTt" class="btn btn-primary">Sửa</a> |
+                    <a asp-action="Details" asp-route-id="@item.MaTt" class="btn btn-primary">Xem chi tiết</a> |
+
+                    <button type="button" class="btn btn-primary btn-delete">Xóa</button>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    <script>
+        function _delete(id, ev) {
+            if (ev.target.className == 'btn btn-primary btn-delete') {
+                console.log(ev.target);
+                console.log(ev.currentTarget);
+                var cf = confirm('Bạn có muốn xoá tin tức ID: ' + id + '?');
+                if (cf) {
+                    $(ev.currentTarget).fadeOut();
+                    $.ajax({
+                        url: '/api/TinTucs/' + id,
+                        type: "Delete",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: true,
+                        success: function (result) {
+                            alert("Xoá thành công");
+                        },
+                        error: function (errormessage) {
+                            alert(errormessage.responseText);
+                        }
+                    });
+                }
+            }
+        }
+    </script>
+    <nav class="navbar-default justify-content-center">
+
+
+        @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model, @searchString = @ViewBag.SearchString, @class = "page-item" })
+
+
+    </nav>
+
+</div>

@@ -1,0 +1,79 @@
+﻿@model ASPCore_Final.Models.TinTuc
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_frontEnd.cshtml";
+}
+<!-- breadcrumbs -->
+<div class="breadcrumbs">
+    <div class="container">
+        <ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
+            <li><a asp-action="Index" asp-controller="Home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Trang chủ</a></li>
+            <li class="active">Tin tức  /  @Model.TieuDe</li>
+        </ol>
+    </div>
+</div>
+<!-- //breadcrumbs -->
+<div class="single">
+    <div class="container">
+        <div class="content">
+            <div class="content_top">
+                <div class="heading alert alert-info" style="text-align:center">
+                    <h3>@Model.TieuDe</h3>
+                </div>
+                <div class="col-md-4">
+                    <img src="~/HangHoa/@Model.Hinh" alt="Alternate Text" style="width:300px;"/>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class=" col-md-8">
+                <div class="section-group" style="background-color:lightpink;padding:15px;">
+                    @Html.Raw(Model.NoiDung)
+                </div>
+                <br />
+                <hr />
+                <div>
+                    <a asp-action="Index" class="btn btn-primary">Trở về</a>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+</div>
+<br />
+<hr />
+<br />
+<div class="single-related-products">
+    <div class="container" style="margin-left:0px;">
+        <h3 class="animated wow slideInUp" data-wow-delay=".5s">Tin liên quan</h3>
+        <div class="new-collections-grids">
+            <div class="new-collections-grid">
+                @{
+                    ESHOPContext db = new ESHOPContext();
+                    var listSP_related = db.TinTuc.Where(p => p.LoaiTt == Model.LoaiTt).Take(4).ToList();
+                }
+
+                @foreach (var item in listSP_related)
+                {
+
+                    <div class="container-fluid">
+                        <div class="row align-content-center">
+                            <div class="col-md-3">
+                                <img src="~/HangHoa/@item.Hinh" style="width:230px;height:230px;" alt="Alternate Text" />
+                            </div>
+                            <div class="col-md-9 align-content-between" >
+                                <h4><a href="/News/Details/@item.MaTt">@item.TieuDe.ToUpper() </a></h4>
+                                <h5>Posted on @item.NgayTao </h5>
+                                @item.LoaiTt
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <hr/>
+                }
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>

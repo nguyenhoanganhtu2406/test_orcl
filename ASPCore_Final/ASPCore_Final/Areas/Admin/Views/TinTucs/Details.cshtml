@@ -1,0 +1,49 @@
+﻿@model ASPCore_Final.Models.TinTuc
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Thông tin tin tức</h2>
+
+<div>
+   
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NoiDung)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NoiDung)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NgayTao)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NgayTao)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TrangThai)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TrangThai)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LoaiTtNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LoaiTtNavigation.LoaiTt)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MaNvNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MaNvNavigation.Email)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.MaTt" class="btn btn-primary">Sửa</a> |
+    <a asp-action="Index" class="btn btn-primary">Trở lại</a>
+</div>

@@ -1,0 +1,119 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="outer-w3-agile mt-3">
+    <h3 class="alert alert-info" style="font-size:25px;">Thông tin voucher</h3>
+    <a class="glyphicon glyphicon-plus" asp-action="TaoVoucher">Thêm mới</a>
+    <div class="bootstrap-tab animated wow slideInUp" data-wow-delay=".5s">
+        <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+            @{
+                ESHOPContext db = new ESHOPContext();
+                List<Voucher> voucher_moi = db.Voucher.Where(p => p.NgayBatDau >= DateTime.Now && p.TrangThai == false).ToList();
+                List<Voucher> voucher_hethan = db.Voucher.Where(p => p.NgayHetHan < DateTime.Now || p.TrangThai == true).ToList();
+            }
+            <ul id="myTab" class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">Voucher mới</a></li>
+                <li role="presentation"><a href="#profile" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile">Voucher hết hạn | Đã kích hoạt</a></li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active bootstrap-tab-text" id="home" aria-labelledby="home-tab">
+                    <div class="bootstrap-tab-text-grids">
+                        <table class="table table-bordered">
+                            <tr style="background-color:skyblue;color:white;">
+                                <th>Mã voucher</th>
+                                <th>Nội dung</th>
+                                <th>Ngày tạo</th>
+                                <th>Ngày bắt đầu</th>
+                                <th>Ngày hết hạn</th>
+                                <th>Giảm giá</th>
+                                <th>Điều kiện</th>
+                                <th>Ghi chú</th>
+                                <th>Trạng thái</th>
+                                <th></th>
+                            </tr>
+                            @foreach (var v in voucher_moi)
+                            {
+                                <tr>
+                                    <td class="text text-info">#@v.MaVc</td>
+                                    <td>@v.NoiDung</td>
+                                    <td>@v.NgayTao</td>
+                                    <td>@v.NgayBatDau</td>
+                                    <td>@v.NgayHetHan</td>
+                                    <td>@v.GiamGia</td>
+                                    <td>@Convert.ToDouble(@v.TongTienDk).ToString("#,##0")</td>
+                                    @{
+                                        System.TimeSpan ngayconlai = Convert.ToDateTime(v.NgayBatDau).Subtract(DateTime.Now);
+                                        if (ngayconlai.TotalHours >= 72)
+                                        {
+                                            <td class="text text-info">@ngayconlai.Days ngày @ngayconlai.Hours giờ</td>
+                                        }
+                                        else
+                                        if (ngayconlai.TotalHours > 0)
+                                        {
+                                            <td class="text text-warning">@ngayconlai.Days ngày @ngayconlai.Hours giờ</td>
+                                        }
+                                        else
+                                        {
+                                            <td class="text text-danger">Quá hạn</td>
+                                        }
+
+                                    }
+
+                                    @{
+                                        if (v.TrangThai == false)
+                                        {
+                                            <td><a asp-action="GuiVoucher" asp-route-mavc="@v.MaVc" class="btn btn-danger">Kích hoạt voucher</a></td>
+                                        }
+                                    }
+                                    <td><a asp-action="Xoa" asp-route-mavc="@v.MaVc" class=" glyphicon glyphicon-trash"></a> | <a asp-action="Sua" asp-route-mavc="@v.MaVc" class=" glyphicon glyphicon-edit"></a> </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane fade bootstrap-tab-text" id="profile" aria-labelledby="profile-tab">
+                    <div class="bootstrap-tab-text-grids">
+                        <div class="bootstrap-tab-text-grids">
+                            <table class="table table-bordered">
+                                <tr style="background-color:skyblue;color:white;">
+                                    <th>Mã voucher</th>
+                                    <th>Nội dung</th>
+                                    <th>Ngày tạo</th>
+                                    <th>Ngày bắt đầu</th>
+                                    <th>Ngày hết hạn</th>
+                                    <th>Giảm giá</th>
+                                    <th>Điều kiện</th>
+                                    <th>Trạng thái</th>
+                                    <th></th>
+                                </tr>
+                                @foreach (var v in voucher_hethan)
+                                {
+                                    <tr>
+                                        <td class="text text-info">#@v.MaVc</td>
+                                        <td>@v.NoiDung</td>
+                                        <td>@v.NgayTao</td>
+                                        <td>@v.NgayBatDau</td>
+                                        <td>@v.NgayHetHan</td>
+                                        <td>@v.GiamGia</td>
+                                        <td>@Convert.ToDouble(@v.TongTienDk).ToString("#,##0")</td>
+                                        @if (DateTime.Now <= v.NgayHetHan)
+                                        {
+                                            <td class="text text-primary">Đã kích hoạt</td>
+                                        }
+                                        else
+                                        {
+                                            <td class="text text-danger">Đã hết hạn</td>
+                                        }
+                                        <td><a asp-action="Xoa" asp-route-mavc="@v.MaVc" class=" glyphicon glyphicon-trash"></a></td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

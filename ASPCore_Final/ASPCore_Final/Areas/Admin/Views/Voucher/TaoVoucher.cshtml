@@ -1,0 +1,52 @@
+﻿@model ASPCore_Final.Models.Voucher
+
+@{
+    ViewData["Title"] = "TaoVoucher";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="outer-w3-agile mt-3">
+    <h4>Voucher</h4>
+    <hr />
+    @if (Context.Session.Get<string>("loi") != null)
+    {
+        var loi = Context.Session.Get<string>("loi");
+        <span class="alert alert-danger">@loi</span>
+    }
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="TaoVoucher">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="NoiDung" class="control-label">Nội dung</label>
+                    <input asp-for="NoiDung" class="form-control" />
+                    <span asp-validation-for="NoiDung" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NgayBatDau" class="control-label">Ngày bắt đầu</label>
+                    <input asp-for="NgayBatDau" type="date" class="form-control" />
+                    <span asp-validation-for="NgayBatDau" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NgayHetHan" class="control-label">Ngày hết hạn</label>
+                    <input asp-for="NgayHetHan" type="date" class="form-control" />
+                    <span asp-validation-for="NgayHetHan" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="GiamGia" class="control-label">Giảm giá</label>
+                    <input asp-for="GiamGia" class="form-control" />
+                    <span asp-validation-for="GiamGia" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TongTienDk" class="control-label">Điều kiện nhận voucher</label>
+                    <input asp-for="TongTienDk" class="form-control" />
+                    <span asp-validation-for="TongTienDk" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Tạo voucher" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

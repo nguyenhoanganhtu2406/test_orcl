@@ -1,0 +1,346 @@
+﻿@model IEnumerable<ASPCore_Final.Models.HangHoa>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    a:hover {
+        cursor:pointer;
+    }
+    div.sec-load-more {
+        padding: 30px 0px;
+        text-align: center;
+    }
+
+        div.sec-load-more a.load-more {
+            padding: 10px 20px;
+            color: #fff;
+            background: #d8703f;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+            div.sec-load-more a.load-more:hover {
+                background: #ffc229;
+                text-decoration: none;
+            }
+        div.sec-load-more p {
+            color: #d8703f;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 14px;
+        }
+    .sb-search-input {
+        position: static;
+    }
+</style>
+@section breadcumb{
+    <div class="breadcrumbs">
+        <div class="container">
+            <ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
+                <li><a asp-action="Index" asp-controller="Home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Trang chủ</a></li>
+                <li class="active">Sản phẩm</li>
+            </ol>
+        </div>
+    </div>
+}
+    <div class="col-md-4 products-left" style="margin-top:15px;">
+        <div class="search">
+            <input class="sb-search-input" placeholder="Nhập vào từ khóa..." type="search" id="searchsp" style="width:300px;">
+            <div id="results"></div>
+        </div>
+        
+        <div class="filter">
+            <input type="hidden" name="loai" value="@Context.Request.Query["loai"]" />
+            <input type="hidden" name="gioitinh" value="@Context.Request.Query["gioitinh"]" />
+            <div class="form-group">
+                <label>Mức giá</label>
+                <select class="form-control" name="mucgia" style="width:300px;">
+                    <option value="macdinh">Mặc định</option>
+                    <option value="100000">Dưới 100.000 đồng</option>
+                    <option value="200000">Từ 100.000 đồng đến 200.000 đồng</option>
+                    <option value="300000">Từ 200.000 đồng đến 300.000 đồng</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Sắp xếp</label>
+                <select class="form-control" name="sapxep" style="width:300px;">
+                    <option value="macdinh">Mặc định</option>
+                    <option value="tang">Giá tăng dần</option>
+                    <option value="giam">Giá giảm dần</option>
+                    <option value="moinhat">Mới nhất</option>
+                    <option value="banchay">Bán chạy nhất</option>
+                </select>
+            </div>
+            <button class="btn btn-default" id="submit-filter">Lọc sản phẩm</button>
+        </div>
+
+        <div class="categories animated wow slideInUp" data-wow-delay=".5s">
+            <h3>Thể loại</h3>
+            <ul class="cate">
+                @{
+                    ESHOPContext db = new ESHOPContext();
+                    var listTatCa = db.HangHoa.ToList();
+                    int soLuongSP = listTatCa.Count();
+                    var listNam = db.Loai.Where(p => p.GioiTinh == false).ToList();
+                    int soluongSPNam = db.HangHoa.Where(p => p.MaLoaiNavigation.GioiTinh == false).ToList().Count();
+                    var listNu = db.Loai.Where(p => p.GioiTinh == true).ToList();
+                    int soluongSPNu = db.HangHoa.Where(p => p.MaLoaiNavigation.GioiTinh == true).ToList().Count();
+                    int tongSoLuong = (int)ViewData["TongSoLuong"];
+                }
+                <li><a asp-controller="HangHoa" asp-action="Index">Tất cả sản phẩm<span>(@soLuongSP)</span></a></li>
+                <li><a asp-controller="HangHoa" asp-action="Index" asp-route-gioitinh="false">Thời trang nam<span>(@soluongSPNam)</span></a></li>
+                <ul>
+                    @foreach (var item in listNam)
+                    {
+                        int soluong = db.HangHoa.Where(p => p.MaLoai == item.MaLoai).ToList().Count();
+                        <li><a asp-action="Index" asp-controller="HangHoa" asp-route-loai="@item.MaLoai">@item.TenLoai</a> <span>(@soluong)</span></li>
+                    }
+                </ul>
+                <li><a asp-controller="HangHoa" asp-action="Index" asp-route-gioitinh="true">Thời trang nữ<span>(@soluongSPNu)</span></a></li>
+                <ul>
+                    @foreach (var item in listNu)
+                    {
+                        int soluong = db.HangHoa.Where(p => p.MaLoai == item.MaLoai).ToList().Count();
+                        <li><a asp-action="Index" asp-controller="HangHoa" asp-route-loai="@item.MaLoai">@item.TenLoai</a> <span>(@soluong)</span></li>
+                    }
+                </ul>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-8 products-right">
+        <div class="products-right-grids-bottom">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4 products-right-grids-bottom-grid" style="margin-bottom:15px;">
+                    <div class="new-collections-grid1 products-right-grid1 animated wow" data-wow-delay=".5s" style="padding:10px;">
+                        <div class="new-collections-grid1-image">
+                            <a asp-action="ChiTiet" asp-controller="HangHoa" asp-route-id="@item.MaHh" class="product-image" style="padding:10px;"><img src="~/HangHoa/@item.Hinh" alt=" " class="img-responsive"></a>
+                            <div class="new-collections-grid1-image-pos products-right-grids-pos" style="text-align:center">
+                                <a asp-action="ChiTiet" asp-controller="HangHoa" asp-route-mahh="@item.MaHh">Xem chi tiết</a>
+                            </div>
+                            @{
+                                List<SanPhamKho> sanPhamKhos = db.SanPhamKho.Where(p => p.MaHh == item.MaHh).ToList();
+                                var soluong = sanPhamKhos.Sum(x => x.SoLuong);
+                                if (soluong > 10)
+                                {
+                                    double gg = item.GiamGia * 100;
+                                    <div class="new-one">
+                                        <p>-@gg%</p>
+                                    </div>
+                                }
+                                else if (soluong > 0)
+                                {
+                                    <div class="new-one">
+                                        <p>Sắp hết hàng</p>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="new-one">
+                                        <p>Tạm hết hàng</p>
+                                    </div>
+                                }
+                            }
+
+                            <div class="new-collections-grid1-right products-right-grids-pos-right">
+                                <div class="rating">
+                                    @{
+                                        List<YeuThich> yts = db.YeuThich.Where(p => p.MaHh == item.MaHh).ToList();
+                                        double diemyt = 0;
+                                        if (yts.Count > 0)
+                                        {
+                                            double tongdiem = 0;
+                                            foreach (var y in yts)
+                                            {
+                                                tongdiem = tongdiem + y.DiemDanhGia;
+                                            }
+                                            diemyt = tongdiem / yts.Count();
+                                            int diem = int.Parse(diemyt.ToString().Split(".")[0]);
+                                            if (diem < 3)
+                                            {
+                                                diem = 3;
+                                            }
+                                            for (int i = 1; i <= 5; i++)
+                                            {
+                                                if (i <= diem)
+                                                {
+                                                    <img src="~/images/2.png" style="opacity:1">
+                                                }
+                                                else if (i > diem)
+                                                {
+                                                    <img src="~/images/1.png" style="opacity:1">
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            @for (int i = 1; i <= 5; i++)
+                                            {
+                                                <img src="~/images/2.png" style="opacity:1">
+                                            }
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <h4><a asp-action="ChiTiet" asp-controller="HangHoa" asp-route-mahh="@item.MaHh">@item.TenHh</a></h4>
+                        <p>@item.MoTa</p>
+                        <div class="simpleCart_shelfItem products-right-grid1-add-cart">
+                            @{
+                                double dongiaban = item.DonGia * (1 - item.GiamGia);
+                                double giamgia = item.GiamGia * 100;
+                            }
+                            <p><i>@item.DonGia.ToString("#,##0") đ</i> <span class="item_price">@dongiaban.ToString("#,##0") đ</span></p>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="clearfix"></div>
+            @{
+                int pageSize = 6;
+                var totalPage = 0;
+                if (tongSoLuong % pageSize == 0)
+                {
+                    totalPage = tongSoLuong / pageSize;
+                }
+                else
+                {
+                    totalPage = tongSoLuong / pageSize;
+                    totalPage += 1;
+                }
+            }
+            <input type="hidden" name="tongsotrang" value="@totalPage" />
+        </div>
+        <div class="sec-load-more">
+            <a class="load-more" id="load-more">Tải thêm sản phẩm</a>
+        </div>
+    </div>
+        <script language="javascript">
+            $(function () {
+                $('#searchsp').focus(function () {
+                    $('#results').show();
+                });
+                $('.search').blur(function () {
+                    $('#results').hide();
+                });
+                var ajaxHH = ajaxHangHoa();
+                //var tongSoTrang = $("input[name='tongsotrang']").val();
+                if (parseInt(ajaxHH.getPage()) >= parseInt($("input[name='tongsotrang']").val())) {
+                    $('.sec-load-more').html('<p>Đã hiển thị tất cả sản phẩm</p>')
+                }
+                $("#searchsp").keyup(function () {
+                    $.ajax({
+                        url: "/HangHoa/TimKiem",
+                        method: "GET",
+                        data: { keyword: $(this).val() },
+                        success: function (res) {
+                            $("#results").html();
+                            $("#results").html(res);
+                        }
+                    });
+                });
+                $('#submit-filter').click(function () {
+                    var loai = $("input[name='loai']").val();
+                    var gioitinh = $("input[name='gioitinh']").val();
+                    var mucgia = $("select[name='mucgia']").val();
+                    var sapxep = $("select[name='sapxep']").val();
+                    if (gioitinh == "") {
+                        gioitinh = null;
+                    }
+                    ajaxHH.resetPage();
+                    ajaxHH.filter(loai, gioitinh, mucgia, sapxep);
+                });
+                $("#load-more").click(function () {
+                    var loai = $("input[name='loai']").val();
+                    var gioitinh = $("input[name='gioitinh']").val();
+                    var mucgia = $("select[name='mucgia']").val();
+                    var sapxep = $("select[name='sapxep']").val();
+                    if (gioitinh == "") {
+                        gioitinh = null;
+                    }
+                    ajaxHH.tangPage();
+                    ajaxHH.taiThem(loai, gioitinh, mucgia, sapxep);
+                });
+            });
+            function ajaxHangHoa(){
+                var page = 1;
+                var resetPage = function () {
+                    page = 1;
+                }
+                var tangPage = function () {
+                    page += 1;
+                };
+                var getPage = function () {
+                    return page;
+                };
+                var filter = function (loai, gioitinh, mucgia, sapxep) {
+                    console.log(page);
+                    console.log(loai);
+                    console.log(gioitinh);
+                    console.log(mucgia);
+                    console.log(sapxep);
+                    $.ajax({
+                        url: "/HangHoa/Filter",
+                        type: "GET",
+                        contentType: "application/json; charset=utf-8",
+                        data: { "loai": loai, "gioitinh": gioitinh, "page": page, 'mucgia': mucgia, 'sapxep': sapxep },
+                        async: true,
+                        success: function (response) {
+                            console.log('success');
+                            $('div.products-right-grids-bottom').fadeOut(function () {
+                                $('div.products-right-grids-bottom').html(response);
+                                $('div.products-right-grids-bottom').fadeIn();
+                                var tongSoTrang = $("input[name='tongsotrang']").val();
+                                console.log(tongSoTrang);
+                                if (parseInt(page) >= parseInt(tongSoTrang)) {
+                                    $('.sec-load-more').html('<p>Đã hiển thị tất cả sản phẩm</p>');
+                                } else {
+                                    $('.sec-load-more').html('<a class="load-more" id="load-more">Tải thêm sản phẩm</a>');
+                                }
+                                $("#load-more").click(function () {
+                                    var loai = $("input[name='loai']").val();
+                                    var gioitinh = $("input[name='gioitinh']").val();
+                                    var mucgia = $("select[name='mucgia']").val();
+                                    var sapxep = $("select[name='sapxep']").val();
+                                    if (gioitinh == "") {
+                                        gioitinh = null;
+                                    }
+                                    tangPage();
+                                    taiThem(loai, gioitinh, mucgia, sapxep);
+                                });
+                            });
+                            
+                        }
+                    });
+                };
+                var taiThem = function (loai, gioitinh, mucgia, sapxep) {
+                    console.log(page);
+                    console.log(loai);
+                    console.log(gioitinh);
+                    $.ajax({
+                        url: "/HangHoa/TaiThem",
+                        type: "GET",
+                        contentType: "application/json; charset=utf-8",
+                        data: {"loai": loai, "gioitinh": gioitinh, "page": page, 'mucgia': mucgia, 'sapxep': sapxep},
+                        async: true,
+                        success: function (response) {
+                            console.log('success');
+                            $('div.products-right-grids-bottom').append(response);
+                            var tongSoTrang = $("input[name='tongsotrang']").val();
+                            console.log(tongSoTrang);
+                            if (parseInt(page) >= parseInt(tongSoTrang)) {
+                                $('.sec-load-more').html('<p>Đã hiển thị tất cả sản phẩm</p>');
+                            }
+                        }
+                    });
+                };
+                return {
+                    resetPage: resetPage,
+                    tangPage: tangPage,
+                    getPage: getPage,
+                    filter: filter,
+                    taiThem: taiThem
+                };
+            }
+        </script>

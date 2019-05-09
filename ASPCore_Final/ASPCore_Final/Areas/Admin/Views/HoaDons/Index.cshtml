@@ -1,0 +1,107 @@
+﻿
+@model ReflectionIT.Mvc.Paging.PagingList<ASPCore_Final.Models.HoaDon>
+@using ReflectionIT.Mvc.Paging;
+@addTagHelper *, ReflectionIT.Mvc.Paging
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="outer-w3-agile mt-3">
+    <h4 class="tittle-w3-agileits mb-4">Danh sách hóa đơn</h4>
+    <form method="get" class="form-inline">
+        <input name="searchString" class="form-control" placeholder="Search..."
+               value="@Model.RouteValue["searchString"]" />
+        <button type="submit" class="btn btn-info">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
+        </button>
+    </form>
+ 
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.NgayDat)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.HoTen)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.DiaChi)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.SdtNguoinhan)
+                </th>
+              
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.PhiVanChuyen)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.MaTrangThai)
+                </th>
+
+                <th scope="col">
+                    Tổng tiền hàng
+                </th>
+                <th scope="col">
+                    Mã giảm giá
+                </th>
+                <th scope="col">
+                    Tổng thực thu
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                
+                <td scope="row">
+                    @Html.DisplayFor(modelItem => item.NgayDat)
+                </td>
+                <td scope="row">
+                    @Html.DisplayFor(modelItem => item.HoTen)
+                </td>
+                <td scope="row">
+                    @Html.DisplayFor(modelItem => item.DiaChi)
+                </td>
+                <td scope="row">
+                    @Html.DisplayFor(modelItem => item.SdtNguoinhan)
+                </td>
+             
+                <td scope="row">
+                    @Convert.ToDouble(item.PhiVanChuyen).ToString("#,##0")
+                </td>
+                <td scope="row">
+                    <a asp-action="ChangeStatus" asp-route-id="@item.MaHd" class="btn-active"> @Html.Raw(item.MaTrangThai == 0 ? "<strong>Chưa Duyệt</strong>" : "Đã Duyệt")</a>
+                </td>
+
+                <td scope="row">
+                    @Convert.ToDouble(item.TongTienHang).ToString("#,##0")
+                </td>
+                <td scope="col" class="text text-primary" style="padding:0px;">
+                    #@item.MaVoucher
+                </td>
+                <td scope="col" style="text-align:center;">
+                    @Convert.ToDouble(item.TongThucThu).ToString("#,##0")
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.MaHd" class="btn btn-primary">Xem chi tiết</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    <nav class="navbar-default justify-content-center">
+
+
+        @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model, @searchString = @ViewBag.SearchString, @class = "page-item" })
+
+
+    </nav>
+
+</div>

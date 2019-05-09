@@ -1,0 +1,62 @@
+﻿@model IEnumerable<ASPCore_Final.Models.ChiTietHd>
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Chi tiết hóa đơn</h2>
+
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.MaHd)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.MaHh)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.DonGia)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.GiamGia)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.SoLuong)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.KichCo)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td scope="row">
+                        @Html.DisplayFor(modelItem => item.MaHd)
+                    </td>
+                    <td scope="row">
+                        @Html.DisplayFor(modelItem => item.MaHh)
+                    </td>
+                    <td scope="row">
+                        @Html.DisplayFor(modelItem => item.DonGia)
+                    </td>
+                    <td scope="row">
+                        @Html.DisplayFor(modelItem => item.GiamGia)
+                    </td>
+                    <td scope="row">
+                        @Html.DisplayFor(modelItem => item.SoLuong)
+                    </td>
+                    <td scope="row">
+                        @Html.DisplayFor(modelItem => item.KichCo)
+                    </td>
+                 
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
