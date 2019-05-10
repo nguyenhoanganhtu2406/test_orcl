@@ -24,9 +24,9 @@
         <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
             @{
                 ModelContext db = new ModelContext();
-                List<HoaDon> hd_cxl = db.HoaDon.Where(p => p.MaTrangThai == 0 && p.Makh == k.Makh ).ToList();
-                List<HoaDon> hd_xl = db.HoaDon.Where(p => p.MaTrangThai == 1 && p.Makh == k.Makh).ToList();
-                List<HoaDon> hd_huy = db.HoaDon.Where(p => p.MaTrangThai == 2 && p.Makh == k.Makh).ToList();
+                List<Hoadon> hd_cxl = db.Hoadon.Where(p => p.Matrangthai == 0 && p.Makh == k.Makh ).ToList();
+                List<Hoadon> hd_xl = db.Hoadon.Where(p => p.Matrangthai == 1 && p.Makh == k.Makh).ToList();
+                List<Hoadon> hd_huy = db.Hoadon.Where(p => p.Matrangthai == 2 && p.Makh == k.Makh).ToList();
             }
             <ul id="myTab" class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">Hóa đơn chưa xử lý</a></li>
@@ -39,19 +39,19 @@
                         {
                             <div class="row table-bordered" style="position:relative;background-color:lightblue">
                                 <div class="col-md-4" style="text-align:left;padding:10px;">
-                                    <span>Mã đơn hàng :<span class="text text-info"> @hd.MaHd</span></span><br />
-                                    <span>Đặt ngày : @hd.NgayDat</span>
+                                    <span>Mã đơn hàng :<span class="text text-info"> @hd.Mahd</span></span><br />
+                                    <span>Đặt ngày : @hd.Ngaydat</span>
                                 </div>
                                 <div class="col-md-3" style="text-align:center;padding:10px;">
                                     <span>Người nhận :</span><br />
                                     <span class="text text-info">@hd.Hoten</span>
                                 </div>
                                 @{
-                                    List<ChiTietHd> chiTietHds = db.ChiTietHd.Where(p => p.MaHd == hd.MaHd).ToList();
+                                    List<Chitiethd> chiTietHds = db.Chitiethd.Where(p => p.Mahd == hd.Mahd).ToList();
                                     double tongtien = 0;
                                     foreach (var ct in chiTietHds)
                                     {
-                                        tongtien += Convert.ToDouble(ct.SoLuong * ct.Dongia * (1 - ct.Giamgia));
+                                        tongtien += Convert.ToDouble(ct.Soluong * ct.Dongia * (1 - ct.Giamgia));
                                     }
                                 }
                                 <div class="col-md-3" style="text-align:right;padding:10px;">
@@ -59,23 +59,23 @@
                                     <span class="text text-danger">@tongtien.ToString("#,##0") đ</span>
                                 </div>
                                 <div class="col-md-2 btn btn-danger" style="text-align:right;margin-top: 15px;margin-left: 40px; width: 130px;color:white">
-                                    <a asp-action="HuyHoaDon" asp-controller="MyHoaDons" asp-route-mahd ="@hd.MaHd">Hủy đơn hàng</a>
+                                    <a asp-action="HuyHoaDon" asp-controller="MyHoaDons" asp-route-mahd ="@hd.Mahd">Hủy đơn hàng</a>
                                 </div>
                             </div>
                             @foreach (var item in chiTietHds)
                             {
                                 Hanghoa hh = db.Hanghoa.Find(item.Mahh);
                                 double giaban = Convert.ToDouble(item.Dongia * (1 - item.Giamgia));
-                                double thanhtien = giaban * item.SoLuong;
+                                double thanhtien = giaban * item.Soluong;
                                 <div class="row table-bordered" style="text-align:center">
                                     <div class="col-md-2 text text-info" style="padding:10px;"><img src="~/Hanghoa/@hh.Hinh" style="width:80px;height:80px;" alt="Alternate Text" /></div>
                                     <div class="col-md-4 text text-info" style="padding-top:40px;">@hh.Tenhh</div>
-                                    <div class="col-md-1 text text-info" style="padding-top:40px;">@item.KichCo</div>
-                                    <div class="col-md-1 text text-info" style="padding-top:40px;">@item.SoLuong</div>
+                                    <div class="col-md-1 text text-info" style="padding-top:40px;">@item.Kichco</div>
+                                    <div class="col-md-1 text text-info" style="padding-top:40px;">@item.Soluong</div>
                                     <div class="col-md-1 text text-info" style="padding-top:40px;text-align:right">@giaban.ToString("#,##0")</div>
                                     <div class="col-md-1 text text-info" style="padding-top:40px;text-align:right">@thanhtien.ToString("#,##0")</div>
                                     <div class="col-md-2 text-danger" style="padding-top:40px;text-align:right">
-                                        <a asp-action="XoaCTHD" asp-controller="MyHoaDons" asp-route-mact="@item.MaCt" class=" glyphicon glyphicon-trash"></a>
+                                        <a asp-action="XoaCTHD" asp-controller="MyHoaDons" asp-route-mact="@item.Mact" class=" glyphicon glyphicon-trash"></a>
                                     </div>
                                 </div>
                             }
@@ -83,10 +83,10 @@
                                 <div class="col-md-3" style="background-color:darkcyan">Trạng thái đơn hàng :</div>
                                 <div class="col-md-9 table-bordered">
                                     @{
-                                        TrangThai tt = db.TrangThai.SingleOrDefault(p => p.MaTrangThai == hd.MaTrangThai);
+                                        Trangthai tt = db.Trangthai.SingleOrDefault(p => p.Matrangthai == hd.Matrangthai);
                                     }
                                     <div class="col-md-3 label label-info">
-                                        @tt.TenTrangThai
+                                        @tt.Tentrangthai
                                     </div>
                                 </div>
                             </div>
@@ -101,19 +101,19 @@
                             {
                                 <div class="row table-bordered" style="position:relative;background-color:lightblue">
                                     <div class="col-md-4" style="text-align:left;padding:10px;">
-                                        <span>Mã đơn hàng :<span class="text text-info"> @hd.MaHd</span></span><br />
-                                        <span>Đặt ngày : @hd.NgayDat</span>
+                                        <span>Mã đơn hàng :<span class="text text-info"> @hd.Mahd</span></span><br />
+                                        <span>Đặt ngày : @hd.Ngaydat</span>
                                     </div>
                                     <div class="col-md-4" style="text-align:center;padding:10px;">
                                         <span>Người nhận :</span><br />
                                         <span class="text text-info">@hd.Hoten</span>
                                     </div>
                                     @{
-                                        List<ChiTietHd> chiTietHds = db.ChiTietHd.Where(p => p.MaHd == hd.MaHd).ToList();
+                                        List<Chitiethd> chiTietHds = db.Chitiethd.Where(p => p.Mahd == hd.Mahd).ToList();
                                         double tongtien = 0;
                                         foreach (var ct in chiTietHds)
                                         {
-                                            tongtien += Convert.ToDouble(ct.SoLuong * ct.Dongia * (1 - ct.Giamgia));
+                                            tongtien += Convert.ToDouble(ct.Soluong * ct.Dongia * (1 - ct.Giamgia));
                                         }
                                     }
                                     <div class="col-md-4" style="text-align:right;padding:10px;">
@@ -125,12 +125,12 @@
                                 {
                                     Hanghoa hh = db.Hanghoa.Find(item.Mahh);
                                     double giaban = Convert.ToDouble(item.Dongia * (1 - item.Giamgia));
-                                    double thanhtien = giaban * item.SoLuong;
+                                    double thanhtien = giaban * item.Soluong;
                                     <div class="row table-bordered" style="text-align:center">
                                         <div class="col-md-2 text text-info" style="padding:10px;"><img src="~/Hanghoa/@hh.Hinh" style="width:80px;height:80px;" alt="Alternate Text" /></div>
                                         <div class="col-md-4 text text-info" style="padding-top:40px;">@hh.Tenhh</div>
-                                        <div class="col-md-1 text text-info" style="padding-top:40px;">@item.KichCo</div>
-                                        <div class="col-md-1 text text-info" style="padding-top:40px;">@item.SoLuong</div>
+                                        <div class="col-md-1 text text-info" style="padding-top:40px;">@item.Kichco</div>
+                                        <div class="col-md-1 text text-info" style="padding-top:40px;">@item.Soluong</div>
                                         <div class="col-md-2 text text-info" style="padding-top:40px;text-align:right">@giaban.ToString("#,##0")</div>
                                         <div class="col-md-2 text text-info" style="padding-top:40px;text-align:right">@thanhtien.ToString("#,##0")</div>
                                     </div>
@@ -139,10 +139,10 @@
                                     <div class="col-md-3" style="background-color:darkcyan">Trạng thái đơn hàng :</div>
                                     <div class="col-md-9 table-bordered">
                                         @{
-                                            TrangThai tt = db.TrangThai.SingleOrDefault(p => p.MaTrangThai == hd.MaTrangThai);
+                                            Trangthai tt = db.Trangthai.SingleOrDefault(p => p.Matrangthai == hd.Matrangthai);
                                         }
                                         <div class="col-md-3 label label-danger">
-                                            @tt.TenTrangThai
+                                            @tt.Tentrangthai
                                         </div>
                                     </div>
                                 </div>
