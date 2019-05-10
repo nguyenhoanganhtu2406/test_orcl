@@ -1,3 +1,15 @@
+/*
+DROP TABLE ChiTietHD;
+DROP TABLE HoaDon;
+DROP TABLE TrangThai;
+DROP TABLE NhanVien;
+DROP TABLE PhanQuyen;
+DROP TABLE KhachHang;
+DROP TABLE HangHoa;
+DROP TABLE NhaCungCap;
+DROP TABLE Loai;
+*/
+
 CREATE TABLE Loai(
   MaLoai VARCHAR2(10) NOT NULL,
   GioiTinh NUMBER(1) NOT NULL,
