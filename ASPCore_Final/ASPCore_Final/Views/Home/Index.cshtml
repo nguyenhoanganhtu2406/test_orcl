@@ -159,8 +159,6 @@
 
 <!-- //banner -->
 @{
-
-    List<Hanghoa> hhs = db.Hanghoa.ToList();
     List<Hanghoa> hhnb = db.Hanghoa.Where(p => p.Giamgia != 0).Take(4).ToList();
 
 }
@@ -214,7 +212,7 @@
                                              hh => hh.Mahh,
                                              cthd => cthd.Mahh,
                                              (hh, cthd) => new { HHoa = hh, CTiet = cthd })
-                                       .Join(db.Hoadon.Where(hd => (DateTime.Now - hd.Ngaydat).TotalDays < 30),
+                                       .Join(db.Hoadon.Where(hd => (DateTime.Now.Date - hd.Ngaydat.Date).TotalDays < 30),
                                              hhcthd => hhcthd.CTiet.Mahd,
                                              hd => hd.Mahd,
                                              (hhcthd, hd) => new { HHCTHD = hhcthd, HDon = hd })

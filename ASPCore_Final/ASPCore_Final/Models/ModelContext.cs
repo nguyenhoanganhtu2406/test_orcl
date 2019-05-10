@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
 
 namespace ASPCore_Final.Models
 {
@@ -24,7 +26,21 @@ namespace ASPCore_Final.Models
         public virtual DbSet<Nhanvien> Nhanvien { get; set; }
         public virtual DbSet<Phanquyen> Phanquyen { get; set; }
         public virtual DbSet<Trangthai> Trangthai { get; set; }
-        
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                // IConfigurationRoot configuration = new ConfigurationBuilder()
+                //.SetBasePath(Directory.GetCurrentDirectory())
+                //.AddJsonFile("appsettings.json")
+                //.Build();
+                // var connectionString = configuration.GetConnectionString("ESHOP");
+                // optionsBuilder.UseOracle(connectionString);
+                optionsBuilder.UseOracle("User Id=nva;Password=123456;Data Source=localhost:1521/db12c;");
+            }
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:DefaultSchema", "NVA");
