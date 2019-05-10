@@ -1,4 +1,4 @@
-﻿@model ReflectionIT.Mvc.Paging.PagingList<ASPCore_Final.Models.HoaDon>
+﻿@model ReflectionIT.Mvc.Paging.PagingList<ASPCore_Final.Models.Hoadon>
 @using ReflectionIT.Mvc.Paging;
 @addTagHelper *, ReflectionIT.Mvc.Paging
 @{
@@ -16,17 +16,17 @@
     </div>
 }
 <br />
-@if (Context.Session.Get<KhachHang>("user") != null)
+@if (Context.Session.Get<Khachhang>("user") != null)
 {
-    KhachHang k = Context.Session.Get<KhachHang>("user");
+    Khachhang k = Context.Session.Get<Khachhang>("user");
     <h3 class="alert alert-info" style="font-size:25px;">Thông tin hóa đơn của bạn</h3>
     <div class="bootstrap-tab animated wow slideInUp" data-wow-delay=".5s">
         <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
             @{
-                ESHOPContext db = new ESHOPContext();
-                List<HoaDon> hd_cxl = db.HoaDon.Where(p => p.MaTrangThai == 0 && p.MaKh == k.MaKh ).ToList();
-                List<HoaDon> hd_xl = db.HoaDon.Where(p => p.MaTrangThai == 1 && p.MaKh == k.MaKh).ToList();
-                List<HoaDon> hd_huy = db.HoaDon.Where(p => p.MaTrangThai == 2 && p.MaKh == k.MaKh).ToList();
+                ModelContext db = new ModelContext();
+                List<HoaDon> hd_cxl = db.HoaDon.Where(p => p.MaTrangThai == 0 && p.Makh == k.Makh ).ToList();
+                List<HoaDon> hd_xl = db.HoaDon.Where(p => p.MaTrangThai == 1 && p.Makh == k.Makh).ToList();
+                List<HoaDon> hd_huy = db.HoaDon.Where(p => p.MaTrangThai == 2 && p.Makh == k.Makh).ToList();
             }
             <ul id="myTab" class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">Hóa đơn chưa xử lý</a></li>
@@ -44,14 +44,14 @@
                                 </div>
                                 <div class="col-md-3" style="text-align:center;padding:10px;">
                                     <span>Người nhận :</span><br />
-                                    <span class="text text-info">@hd.HoTen</span>
+                                    <span class="text text-info">@hd.Hoten</span>
                                 </div>
                                 @{
                                     List<ChiTietHd> chiTietHds = db.ChiTietHd.Where(p => p.MaHd == hd.MaHd).ToList();
                                     double tongtien = 0;
                                     foreach (var ct in chiTietHds)
                                     {
-                                        tongtien += Convert.ToDouble(ct.SoLuong * ct.DonGia * (1 - ct.GiamGia));
+                                        tongtien += Convert.ToDouble(ct.SoLuong * ct.Dongia * (1 - ct.Giamgia));
                                     }
                                 }
                                 <div class="col-md-3" style="text-align:right;padding:10px;">
@@ -64,12 +64,12 @@
                             </div>
                             @foreach (var item in chiTietHds)
                             {
-                                HangHoa hh = db.HangHoa.Find(item.MaHh);
-                                double giaban = Convert.ToDouble(item.DonGia * (1 - item.GiamGia));
+                                Hanghoa hh = db.Hanghoa.Find(item.Mahh);
+                                double giaban = Convert.ToDouble(item.Dongia * (1 - item.Giamgia));
                                 double thanhtien = giaban * item.SoLuong;
                                 <div class="row table-bordered" style="text-align:center">
-                                    <div class="col-md-2 text text-info" style="padding:10px;"><img src="~/HangHoa/@hh.Hinh" style="width:80px;height:80px;" alt="Alternate Text" /></div>
-                                    <div class="col-md-4 text text-info" style="padding-top:40px;">@hh.TenHh</div>
+                                    <div class="col-md-2 text text-info" style="padding:10px;"><img src="~/Hanghoa/@hh.Hinh" style="width:80px;height:80px;" alt="Alternate Text" /></div>
+                                    <div class="col-md-4 text text-info" style="padding-top:40px;">@hh.Tenhh</div>
                                     <div class="col-md-1 text text-info" style="padding-top:40px;">@item.KichCo</div>
                                     <div class="col-md-1 text text-info" style="padding-top:40px;">@item.SoLuong</div>
                                     <div class="col-md-1 text text-info" style="padding-top:40px;text-align:right">@giaban.ToString("#,##0")</div>
@@ -106,14 +106,14 @@
                                     </div>
                                     <div class="col-md-4" style="text-align:center;padding:10px;">
                                         <span>Người nhận :</span><br />
-                                        <span class="text text-info">@hd.HoTen</span>
+                                        <span class="text text-info">@hd.Hoten</span>
                                     </div>
                                     @{
                                         List<ChiTietHd> chiTietHds = db.ChiTietHd.Where(p => p.MaHd == hd.MaHd).ToList();
                                         double tongtien = 0;
                                         foreach (var ct in chiTietHds)
                                         {
-                                            tongtien += Convert.ToDouble(ct.SoLuong * ct.DonGia * (1 - ct.GiamGia));
+                                            tongtien += Convert.ToDouble(ct.SoLuong * ct.Dongia * (1 - ct.Giamgia));
                                         }
                                     }
                                     <div class="col-md-4" style="text-align:right;padding:10px;">
@@ -123,12 +123,12 @@
                                 </div>
                                 @foreach (var item in chiTietHds)
                                 {
-                                    HangHoa hh = db.HangHoa.Find(item.MaHh);
-                                    double giaban = Convert.ToDouble(item.DonGia * (1 - item.GiamGia));
+                                    Hanghoa hh = db.Hanghoa.Find(item.Mahh);
+                                    double giaban = Convert.ToDouble(item.Dongia * (1 - item.Giamgia));
                                     double thanhtien = giaban * item.SoLuong;
                                     <div class="row table-bordered" style="text-align:center">
-                                        <div class="col-md-2 text text-info" style="padding:10px;"><img src="~/HangHoa/@hh.Hinh" style="width:80px;height:80px;" alt="Alternate Text" /></div>
-                                        <div class="col-md-4 text text-info" style="padding-top:40px;">@hh.TenHh</div>
+                                        <div class="col-md-2 text text-info" style="padding:10px;"><img src="~/Hanghoa/@hh.Hinh" style="width:80px;height:80px;" alt="Alternate Text" /></div>
+                                        <div class="col-md-4 text text-info" style="padding-top:40px;">@hh.Tenhh</div>
                                         <div class="col-md-1 text text-info" style="padding-top:40px;">@item.KichCo</div>
                                         <div class="col-md-1 text text-info" style="padding-top:40px;">@item.SoLuong</div>
                                         <div class="col-md-2 text text-info" style="padding-top:40px;text-align:right">@giaban.ToString("#,##0")</div>

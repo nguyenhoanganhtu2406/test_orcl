@@ -1,4 +1,4 @@
-﻿@model ASPCore_Final.Models.NhaCungCap
+﻿@model ASPCore_Final.Models.Nhacungcap
 
 @{
     ViewData["Title"] = "Create";
@@ -14,14 +14,14 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="MaNcc" class="control-label"></label>
-                <input asp-for="MaNcc" class="form-control" />
-                <span asp-validation-for="MaNcc" class="text-danger"></span>
+                <label asp-for="Mancc" class="control-label"></label>
+                <input asp-for="Mancc" class="form-control" />
+                <span asp-validation-for="Mancc" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TenCongTy" class="control-label"></label>
-                <input asp-for="TenCongTy" class="form-control" />
-                <span asp-validation-for="TenCongTy" class="text-danger"></span>
+                <label asp-for="Tencongty" class="control-label"></label>
+                <input asp-for="Tencongty" class="form-control" />
+                <span asp-validation-for="Tencongty" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
@@ -29,19 +29,14 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DienThoai" class="control-label"></label>
-                <input asp-for="DienThoai" class="form-control" />
-                <span asp-validation-for="DienThoai" class="text-danger"></span>
+                <label asp-for="Dienthoai" class="control-label"></label>
+                <input asp-for="Dienthoai" class="form-control" />
+                <span asp-validation-for="Dienthoai" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DiaChi" class="control-label"></label>
-                <input asp-for="DiaChi" class="form-control" />
-                <span asp-validation-for="DiaChi" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MoTa" class="control-label"></label>
-                <input asp-for="MoTa" class="form-control" />
-                <span asp-validation-for="MoTa" class="text-danger"></span>
+                <label asp-for="Diachi" class="control-label"></label>
+                <input asp-for="Diachi" class="form-control" />
+                <span asp-validation-for="Diachi" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

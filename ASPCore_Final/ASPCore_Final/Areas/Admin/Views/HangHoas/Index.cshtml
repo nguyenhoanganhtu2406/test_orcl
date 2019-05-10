@@ -1,5 +1,5 @@
 ﻿
-@model ReflectionIT.Mvc.Paging.PagingList<ASPCore_Final.Models.HangHoa>
+@model ReflectionIT.Mvc.Paging.PagingList<ASPCore_Final.Models.Hanghoa>
 @using ReflectionIT.Mvc.Paging;
 @addTagHelper *, ReflectionIT.Mvc.Paging
 @{
@@ -28,23 +28,23 @@
         <thead>
             <tr>
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.TenHh)
+                    @Html.DisplayNameFor(model => model.Tenhh)
                 </th>
                 <th scope="col">
                     @Html.DisplayNameFor(model => model.Hinh)
                 </th>
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.DonGia)
+                    @Html.DisplayNameFor(model => model.Dongia)
                 </th>
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.GiamGia)
+                    @Html.DisplayNameFor(model => model.Giamgia)
                 </th>
              
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.MaLoaiNavigation)
+                    @Html.DisplayNameFor(model => model.MaloaiNavigation)
                 </th>
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.MaNccNavigation)
+                    @Html.DisplayNameFor(model => model.ManccNavigation)
                 </th>
                 <th></th>
             </tr>
@@ -52,29 +52,29 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr onclick="_delete(@item.MaHh, event)">
+                <tr onclick="_delete(@item.Mahh, event)">
                     <td scope="row">
-                        @Html.DisplayFor(modelItem => item.TenHh)
+                        @Html.DisplayFor(modelItem => item.Tenhh)
                     </td>
                     <td scope="row">
                         <img src="~/HangHoa/@item.Hinh" style="width:80px;height:80px;" alt="Alternate Text" />
                     </td>
                     <td scope="row">
-                        @Html.DisplayFor(modelItem => item.DonGia)
+                        @Html.DisplayFor(modelItem => item.Dongia)
                     </td>
                     <td scope="row">
-                        @Html.DisplayFor(modelItem => item.GiamGia)
+                        @Html.DisplayFor(modelItem => item.Giamgia)
                     </td>
                   
                     <td scope="row">
-                        @Html.DisplayFor(modelItem => item.MaLoaiNavigation.MaLoai)
+                        @Html.DisplayFor(modelItem => item.MaloaiNavigation.Maloai)
                     </td>
                     <td scope="row">
-                        @Html.DisplayFor(modelItem => item.MaNccNavigation.MaNcc)
+                        @Html.DisplayFor(modelItem => item.ManccNavigation.Mancc)
                     </td>
                     <td scope="row">
-                        <a asp-action="Edit" asp-route-id="@item.MaHh" class="btn btn-primary">Sửa</a> |
-                        <a asp-action="Details" asp-route-id="@item.MaHh" class="btn btn-primary">Xem chi tiết</a>
+                        <a asp-action="Edit" asp-route-id="@item.Mahh" class="btn btn-primary">Sửa</a> |
+                        <a asp-action="Details" asp-route-id="@item.Mahh" class="btn btn-primary">Xem chi tiết</a>
                         <button type="button" class="btn btn-primary btn-delete">Xóa</button>
                     </td>
                 </tr>

@@ -1,5 +1,5 @@
 ﻿
-@model ReflectionIT.Mvc.Paging.PagingList<ASPCore_Final.Models.HoaDon>
+@model ReflectionIT.Mvc.Paging.PagingList<ASPCore_Final.Models.Hoadon>
 @using ReflectionIT.Mvc.Paging;
 @addTagHelper *, ReflectionIT.Mvc.Paging
 @{
@@ -24,23 +24,23 @@
             <tr>
                 
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.NgayDat)
+                    @Html.DisplayNameFor(model => model.Ngaydat)
                 </th>
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.HoTen)
+                    @Html.DisplayNameFor(model => model.Hoten)
                 </th>
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.DiaChi)
+                    @Html.DisplayNameFor(model => model.Diachi)
                 </th>
                 <th scope="col">
                     @Html.DisplayNameFor(model => model.SdtNguoinhan)
                 </th>
               
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.PhiVanChuyen)
+                    @Html.DisplayNameFor(model => model.Phivanchuyen)
                 </th>
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.MaTrangThai)
+                    @Html.DisplayNameFor(model => model.Matrangthai)
                 </th>
 
                 <th scope="col">
@@ -61,36 +61,36 @@
             <tr>
                 
                 <td scope="row">
-                    @Html.DisplayFor(modelItem => item.NgayDat)
+                    @Html.DisplayFor(modelItem => item.Ngaydat)
                 </td>
                 <td scope="row">
-                    @Html.DisplayFor(modelItem => item.HoTen)
+                    @Html.DisplayFor(modelItem => item.Hoten)
                 </td>
                 <td scope="row">
-                    @Html.DisplayFor(modelItem => item.DiaChi)
+                    @Html.DisplayFor(modelItem => item.Diachi)
                 </td>
                 <td scope="row">
                     @Html.DisplayFor(modelItem => item.SdtNguoinhan)
                 </td>
              
                 <td scope="row">
-                    @Convert.ToDouble(item.PhiVanChuyen).ToString("#,##0")
+                    @Convert.ToDouble(item.Phivanchuyen).ToString("#,##0")
                 </td>
                 <td scope="row">
-                    <a asp-action="ChangeStatus" asp-route-id="@item.MaHd" class="btn-active"> @Html.Raw(item.MaTrangThai == 0 ? "<strong>Chưa Duyệt</strong>" : "Đã Duyệt")</a>
+                    <a asp-action="ChangeStatus" asp-route-id="@item.Mahd" class="btn-active"> @Html.Raw(item.Matrangthai == 0 ? "<strong>Chưa Duyệt</strong>" : "Đã Duyệt")</a>
                 </td>
 
                 <td scope="row">
-                    @Convert.ToDouble(item.TongTienHang).ToString("#,##0")
+                    @Convert.ToDouble(item.Tongtienhang).ToString("#,##0")
                 </td>
                 <td scope="col" class="text text-primary" style="padding:0px;">
-                    #@item.MaVoucher
+                    
                 </td>
                 <td scope="col" style="text-align:center;">
-                    @Convert.ToDouble(item.TongThucThu).ToString("#,##0")
+                    @Convert.ToDouble(item.Tongthucthu).ToString("#,##0")
                 </td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.MaHd" class="btn btn-primary">Xem chi tiết</a>
+                    <a asp-action="Details" asp-route-id="@item.Mahd" class="btn btn-primary">Xem chi tiết</a>
                 </td>
             </tr>
             }

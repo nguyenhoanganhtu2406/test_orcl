@@ -141,14 +141,12 @@
 </style>
 
 @{
-    ESHOPContext db = new ESHOPContext();
-    List<HoaDon> hoaDons_moi = db.HoaDon.Where(p => p.NgayDat.Date == DateTime.Now.Date && p.MaTrangThai == 0).ToList();
-    List<HoaDon> hoaDons_ngay = db.HoaDon.Where(p => p.NgayDat.Date == DateTime.Now.Date).ToList();
-    List<HoiDap> phanhoi_ngay = db.HoiDap.Where(p => p.NgayDua.Date == DateTime.Now.Date).ToList();
-    List<HoiDap> phanhois = db.HoiDap.ToList();
-    List<KhachHang> khachHangs = db.KhachHang.ToList();
-    List<HoaDon> hoaDons = db.HoaDon.ToList();
-    double hoaDons_doanhthu = Convert.ToDouble(db.HoaDon.Where(p=>p.MaTrangThai == 1 && p.NgayDat.Date == DateTime.Now.Date).Sum(p => p.TongThucThu));
+    ModelContext db = new ModelContext();
+    List<Hoadon> hoaDons_moi = db.Hoadon.Where(p => p.Ngaydat.Date == DateTime.Now.Date && p.Matrangthai == 0).ToList();
+    List<Hoadon> hoaDons_ngay = db.Hoadon.Where(p => p.Ngaydat.Date == DateTime.Now.Date).ToList();
+    List<Khachhang> khachHangs = db.Khachhang.ToList();
+    List<Hoadon> hoaDons = db.Hoadon.ToList();
+    double hoaDons_doanhthu = Convert.ToDouble(db.Hoadon.Where(p=>p.Matrangthai == 1 && p.Ngaydat.Date == DateTime.Now.Date).Sum(p => p.Tongthucthu));
 }
 <!-- //market-->
 <div class="market-updates">
@@ -173,31 +171,6 @@
                 <h4>Tổng hóa đơn ngày</h4>
                 <h3>@hoaDons_ngay.Count()</h3>
 
-            </div>
-            <div class="clearfix"> </div>
-        </div>
-    </div>
-    <div class="col-md-3 market-update-gd">
-        <div class="market-update-block clr-block-2">
-            <div class="col-md-4 market-update-right">
-                <i class="fa fa-eye"> </i>
-            </div>
-            <div class="col-md-8 market-update-left">
-                <h4>Số phản hồi trong ngày</h4>
-                <h3>@phanhoi_ngay.Count()</h3>
-            </div>
-            <div class="clearfix"> </div>
-        </div>
-    </div>
-
-    <div class="col-md-3 market-update-gd">
-        <div class="market-update-block clr-block-4">
-            <div class="col-md-4 market-update-right">
-                <i class="fa fa-eye"> </i>
-            </div>
-            <div class="col-md-8 market-update-left">
-                <h4>Tổng phản hồi</h4>
-                <h3>@phanhois.Count()</h3>
             </div>
             <div class="clearfix"> </div>
         </div>

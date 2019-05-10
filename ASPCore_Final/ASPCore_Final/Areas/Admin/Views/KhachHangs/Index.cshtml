@@ -1,5 +1,5 @@
 ﻿
-@model ReflectionIT.Mvc.Paging.PagingList<ASPCore_Final.Models.KhachHang>
+@model ReflectionIT.Mvc.Paging.PagingList<ASPCore_Final.Models.Khachhang>
 @using ReflectionIT.Mvc.Paging;
 @addTagHelper *, ReflectionIT.Mvc.Paging
 @{
@@ -23,27 +23,24 @@
         <thead>
             <tr>
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.TaiKhoan)
+                    @Html.DisplayNameFor(model => model.Taikhoan)
                 </th>
 
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.HoTen)
+                    @Html.DisplayNameFor(model => model.Hoten)
                 </th>
 
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.DiaChi)
+                    @Html.DisplayNameFor(model => model.Diachi)
                 </th>
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.DienThoai)
+                    @Html.DisplayNameFor(model => model.Dienthoai)
                 </th>
                 <th scope="col">
                     @Html.DisplayNameFor(model => model.Email)
                 </th>
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.LoaiKH)
-                </th>
-                <th scope="col">
-                    @Html.DisplayNameFor(model => model.TrangThaiHd)
+                    @Html.DisplayNameFor(model => model.Trangthaihd)
                 </th>
 
                 <th></th>
@@ -52,34 +49,31 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr onclick="_delete(@item.MaKh, event)">
+                <tr onclick="_delete(@item.Makh, event)">
                     <td scope="row">
-                        @Html.DisplayFor(modelItem => item.TaiKhoan)
+                        @Html.DisplayFor(modelItem => item.Taikhoan)
                     </td>
 
                     <td scope="row">
-                        @Html.DisplayFor(modelItem => item.HoTen)
+                        @Html.DisplayFor(modelItem => item.Hoten)
                     </td>
 
                     <td scope="row">
-                        @Html.DisplayFor(modelItem => item.DiaChi)
+                        @Html.DisplayFor(modelItem => item.Diachi)
                     </td>
                     <td scope="row">
-                        @Html.DisplayFor(modelItem => item.DienThoai)
+                        @Html.DisplayFor(modelItem => item.Dienthoai)
                     </td>
                     <td scope="row">
                         @Html.DisplayFor(modelItem => item.Email)
                     </td>
-                    <td scope="row">
-                        @Html.Raw(item.LoaiKH == true ? "<strong>KH thân thiết</strong>" : "KH thường")
-                    </td>
 
                     <td scope="row">
-                        <a asp-action="ChangeStatus" asp-route-id="@item.MaKh" class="btn-active"> @Html.Raw(item.TrangThaiHd == true ? "<strong>True</strong>" : "False")</a>
+                        <a asp-action="ChangeStatus" asp-route-id="@item.Makh" class="btn-active"> @Html.Raw(item.Trangthaihd == true ? "<strong>True</strong>" : "False")</a>
                     </td>
                     <td scope="row">
 
-                        <a asp-action="Details" asp-route-id="@item.MaKh" class="btn btn-primary">Xem chi tiết</a>
+                        <a asp-action="Details" asp-route-id="@item.Makh" class="btn btn-primary">Xem chi tiết</a>
                         <button type="button" class="btn btn-primary btn-delete">Xóa</button>
                     </td>
                 </tr>

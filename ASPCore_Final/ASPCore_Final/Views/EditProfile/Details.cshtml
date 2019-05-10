@@ -1,4 +1,4 @@
-﻿@model ASPCore_Final.Models.KhachHang
+﻿@model ASPCore_Final.Models.Khachhang
 
 @{
     ViewData["Title"] = "Details";
@@ -8,50 +8,50 @@
 <h2>Details</h2>
 
 <div>
-    <h4>KhachHang</h4>
+    <h4>Khachhang</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.TaiKhoan)
+            @Html.DisplayNameFor(model => model.Taikhoan)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.TaiKhoan)
+            @Html.DisplayFor(model => model.Taikhoan)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.MatKhau)
+            @Html.DisplayNameFor(model => model.Matkhau)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.MatKhau)
+            @Html.DisplayFor(model => model.Matkhau)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.HoTen)
+            @Html.DisplayNameFor(model => model.Hoten)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.HoTen)
+            @Html.DisplayFor(model => model.Hoten)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.GioiTinh)
+            @Html.DisplayNameFor(model => model.Gioitinh)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.GioiTinh)
+            @Html.DisplayFor(model => model.Gioitinh)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.NgaySinh)
+            @Html.DisplayNameFor(model => model.Ngaysinh)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.NgaySinh)
+            @Html.DisplayFor(model => model.Ngaysinh)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.DiaChi)
+            @Html.DisplayNameFor(model => model.Diachi)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.DiaChi)
+            @Html.DisplayFor(model => model.Diachi)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.DienThoai)
+            @Html.DisplayNameFor(model => model.Dienthoai)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.DienThoai)
+            @Html.DisplayFor(model => model.Dienthoai)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Email)
@@ -66,14 +66,14 @@
             @Html.DisplayFor(model => model.Hinh)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.TrangThaiHd)
+            @Html.DisplayNameFor(model => model.Trangthaihd)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.TrangThaiHd)
+            @Html.DisplayFor(model => model.Trangthaihd)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.MaKh">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Makh">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

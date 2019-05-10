@@ -1,4 +1,4 @@
-﻿@model ASPCore_Final.Models.HangHoa
+﻿@model ASPCore_Final.Models.Hanghoa
 
 @{
     ViewData["Title"] = "Create";
@@ -16,13 +16,13 @@
         <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="TenHh" class="control-label"></label>
-                <input asp-for="TenHh" class="form-control" />
-                <span asp-validation-for="TenHh" class="text-danger"></span>
+                <label asp-for="Tenhh" class="control-label"></label>
+                <input asp-for="Tenhh" class="form-control" />
+                <span asp-validation-for="Tenhh" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MaLoai" class="control-label"></label>
-                <select asp-for="MaLoai" class="form-control" asp-items="ViewBag.MaLoai"></select>
+                <label asp-for="Maloai" class="control-label"></label>
+                <select asp-for="Maloai" class="form-control" asp-items="ViewBag.MaLoai"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Hinh" class="control-label"></label>
@@ -30,28 +30,28 @@
                 <span asp-validation-for="Hinh" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DonGia" class="control-label"></label>
-                <input asp-for="DonGia" class="form-control" />
-                <span asp-validation-for="DonGia" class="text-danger"></span>
+                <label asp-for="Dongia" class="control-label"></label>
+                <input asp-for="Dongia" class="form-control" />
+                <span asp-validation-for="Dongia" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="GiamGia" class="control-label"></label>
-                <input asp-for="GiamGia" class="form-control" />
-                <span asp-validation-for="GiamGia" class="text-danger"></span>
+                <label asp-for="Giamgia" class="control-label"></label>
+                <input asp-for="Giamgia" class="form-control" />
+                <span asp-validation-for="Giamgia" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MoTa" class="control-label"></label>
-                <textarea asp-for="MoTa" class="form-control" id="txtMoTa"></textarea>
+                <label asp-for="Mota" class="control-label"></label>
+                <textarea asp-for="Mota" class="form-control" id="txtMoTa"></textarea>
                 
                 <script>
                     var editor = CKEDITOR.replace('txtMoTa');
 
                 </script>
-                <span asp-validation-for="MoTa" class="text-danger"></span>
+                <span asp-validation-for="Mota" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MaNcc" class="control-label"></label>
-                <select asp-for="MaNcc" class="form-control" asp-items="ViewBag.MaNcc"></select>
+                <label asp-for="Mancc" class="control-label"></label>
+                <select asp-for="Mancc" class="form-control" asp-items="ViewBag.MaNcc"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

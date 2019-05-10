@@ -47,7 +47,7 @@
                     {
                     <tr class="rem1 row-item">
                         <td class="invert" width="70px;">@i</td>
-                        <td class="invert-image" width="150px;"><a asp-action="ChiTiet" asp-controller="HangHoa" asp-route-mahh="@item.MaHh"><img src="~/HangHoa/@item.Hinh" alt=" " class="img-responsive" /></a></td>
+                        <td class="invert-image" width="150px;"><a asp-action="ChiTiet" asp-controller="Hanghoa" asp-route-mahh="@item.MaHh"><img src="~/Hanghoa/@item.Hinh" alt=" " class="img-responsive" /></a></td>
                         <td class="invert" width="50px;">@item.KichCo</td>
 
                         <td class="invert">@item.TenHh</td>
@@ -191,7 +191,7 @@
                     </ul>
                 </div>
                 <div class="checkout-right-basket animated wow slideInRight" data-wow-delay=".5s">
-                    <a asp-action="Index" asp-controller="HangHoa"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Tiếp tục mua hàng</a>
+                    <a asp-action="Index" asp-controller="Hanghoa"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Tiếp tục mua hàng</a>
                 </div>
                 <div class="clearfix"> </div>
                 <br />
@@ -210,9 +210,9 @@
                     <div class="motkhoi">
                         <h3 class="btn btn-success" style="margin:auto;display:block;margin:auto">THANH TOÁN GIỎ HÀNG</h3>
                         <div class="ndmotkhoi">
-                            @if (Context.Session.Get<KhachHang>("user") != null)
+                            @if (Context.Session.Get<Khachhang>("user") != null)
                             {
-                                KhachHang kh = Context.Session.Get<KhachHang>("user");
+                                Khachhang kh = Context.Session.Get<Khachhang>("user");
                                 <form asp-action="TaoHoaDon" asp-controller="GioHang" method="post">
                                     @if (Context.Session.Get<string>("mavc") != null)
                                     {
@@ -223,17 +223,17 @@
                                     {
                                         <input type="hidden" name="magiamgia" value="" class="form-control" />
                                     }
-                                    <input type="hidden" name="makh" value="@kh.MaKh" class="form-control" />
+                                    <input type="hidden" name="makh" value="@kh.Makh" class="form-control" />
                                     <br />
 
                                     <div style="display:inline">
                                         <label>Họ và tên khách hàng</label>
-                                        <input type="text" name="hotenkh" value="@kh.HoTen" class="form-control" />
+                                        <input type="text" name="hotenkh" value="@kh.Hoten" class="form-control" />
                                     </div>
                                     <br />
                                     <div style="display:inline">
                                         <label>Địa chỉ</label>
-                                        <input type="text" name="diachi" value="@kh.DiaChi" class="form-control" />
+                                        <input type="text" name="diachi" value="@kh.Diachi" class="form-control" />
                                     </div>
                                     <br />
                                     <div style="display:inline">
@@ -341,7 +341,7 @@
                     <h4>Thanh toán</h4>
                 </div>
                 <div class="checkout-right-basket animated wow slideInRight" data-wow-delay=".5s">
-                    <a asp-action="Index" asp-controller="HangHoa"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Tiếp tục mua hàng</a>
+                    <a asp-action="Index" asp-controller="Hanghoa"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Tiếp tục mua hàng</a>
                 </div>
                 <div class="clearfix"> </div>
             </div>

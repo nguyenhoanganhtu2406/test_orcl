@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ASPCore_Final.Models.KhachHang>
+﻿@model IEnumerable<ASPCore_Final.Models.Khachhang>
 
 @{
     ViewData["Title"] = "Index";
@@ -14,25 +14,25 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.TaiKhoan)
+                @Html.DisplayNameFor(model => model.Taikhoan)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MatKhau)
+                @Html.DisplayNameFor(model => model.Matkhau)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HoTen)
+                @Html.DisplayNameFor(model => model.Hoten)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.GioiTinh)
+                @Html.DisplayNameFor(model => model.Gioitinh)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NgaySinh)
+                @Html.DisplayNameFor(model => model.Ngaysinh)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DiaChi)
+                @Html.DisplayNameFor(model => model.Diachi)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DienThoai)
+                @Html.DisplayNameFor(model => model.Dienthoai)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Email)
@@ -41,7 +41,7 @@
                 @Html.DisplayNameFor(model => model.Hinh)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TrangThaiHd)
+                @Html.DisplayNameFor(model => model.Trangthaihd)
             </th>
             <th></th>
         </tr>
@@ -50,25 +50,25 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.TaiKhoan)
+                @Html.DisplayFor(modelItem => item.Taikhoan)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MatKhau)
+                @Html.DisplayFor(modelItem => item.Matkhau)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.HoTen)
+                @Html.DisplayFor(modelItem => item.Hoten)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.GioiTinh)
+                @Html.DisplayFor(modelItem => item.Gioitinh)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NgaySinh)
+                @Html.DisplayFor(modelItem => item.Ngaysinh)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DiaChi)
+                @Html.DisplayFor(modelItem => item.Diachi)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DienThoai)
+                @Html.DisplayFor(modelItem => item.Dienthoai)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
@@ -77,12 +77,12 @@
                 @Html.DisplayFor(modelItem => item.Hinh)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TrangThaiHd)
+                @Html.DisplayFor(modelItem => item.Trangthaihd)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.MaKh">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MaKh">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MaKh">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Makh">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Makh">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Makh">Delete</a>
             </td>
         </tr>
 }

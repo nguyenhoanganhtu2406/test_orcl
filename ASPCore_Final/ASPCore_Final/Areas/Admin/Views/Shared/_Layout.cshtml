@@ -59,9 +59,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!--//web-fonts-->
 </head>
 @{
-    ESHOPContext db = new ESHOPContext();
-    int c_hoidaps = db.HoiDap.Where(p => p.TrangThaiTl == false).ToList().Count();
-    int c_hoadons = db.HoaDon.Where(p => p.MaTrangThai == 0).ToList().Count();
+    ModelContext db = new ModelContext();
+    int c_hoadons = db.Hoadon.Where(p => p.Matrangthai == 0).ToList().Count();
 }
 <body>
     <div class="wrapper">
@@ -86,13 +85,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <a href="/Admin/NhanViens">
                         <i class="fas fa-user"></i>
                         Nhân viên
-                    </a>
-                </li>
-                <li>
-                    <a href="/Admin/HoiDap">
-                        <i class="far fa-envelope"></i>
-                        Phản hồi
-                        <span class="badge badge-secondary float-md-right bg-danger">@c_hoidaps</span>
                     </a>
                 </li>
                 <li>
@@ -124,30 +116,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <a href="/Admin/NhaCungCaps">
                         <i class="far fa-hourglass"></i>
                         Nhà Cung Cấp
-                    </a>
-                </li>
-                <li>
-                    <a href="/Admin/PhieuNhapHang">
-                        <i class="fa fa-download"></i>
-                        Phiếu nhập hàng
-                    </a>
-                </li>
-                <li>
-                    <a href="/Admin/TinTucs">
-                        <i class="fa fa-newspaper"></i>
-                        Tin Tức
-                    </a>
-                </li>
-                <li>
-                    <a href="/Admin/BannerQcs">
-                        <i class="fa fa-bars"></i>
-                        Banner
-                    </a>
-                </li>
-                <li>
-                    <a href="/Admin/Voucher">
-                        <i class="fa fa-dollar-sign"></i>
-                        Quản lý Voucher
                     </a>
                 </li>
                 <li>

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ASPCore_Final.Models.HangHoa>
+﻿@model IEnumerable<ASPCore_Final.Models.Hanghoa>
 @{
     Layout = "";
 }
@@ -17,7 +17,7 @@ else
         foreach (var item in Model)
         {
 
-            <li style="margin:10px;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"><a asp-action="ChiTiet" asp-controller="HangHoa" asp-route-mahh="@item.MaHh"><img src="~/HangHoa/@item.Hinh" style="width:50px;height:50px;" /><span>@item.TenHh</span></a></li>
+            <li style="margin:10px;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"><a asp-action="ChiTiet" asp-controller="Hanghoa" asp-route-mahh="@item.Mahh"><img src="~/Hanghoa/@item.Hinh" style="width:50px;height:50px;" /><span>@item.Tenhh</span></a></li>
         }
     }
 </ul>

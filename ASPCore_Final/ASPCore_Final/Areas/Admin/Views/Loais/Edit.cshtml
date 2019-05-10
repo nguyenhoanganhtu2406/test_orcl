@@ -13,18 +13,18 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="MaLoai" />
+            <input type="hidden" asp-for="Maloai" />
             <div class="form-group">
-                <label asp-for="GioiTinh" class="control-label">
+                <label asp-for="Gioitinh" class="control-label">
 
-                    <span asp-validation-for="GioiTinh" class="text-danger"></span>
+                    <span asp-validation-for="Gioitinh" class="text-danger"></span>
                 </label>
-                <input asp-for="GioiTinh" />  @Html.DisplayNameFor(model => model.GioiTinh)
+                <input asp-for="Gioitinh" />  @Html.DisplayNameFor(model => model.Gioitinh)
             </div>
             <div class="form-group">
-                <label asp-for="TenLoai" class="control-label"></label>
-                <input asp-for="TenLoai" class="form-control" />
-                <span asp-validation-for="TenLoai" class="text-danger"></span>
+                <label asp-for="Tenloai" class="control-label"></label>
+                <input asp-for="Tenloai" class="form-control" />
+                <span asp-validation-for="Tenloai" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

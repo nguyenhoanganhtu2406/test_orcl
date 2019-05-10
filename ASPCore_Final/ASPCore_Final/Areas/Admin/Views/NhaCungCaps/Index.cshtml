@@ -1,5 +1,5 @@
 ﻿
-@model ReflectionIT.Mvc.Paging.PagingList<ASPCore_Final.Models.NhaCungCap>
+@model ReflectionIT.Mvc.Paging.PagingList<ASPCore_Final.Models.Nhacungcap>
 @using ReflectionIT.Mvc.Paging;
 @addTagHelper *, ReflectionIT.Mvc.Paging
 @{
@@ -24,19 +24,16 @@
         <thead>
             <tr>
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.TenCongTy)
+                    @Html.DisplayNameFor(model => model.Tencongty)
                 </th>
                 <th scope="col">
                     @Html.DisplayNameFor(model => model.Email)
                 </th>
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.DienThoai)
+                    @Html.DisplayNameFor(model => model.Dienthoai)
                 </th>
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.DiaChi)
-                </th>
-                <th scope="col">
-                    @Html.DisplayNameFor(model => model.MoTa)
+                    @Html.DisplayNameFor(model => model.Diachi)
                 </th>
                 <th></th>
             </tr>
@@ -44,25 +41,22 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr onclick="_delete('@item.MaNcc', event)">
+                <tr onclick="_delete('@item.Mancc', event)">
                     <td scope="row">
-                        @Html.DisplayFor(modelItem => item.TenCongTy)
+                        @Html.DisplayFor(modelItem => item.Tencongty)
                     </td>
                     <td scope="row">
                         @Html.DisplayFor(modelItem => item.Email)
                     </td>
                     <td scope="row">
-                        @Html.DisplayFor(modelItem => item.DienThoai)
+                        @Html.DisplayFor(modelItem => item.Dienthoai)
                     </td>
                     <td scope="row">
-                        @Html.DisplayFor(modelItem => item.DiaChi)
+                        @Html.DisplayFor(modelItem => item.Diachi)
                     </td>
                     <td scope="row">
-                        @Html.DisplayFor(modelItem => item.MoTa)
-                    </td>
-                    <td scope="row">
-                        <a asp-action="Edit" asp-route-id="@item.MaNcc" class="btn btn-primary">Sửa</a> |
-                        <a asp-action="Details" asp-route-id="@item.MaNcc" class="btn btn-primary">Xem chi tiết</a>
+                        <a asp-action="Edit" asp-route-id="@item.Mancc" class="btn btn-primary">Sửa</a> |
+                        <a asp-action="Details" asp-route-id="@item.Mancc" class="btn btn-primary">Xem chi tiết</a>
 
                         <button type="button" class="btn btn-primary btn-delete">Xóa</button>
 

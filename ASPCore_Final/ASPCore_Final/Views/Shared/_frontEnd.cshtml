@@ -183,16 +183,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <ul>
                         <li><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i><a href="mailto:eshop@gmail.com">eshop@gmail.com</a></li>
                         <li><i class="glyphicon glyphicon-earphone" aria-hidden="true"></i>+1234 567 892</li>
-                        @if (Context.Session.Get<KhachHang>("user") == null)
+                        @if (Context.Session.Get<Khachhang>("user") == null)
                         {
                             <li><i class="glyphicon glyphicon-log-in" aria-hidden="true"></i><a asp-action="Index" asp-controller="Login">Đăng nhập</a></li>
                             <li><i class="glyphicon glyphicon-book" aria-hidden="true"></i><a asp-action="Create" asp-controller="Register">Đăng kí</a></li>
                         }
                         else
                         {
-                            KhachHang kh = Context.Session.Get<KhachHang>("user");
+                            Khachhang kh = Context.Session.Get<Khachhang>("user");
                             <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown"><img src="~/UserAvatar/@kh.Hinh" style="width:30px;height:30px;border-radius: 50%;display: inline-block;" />@kh.HoTen<span class="caret"></span></a>
+                                <a class="dropdown-toggle" data-toggle="dropdown"><img src="~/UserAvatar/@kh.Hinh" style="width:30px;height:30px;border-radius: 50%;display: inline-block;" />@kh.Hoten<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a asp-controller="ChangePassword" asp-action="Index">Đổi mật khẩu</a></li>
                                     <li><a asp-controller="EditProfile" asp-action="Index">Thông tin tài khoản</a></li>
@@ -239,12 +239,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                                 <ul class="multi-column-dropdown">
                                                     <h6>Trang phục nam</h6>
                                                     @{
-                                                        ESHOPContext db = new ESHOPContext();
-                                                        var listNam = db.Loai.Where(p => p.GioiTinh == false).ToList();
+                                                        ModelContext db = new ModelContext();
+                                                        var listNam = db.Loai.Where(p => p.Gioitinh == false).ToList();
                                                     }
                                                     @foreach (var item in listNam)
                                                     {
-                                                        <li><a asp-action="Index" asp-controller="HangHoa" asp-route-loai="@item.MaLoai">@item.TenLoai</a></li>
+                                                        <li><a asp-action="Index" asp-controller="Hanghoa" asp-route-loai="@item.MaLoai">@item.TenLoai</a></li>
                                                     }
                                                 </ul>
                                             </div>
@@ -252,11 +252,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                                 <ul class="multi-column-dropdown">
                                                     <h6>Trang phục nữ</h6>
                                                     @{
-                                                        var listNu = db.Loai.Where(p => p.GioiTinh == true).ToList();
+                                                        var listNu = db.Loai.Where(p => p.Gioitinh == true).ToList();
                                                     }
                                                     @foreach (var item in listNu)
                                                     {
-                                                        <li><a asp-action="Index" asp-controller="HangHoa" asp-route-loai="@item.MaLoai">@item.TenLoai</a></li>
+                                                        <li><a asp-action="Index" asp-controller="Hanghoa" asp-route-loai="@item.MaLoai">@item.TenLoai</a></li>
                                                     }
                                                 </ul>
                                             </div>

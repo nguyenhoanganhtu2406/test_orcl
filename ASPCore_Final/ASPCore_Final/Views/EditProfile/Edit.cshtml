@@ -1,4 +1,4 @@
-﻿@model ASPCore_Final.Models.KhachHang
+﻿@model ASPCore_Final.Models.Khachhang
 
 @{
     ViewData["Title"] = "Edit";
@@ -32,21 +32,21 @@
                     <strong>Tên đăng nhập và Email không thể thay đổi.</strong>
                 </div>
                 <!--<form class="form-horizontal" role="form">-->
-                <input type="hidden" asp-for="MaKh" />
-                <input type="hidden" asp-for="MatKhau" />
-                <input type="hidden" asp-for="TrangThaiHd" />
-                <input type="hidden" asp-for="TaiKhoan" />
+                <input type="hidden" asp-for="Makh" />
+                <input type="hidden" asp-for="Matkhau" />
+                <input type="hidden" asp-for="Trangthaihd" />
+                <input type="hidden" asp-for="Taikhoan" />
                 <input type="hidden" asp-for="Email" />
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Họ tên:</label>
                     <div class="col-lg-8">
-                        <input asp-for="HoTen" class="form-control" />
+                        <input asp-for="Hoten" class="form-control" />
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Giới tính:</label>
                     <div class="col-lg-8">
-                        <select class="form-control selected" asp-for="GioiTinh">
+                        <select class="form-control selected" asp-for="Gioitinh">
                             <option>Nam</option>
                             <option>Nữ</option>
                         </select>
@@ -55,19 +55,19 @@
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Ngày sinh:</label>
                     <div class="col-lg-8">
-                        <input asp-for="NgaySinh" class="form-control" />
+                        <input asp-for="Ngaysinh" class="form-control" />
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">Địa chỉ:</label>
                     <div class="col-md-8">
-                        <input asp-for="DiaChi" class="form-control" />
+                        <input asp-for="Diachi" class="form-control" />
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">Số điện thoại:</label>
                     <div class="col-md-8">
-                        <input asp-for="DienThoai" class="form-control" />
+                        <input asp-for="Dienthoai" class="form-control" />
                     </div>
                 </div>
                 <div class="form-group">

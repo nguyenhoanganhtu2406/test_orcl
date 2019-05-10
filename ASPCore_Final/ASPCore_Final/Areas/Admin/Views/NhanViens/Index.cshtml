@@ -1,4 +1,4 @@
-﻿@model ReflectionIT.Mvc.Paging.PagingList<ASPCore_Final.Models.NhanVien>
+﻿@model ReflectionIT.Mvc.Paging.PagingList<ASPCore_Final.Models.Nhanvien>
 @using ReflectionIT.Mvc.Paging;
 @addTagHelper *, ReflectionIT.Mvc.Paging
 @{
@@ -29,20 +29,20 @@
         <thead>
             <tr>
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.MaNv)
+                    @Html.DisplayNameFor(model => model.Manv)
                 </th>
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.HoTen)
+                    @Html.DisplayNameFor(model => model.Hoten)
                 </th>
                 <th scope="col">
                     @Html.DisplayNameFor(model => model.Email)
                 </th>
 
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.TrangThaiHd)
+                    @Html.DisplayNameFor(model => model.Trangthaihd)
                 </th>
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.MaPqNavigation)
+                    @Html.DisplayNameFor(model => model.MapqNavigation)
                 </th>
                 <th></th>
             </tr>
@@ -50,26 +50,26 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr onclick="_delete(@item.MaNv, event)">
+                <tr onclick="_delete(@item.Manv, event)">
                     <td scope="row">
-                        @Html.DisplayFor(modelItem => item.MaNv)
+                        @Html.DisplayFor(modelItem => item.Manv)
                     </td>
                     <td scope="row">
-                        @Html.DisplayFor(modelItem => item.HoTen)
+                        @Html.DisplayFor(modelItem => item.Hoten)
                     </td>
                     <td scope="row">
                         @Html.DisplayFor(modelItem => item.Email)
                     </td>
 
                     <td scope="row">
-                        <a asp-action="ChangeStatus" asp-route-id="@item.MaNv" class="btn-active"> @Html.Raw(item.TrangThaiHd == true ? "<strong>True</strong>" : "False")</a>
+                        <a asp-action="ChangeStatus" asp-route-id="@item.Manv" class="btn-active"> @Html.Raw(item.Trangthaihd == true ? "<strong>True</strong>" : "False")</a>
                     </td>
                     <td scope="row">
-                        @Html.DisplayFor(modelItem => item.MaPqNavigation.MaPq)
+                        @Html.DisplayFor(modelItem => item.MapqNavigation.Mapq)
                     </td>
                     <td scope="row">
-                        <a asp-action="Edit" asp-route-id="@item.MaNv" class="btn btn-primary">Sửa</a> |
-                        <a asp-action="Details" asp-route-id="@item.MaNv" class="btn btn-primary">Xem chi tiết</a> |
+                        <a asp-action="Edit" asp-route-id="@item.Manv" class="btn btn-primary">Sửa</a> |
+                        <a asp-action="Details" asp-route-id="@item.Manv" class="btn btn-primary">Xem chi tiết</a> |
 
                         <button type="button" class="btn btn-primary btn-delete">Xóa</button>
                     </td>

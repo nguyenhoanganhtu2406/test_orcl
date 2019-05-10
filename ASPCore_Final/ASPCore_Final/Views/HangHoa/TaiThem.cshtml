@@ -1,22 +1,22 @@
-﻿@model IEnumerable<ASPCore_Final.Models.HangHoa>
+﻿@model IEnumerable<ASPCore_Final.Models.Hanghoa>
 @{ 
-    ESHOPContext db = new ESHOPContext();
+    ModelContext db = new ModelContext();
 }
 @foreach (var item in Model)
 {
     <div class="col-md-4 products-right-grids-bottom-grid" style="margin-bottom:15px;">
         <div class="new-collections-grid1 products-right-grid1 animated wow" data-wow-delay=".5s" style="padding:10px;">
             <div class="new-collections-grid1-image">
-                <a asp-action="ChiTiet" asp-controller="HangHoa" asp-route-id="@item.MaHh" class="product-image" style="padding:10px;"><img src="~/HangHoa/@item.Hinh" alt=" " class="img-responsive"></a>
+                <a asp-action="ChiTiet" asp-controller="Hanghoa" asp-route-id="@item.Mahh" class="product-image" style="padding:10px;"><img src="~/Hanghoa/@item.Hinh" alt=" " class="img-responsive"></a>
                 <div class="new-collections-grid1-image-pos products-right-grids-pos" style="text-align:center">
-                    <a asp-action="ChiTiet" asp-controller="HangHoa" asp-route-mahh="@item.MaHh">Xem chi tiết</a>
+                    <a asp-action="ChiTiet" asp-controller="Hanghoa" asp-route-mahh="@item.Mahh">Xem chi tiết</a>
                 </div>
                 @{
-                    List<SanPhamKho> sanPhamKhos = db.SanPhamKho.Where(p => p.MaHh == item.MaHh).ToList();
+                    List<SanPhamKho> sanPhamKhos = db.SanPhamKho.Where(p => p.Mahh == item.Mahh).ToList();
                     var soluong = sanPhamKhos.Sum(x => x.SoLuong);
                     if (soluong > 10)
                     {
-                        double gg = item.GiamGia * 100;
+                        double gg = item.Giamgia * 100;
                         <div class="new-one">
                             <p>-@gg%</p>
                         </div>
@@ -38,7 +38,7 @@
                 <div class="new-collections-grid1-right products-right-grids-pos-right">
                     <div class="rating">
                         @{
-                            List<YeuThich> yts = db.YeuThich.Where(p => p.MaHh == item.MaHh).ToList();
+                            List<YeuThich> yts = db.YeuThich.Where(p => p.Mahh == item.Mahh).ToList();
                             double diemyt = 0;
                             if (yts.Count > 0)
                             {
@@ -76,14 +76,14 @@
                     </div>
                 </div>
             </div>
-            <h4><a asp-action="ChiTiet" asp-controller="HangHoa" asp-route-mahh="@item.MaHh">@item.TenHh</a></h4>
+            <h4><a asp-action="ChiTiet" asp-controller="Hanghoa" asp-route-mahh="@item.Mahh">@item.Tenhh</a></h4>
             <p>@item.MoTa</p>
             <div class="simpleCart_shelfItem products-right-grid1-add-cart">
                 @{
-                    double dongiaban = item.DonGia * (1 - item.GiamGia);
-                    double giamgia = item.GiamGia * 100;
+                    double dongiaban = item.Dongia * (1 - item.Giamgia);
+                    double giamgia = item.Giamgia * 100;
                 }
-                <p><i>@item.DonGia.ToString("#,##0") đ</i> <span class="item_price">@dongiaban.ToString("#,##0") đ</span></p>
+                <p><i>@item.Dongia.ToString("#,##0") đ</i> <span class="item_price">@dongiaban.ToString("#,##0") đ</span></p>
             </div>
         </div>
     </div>

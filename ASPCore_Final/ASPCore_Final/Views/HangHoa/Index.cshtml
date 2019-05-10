@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ASPCore_Final.Models.HangHoa>
+﻿@model IEnumerable<ASPCore_Final.Models.Hanghoa>
 @{
     ViewData["Title"] = "Index";
 }
@@ -79,30 +79,30 @@
             <h3>Thể loại</h3>
             <ul class="cate">
                 @{
-                    ESHOPContext db = new ESHOPContext();
-                    var listTatCa = db.HangHoa.ToList();
+                    ModelContext db = new ModelContext();
+                    var listTatCa = db.Hanghoa.ToList();
                     int soLuongSP = listTatCa.Count();
-                    var listNam = db.Loai.Where(p => p.GioiTinh == false).ToList();
-                    int soluongSPNam = db.HangHoa.Where(p => p.MaLoaiNavigation.GioiTinh == false).ToList().Count();
-                    var listNu = db.Loai.Where(p => p.GioiTinh == true).ToList();
-                    int soluongSPNu = db.HangHoa.Where(p => p.MaLoaiNavigation.GioiTinh == true).ToList().Count();
+                    var listNam = db.Loai.Where(p => p.Gioitinh == false).ToList();
+                    int soluongSPNam = db.Hanghoa.Where(p => p.MaLoaiNavigation.Gioitinh == false).ToList().Count();
+                    var listNu = db.Loai.Where(p => p.Gioitinh == true).ToList();
+                    int soluongSPNu = db.Hanghoa.Where(p => p.MaLoaiNavigation.Gioitinh == true).ToList().Count();
                     int tongSoLuong = (int)ViewData["TongSoLuong"];
                 }
-                <li><a asp-controller="HangHoa" asp-action="Index">Tất cả sản phẩm<span>(@soLuongSP)</span></a></li>
-                <li><a asp-controller="HangHoa" asp-action="Index" asp-route-gioitinh="false">Thời trang nam<span>(@soluongSPNam)</span></a></li>
+                <li><a asp-controller="Hanghoa" asp-action="Index">Tất cả sản phẩm<span>(@soLuongSP)</span></a></li>
+                <li><a asp-controller="Hanghoa" asp-action="Index" asp-route-gioitinh="false">Thời trang nam<span>(@soluongSPNam)</span></a></li>
                 <ul>
                     @foreach (var item in listNam)
                     {
-                        int soluong = db.HangHoa.Where(p => p.MaLoai == item.MaLoai).ToList().Count();
-                        <li><a asp-action="Index" asp-controller="HangHoa" asp-route-loai="@item.MaLoai">@item.TenLoai</a> <span>(@soluong)</span></li>
+                        int soluong = db.Hanghoa.Where(p => p.MaLoai == item.MaLoai).ToList().Count();
+                        <li><a asp-action="Index" asp-controller="Hanghoa" asp-route-loai="@item.MaLoai">@item.TenLoai</a> <span>(@soluong)</span></li>
                     }
                 </ul>
-                <li><a asp-controller="HangHoa" asp-action="Index" asp-route-gioitinh="true">Thời trang nữ<span>(@soluongSPNu)</span></a></li>
+                <li><a asp-controller="Hanghoa" asp-action="Index" asp-route-gioitinh="true">Thời trang nữ<span>(@soluongSPNu)</span></a></li>
                 <ul>
                     @foreach (var item in listNu)
                     {
-                        int soluong = db.HangHoa.Where(p => p.MaLoai == item.MaLoai).ToList().Count();
-                        <li><a asp-action="Index" asp-controller="HangHoa" asp-route-loai="@item.MaLoai">@item.TenLoai</a> <span>(@soluong)</span></li>
+                        int soluong = db.Hanghoa.Where(p => p.MaLoai == item.MaLoai).ToList().Count();
+                        <li><a asp-action="Index" asp-controller="Hanghoa" asp-route-loai="@item.MaLoai">@item.TenLoai</a> <span>(@soluong)</span></li>
                     }
                 </ul>
             </ul>
@@ -115,16 +115,16 @@
                 <div class="col-md-4 products-right-grids-bottom-grid" style="margin-bottom:15px;">
                     <div class="new-collections-grid1 products-right-grid1 animated wow" data-wow-delay=".5s" style="padding:10px;">
                         <div class="new-collections-grid1-image">
-                            <a asp-action="ChiTiet" asp-controller="HangHoa" asp-route-id="@item.MaHh" class="product-image" style="padding:10px;"><img src="~/HangHoa/@item.Hinh" alt=" " class="img-responsive"></a>
+                            <a asp-action="ChiTiet" asp-controller="Hanghoa" asp-route-id="@item.Mahh" class="product-image" style="padding:10px;"><img src="~/Hanghoa/@item.Hinh" alt=" " class="img-responsive"></a>
                             <div class="new-collections-grid1-image-pos products-right-grids-pos" style="text-align:center">
-                                <a asp-action="ChiTiet" asp-controller="HangHoa" asp-route-mahh="@item.MaHh">Xem chi tiết</a>
+                                <a asp-action="ChiTiet" asp-controller="Hanghoa" asp-route-mahh="@item.Mahh">Xem chi tiết</a>
                             </div>
                             @{
-                                List<SanPhamKho> sanPhamKhos = db.SanPhamKho.Where(p => p.MaHh == item.MaHh).ToList();
+                                List<SanPhamKho> sanPhamKhos = db.SanPhamKho.Where(p => p.Mahh == item.Mahh).ToList();
                                 var soluong = sanPhamKhos.Sum(x => x.SoLuong);
                                 if (soluong > 10)
                                 {
-                                    double gg = item.GiamGia * 100;
+                                    double gg = item.Giamgia * 100;
                                     <div class="new-one">
                                         <p>-@gg%</p>
                                     </div>
@@ -146,7 +146,7 @@
                             <div class="new-collections-grid1-right products-right-grids-pos-right">
                                 <div class="rating">
                                     @{
-                                        List<YeuThich> yts = db.YeuThich.Where(p => p.MaHh == item.MaHh).ToList();
+                                        List<YeuThich> yts = db.YeuThich.Where(p => p.Mahh == item.Mahh).ToList();
                                         double diemyt = 0;
                                         if (yts.Count > 0)
                                         {
@@ -184,14 +184,14 @@
                                 </div>
                             </div>
                         </div>
-                        <h4><a asp-action="ChiTiet" asp-controller="HangHoa" asp-route-mahh="@item.MaHh">@item.TenHh</a></h4>
+                        <h4><a asp-action="ChiTiet" asp-controller="Hanghoa" asp-route-mahh="@item.Mahh">@item.Tenhh</a></h4>
                         <p>@item.MoTa</p>
                         <div class="simpleCart_shelfItem products-right-grid1-add-cart">
                             @{
-                                double dongiaban = item.DonGia * (1 - item.GiamGia);
-                                double giamgia = item.GiamGia * 100;
+                                double dongiaban = item.Dongia * (1 - item.Giamgia);
+                                double giamgia = item.Giamgia * 100;
                             }
-                            <p><i>@item.DonGia.ToString("#,##0") đ</i> <span class="item_price">@dongiaban.ToString("#,##0") đ</span></p>
+                            <p><i>@item.Dongia.ToString("#,##0") đ</i> <span class="item_price">@dongiaban.ToString("#,##0") đ</span></p>
                         </div>
                     </div>
                 </div>
@@ -231,7 +231,7 @@
                 }
                 $("#searchsp").keyup(function () {
                     $.ajax({
-                        url: "/HangHoa/TimKiem",
+                        url: "/Hanghoa/TimKiem",
                         method: "GET",
                         data: { keyword: $(this).val() },
                         success: function (res) {
@@ -281,7 +281,7 @@
                     console.log(mucgia);
                     console.log(sapxep);
                     $.ajax({
-                        url: "/HangHoa/Filter",
+                        url: "/Hanghoa/Filter",
                         type: "GET",
                         contentType: "application/json; charset=utf-8",
                         data: { "loai": loai, "gioitinh": gioitinh, "page": page, 'mucgia': mucgia, 'sapxep': sapxep },
@@ -319,7 +319,7 @@
                     console.log(loai);
                     console.log(gioitinh);
                     $.ajax({
-                        url: "/HangHoa/TaiThem",
+                        url: "/Hanghoa/TaiThem",
                         type: "GET",
                         contentType: "application/json; charset=utf-8",
                         data: {"loai": loai, "gioitinh": gioitinh, "page": page, 'mucgia': mucgia, 'sapxep': sapxep},

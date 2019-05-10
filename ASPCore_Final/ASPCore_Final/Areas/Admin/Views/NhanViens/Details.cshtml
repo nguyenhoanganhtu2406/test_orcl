@@ -1,4 +1,4 @@
-﻿@model ASPCore_Final.Models.NhanVien
+﻿@model ASPCore_Final.Models.Nhanvien
 
 @{
     ViewData["Title"] = "Details";
@@ -12,10 +12,10 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.HoTen)
+            @Html.DisplayNameFor(model => model.Hoten)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.HoTen)
+            @Html.DisplayFor(model => model.Hoten)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Email)
@@ -24,26 +24,26 @@
             @Html.DisplayFor(model => model.Email)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.MatKhau)
+            @Html.DisplayNameFor(model => model.Matkhau)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.MatKhau)
+            @Html.DisplayFor(model => model.Matkhau)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.TrangThaiHd)
+            @Html.DisplayNameFor(model => model.Trangthaihd)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.TrangThaiHd)
+            @Html.DisplayFor(model => model.Trangthaihd)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.MaPqNavigation)
+            @Html.DisplayNameFor(model => model.MapqNavigation)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.MaPqNavigation.MaPq)
+            @Html.DisplayFor(model => model.MapqNavigation.Mapq)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.MaNv" class="btn btn-primary">Sửa</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Manv" class="btn btn-primary">Sửa</a> |
     <a asp-action="Index" class="btn btn-primary">Trở lại</a>
 </div>

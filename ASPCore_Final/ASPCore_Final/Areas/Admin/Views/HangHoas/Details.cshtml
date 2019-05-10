@@ -1,4 +1,4 @@
-﻿@model ASPCore_Final.Models.HangHoa
+﻿@model ASPCore_Final.Models.Hanghoa
 
 @{
     ViewData["Title"] = "Details";
@@ -12,10 +12,10 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.TenHh)
+            @Html.DisplayNameFor(model => model.Tenhh)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.TenHh)
+            @Html.DisplayFor(model => model.Tenhh)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Hinh)
@@ -24,39 +24,39 @@
             @Html.DisplayFor(model => model.Hinh)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.DonGia)
+            @Html.DisplayNameFor(model => model.Dongia)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.DonGia)
+            @Html.DisplayFor(model => model.Dongia)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.GiamGia)
+            @Html.DisplayNameFor(model => model.Giamgia)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.GiamGia)
+            @Html.DisplayFor(model => model.Giamgia)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.MoTa)
+            @Html.DisplayNameFor(model => model.Mota)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.MoTa)
+            @Html.DisplayFor(model => model.Mota)
         </dd>
         
         <dt>
-            @Html.DisplayNameFor(model => model.MaLoaiNavigation)
+            @Html.DisplayNameFor(model => model.MaloaiNavigation)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.MaLoaiNavigation.MaLoai)
+            @Html.DisplayFor(model => model.MaloaiNavigation.Maloai)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.MaNccNavigation)
+            @Html.DisplayNameFor(model => model.ManccNavigation)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.MaNccNavigation.MaNcc)
+            @Html.DisplayFor(model => model.ManccNavigation.Mancc)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.MaHh" class="btn btn-primary">Sửa</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Mahh" class="btn btn-primary">Sửa</a> |
     <a asp-action="Index" class="btn btn-primary">Trở lại</a>
 </div>

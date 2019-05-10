@@ -108,7 +108,7 @@
 </style>
 <div class="banner">
     @{
-        ESHOPContext db = new ESHOPContext();
+        ModelContext db = new ModelContext();
         // lấy banner trong thời gian hoạt động
         List<BannerQc> bannerQcs = db.BannerQc.Where(p => p.NgayBatDau <= DateTime.Now && DateTime.Now <= p.NgayKetThucQc).ToList();
         foreach (var item in bannerQcs)
@@ -160,8 +160,8 @@
 <!-- //banner -->
 @{
 
-    List<HangHoa> hhs = db.HangHoa.ToList();
-    List<HangHoa> hhnb = db.HangHoa.Where(p => p.GiamGia != 0).Take(4).ToList();
+    List<Hanghoa> hhs = db.Hanghoa.ToList();
+    List<Hanghoa> hhnb = db.Hanghoa.Where(p => p.Giamgia != 0).Take(4).ToList();
 
 }
 <section class="san-pham-noi-bat">
@@ -174,16 +174,16 @@
                     <div class="col-md-3 new-collections-grid">
                         <div class="new-collections-grid1 new-collections-grid1-image-width animated wow slideInUp" data-wow-delay=".5s">
                             <div class="new-collections-grid1-image">
-                                <a asp-action="ChiTiet" asp-controller="HangHoa" asp-route-mahh="@item.MaHh" class="product-image"><img src="~/HangHoa/@item.Hinh" alt=" " class="img-responsive" /></a>
+                                <a asp-action="ChiTiet" asp-controller="Hanghoa" asp-route-mahh="@item.Mahh" class="product-image"><img src="~/Hanghoa/@item.Hinh" alt=" " class="img-responsive" /></a>
                                 <div class="new-collections-grid1-image-pos products-right-grids-pos">
-                                    <a asp-action="ChiTiet" asp-controller="HangHoa" asp-route-mahh="@item.MaHh">Xem chi tiết</a>
+                                    <a asp-action="ChiTiet" asp-controller="Hanghoa" asp-route-mahh="@item.Mahh">Xem chi tiết</a>
                                 </div>
                                 @{
-                                    List<SanPhamKho> sanPhamKhos = db.SanPhamKho.Where(p => p.MaHh == item.MaHh).ToList();
+                                    List<SanPhamKho> sanPhamKhos = db.SanPhamKho.Where(p => p.Mahh == item.Mahh).ToList();
                                     var soluong = sanPhamKhos.Sum(x => x.SoLuong);
                                     if (soluong > 10)
                                     {
-                                        double gg = item.GiamGia * 100;
+                                        double gg = item.Giamgia * 100;
                                         <div class="new-one">
                                             <p>-@gg%</p>
                                         </div>
@@ -205,7 +205,7 @@
 
                                     <div class="rating">
                                         @{
-                                            List<YeuThich> yts = db.YeuThich.Where(p => p.MaHh == item.MaHh).ToList();
+                                            List<YeuThich> yts = db.YeuThich.Where(p => p.Mahh == item.Mahh).ToList();
                                             double diemyt = 0;
                                             if (yts.Count > 0)
                                             {
@@ -245,12 +245,12 @@
 
                                 </div>
                             </div>
-                            <h4><a asp-action="ChiTiet" asp-controller="HangHoa" asp-route-mahh="@item.MaHh">@item.TenHh</a></h4>
+                            <h4><a asp-action="ChiTiet" asp-controller="Hanghoa" asp-route-mahh="@item.Mahh">@item.Tenhh</a></h4>
                             @{
-                                double giaban = item.DonGia * (1 - item.GiamGia);
+                                double giaban = item.Dongia * (1 - item.Giamgia);
                             }
                             <div class="new-collections-grid1-left simpleCart_shelfItem">
-                                <p><i>@item.DonGia.ToString("#,##0") đ</i> <span class="item_price">@giaban.ToString("#,##0") đ</span></p>
+                                <p><i>@item.Dongia.ToString("#,##0") đ</i> <span class="item_price">@giaban.ToString("#,##0") đ</span></p>
                             </div>
                         </div>
                     </div>
@@ -266,23 +266,23 @@
         <div class="new-collections-grids">
             <div class="row">
                 @{
-                    List<HangHoaBanChayModel> hhbc = db.HangHoa.Join(db.ChiTietHd,
-                                             hh => hh.MaHh,
-                                             cthd => cthd.MaHh,
+                    List<HangHoaBanChayModel> hhbc = db.Hanghoa.Join(db.ChiTietHd,
+                                             hh => hh.Mahh,
+                                             cthd => cthd.Mahh,
                                              (hh, cthd) => new { HHoa = hh, CTiet = cthd })
                                        .Join(db.HoaDon.Where(hd => (DateTime.Now - hd.NgayDat).TotalDays < 30),
                                              hhcthd => hhcthd.CTiet.MaHd,
                                              hd => hd.MaHd,
                                              (hhcthd, hd) => new { HHCTHD = hhcthd, HDon = hd })
-                                       .GroupBy(g => new { g.HHCTHD.HHoa.MaHh, g.HHCTHD.HHoa.TenHh, g.HHCTHD.HHoa.Hinh, g.HHCTHD.HHoa.MoTa, g.HHCTHD.HHoa.DonGia, g.HHCTHD.HHoa.GiamGia })
+                                       .GroupBy(g => new { g.HHCTHD.HHoa.Mahh, g.HHCTHD.HHoa.Tenhh, g.HHCTHD.HHoa.Hinh, g.HHCTHD.HHoa.MoTa, g.HHCTHD.HHoa.Dongia, g.HHCTHD.HHoa.Giamgia })
                                        .Select(group => new HangHoaBanChayModel
                                        {
-                                           MaHH = group.Key.MaHh,
-                                           TenHH = group.Key.TenHh,
+                                           MaHH = group.Key.Mahh,
+                                           TenHH = group.Key.Tenhh,
                                            HAnh = group.Key.Hinh,
                                            MTa = group.Key.MoTa,
-                                           DGIa = group.Key.DonGia,
-                                           GGia = group.Key.GiamGia,
+                                           DGIa = group.Key.Dongia,
+                                           GGia = group.Key.Giamgia,
                                            TongSoBan = group.Sum(t => t.HHCTHD.CTiet.SoLuong)
                                        }).ToList();
                     hhbc = hhbc.Take(4).ToList();
@@ -292,12 +292,12 @@
                     <div class="col-md-3 new-collections-grid">
                         <div class="new-collections-grid1 new-collections-grid1-image-width animated wow slideInUp" data-wow-delay=".5s">
                             <div class="new-collections-grid1-image">
-                                <a asp-action="ChiTiet" asp-controller="HangHoa" asp-route-id="@item.MaHH" class="product-image"><img src="~/HangHoa/@item.HAnh" alt=" " class="img-responsive"></a>
+                                <a asp-action="ChiTiet" asp-controller="Hanghoa" asp-route-id="@item.Mahh" class="product-image"><img src="~/Hanghoa/@item.HAnh" alt=" " class="img-responsive"></a>
                                 <div class="new-collections-grid1-image-pos products-right-grids-pos">
-                                    <a asp-action="ChiTiet" asp-controller="HangHoa" asp-route-mahh="@item.MaHH">Xem chi tiết</a>
+                                    <a asp-action="ChiTiet" asp-controller="Hanghoa" asp-route-mahh="@item.Mahh">Xem chi tiết</a>
                                 </div>
                                 @{
-                                    List<SanPhamKho> sanPhamKhos = db.SanPhamKho.Where(p => p.MaHh == item.MaHH).ToList();
+                                    List<SanPhamKho> sanPhamKhos = db.SanPhamKho.Where(p => p.Mahh == item.Mahh).ToList();
                                     var soluong = sanPhamKhos.Sum(x => x.SoLuong);
                                     if (soluong > 10)
                                     {
@@ -323,7 +323,7 @@
                                 <div class="new-collections-grid1-right products-right-grids-pos-right">
                                     <div class="rating">
                                         @{
-                                            List<YeuThich> yts = db.YeuThich.Where(p => p.MaHh == item.MaHH).ToList();
+                                            List<YeuThich> yts = db.YeuThich.Where(p => p.Mahh == item.Mahh).ToList();
                                             double diemyt = 0;
                                             if (yts.Count > 0)
                                             {
@@ -361,7 +361,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <h4><a asp-action="ChiTiet" asp-controller="HangHoa" asp-route-mahh="@item.MaHH">@item.TenHH</a></h4>
+                            <h4><a asp-action="ChiTiet" asp-controller="Hanghoa" asp-route-mahh="@item.Mahh">@item.TenHH</a></h4>
                             <div class="simpleCart_shelfItem products-right-grid1-add-cart">
                                 @{
                                     double giaban = item.DGIa * (1 - item.GGia);
@@ -378,11 +378,11 @@
 </section>
 @{
     //section này tuy ghi là Hàng hóa nổi bật nhưng thực ra là Hàng hóa gợi ý
-    List<HangHoa> hhgy = new List<HangHoa>();
+    List<Hanghoa> hhgy = new List<Hanghoa>();
     int demhhgy = 0;
     foreach (var item in hhs)
     {
-        List<BinhLuanSp> bls = db.BinhLuanSp.Where(p => p.MaHh == item.MaHh).ToList();
+        List<BinhLuanSp> bls = db.BinhLuanSp.Where(p => p.Mahh == item.Mahh).ToList();
         if (bls.Count > 0 && demhhgy < 4)
         {
             ++demhhgy;
@@ -392,7 +392,7 @@
     if (demhhgy < 4)
     {
         Random rnd = new Random();
-        List<HangHoa> hhs_random = hhs.OrderBy(x => rnd.Next()).ToList();
+        List<Hanghoa> hhs_random = hhs.OrderBy(x => rnd.Next()).ToList();
 
         foreach (var hh in hhs_random)
         {
@@ -414,16 +414,16 @@
                     <div class="col-md-3 new-collections-grid">
                         <div class="new-collections-grid1 new-collections-grid1-image-width animated wow slideInUp" data-wow-delay=".5s">
                             <div class="new-collections-grid1-image">
-                                <a asp-action="ChiTiet" asp-controller="HangHoa" asp-route-mahh="@item.MaHh" class="product-image"><img src="~/HangHoa/@item.Hinh" alt=" " class="img-responsive" /></a>
+                                <a asp-action="ChiTiet" asp-controller="Hanghoa" asp-route-mahh="@item.Mahh" class="product-image"><img src="~/Hanghoa/@item.Hinh" alt=" " class="img-responsive" /></a>
                                 <div class="new-collections-grid1-image-pos products-right-grids-pos">
-                                    <a asp-action="ChiTiet" asp-controller="HangHoa" asp-route-mahh="@item.MaHh">Xem chi tiết</a>
+                                    <a asp-action="ChiTiet" asp-controller="Hanghoa" asp-route-mahh="@item.Mahh">Xem chi tiết</a>
                                 </div>
                                 @{
-                                    List<SanPhamKho> sanPhamKhos = db.SanPhamKho.Where(p => p.MaHh == item.MaHh).ToList();
+                                    List<SanPhamKho> sanPhamKhos = db.SanPhamKho.Where(p => p.Mahh == item.Mahh).ToList();
                                     var soluong = sanPhamKhos.Sum(x => x.SoLuong);
                                     if (soluong > 10)
                                     {
-                                        double gg = item.GiamGia * 100;
+                                        double gg = item.Giamgia * 100;
                                         <div class="new-one">
                                             <p>-@gg%</p>
                                         </div>
@@ -445,7 +445,7 @@
 
                                     <div class="rating">
                                         @{
-                                            List<YeuThich> yts = db.YeuThich.Where(p => p.MaHh == item.MaHh).ToList();
+                                            List<YeuThich> yts = db.YeuThich.Where(p => p.Mahh == item.Mahh).ToList();
                                             double diemyt = 0;
                                             if (yts.Count > 0)
                                             {
@@ -485,12 +485,12 @@
 
                                 </div>
                             </div>
-                            <h4><a asp-action="ChiTiet" asp-controller="HangHoa" asp-route-mahh="@item.MaHh">@item.TenHh</a></h4>
+                            <h4><a asp-action="ChiTiet" asp-controller="Hanghoa" asp-route-mahh="@item.Mahh">@item.Tenhh</a></h4>
                             @{
-                                double giaban = item.DonGia * (1 - item.GiamGia);
+                                double giaban = item.Dongia * (1 - item.Giamgia);
                             }
                             <div class="new-collections-grid1-left simpleCart_shelfItem">
-                                <p><i>@item.DonGia.ToString("#,##0") đ</i> <span class="item_price">@giaban.ToString("#,##0") đ</span></p>
+                                <p><i>@item.Dongia.ToString("#,##0") đ</i> <span class="item_price">@giaban.ToString("#,##0") đ</span></p>
                             </div>
                         </div>
                     </div>
@@ -506,23 +506,23 @@
         <div class="new-collections-grids">
             <div class="row">
                 @{
-                    List<HangHoa> hangHoaMoi = db.HangHoa.OrderByDescending(p => p.MaHh).Take(4).ToList();
+                    List<Hanghoa> hangHoaMoi = db.Hanghoa.OrderByDescending(p => p.Mahh).Take(4).ToList();
                 }
                 @foreach (var item in hangHoaMoi)
                 {
                     <div class="col-md-3 new-collections-grid">
                         <div class="new-collections-grid1 new-collections-grid1-image-width animated wow slideInUp" data-wow-delay=".5s">
                             <div class="new-collections-grid1-image">
-                                <a asp-action="ChiTiet" asp-controller="HangHoa" asp-route-mahh="@item.MaHh" class="product-image"><img src="~/HangHoa/@item.Hinh" alt=" " class="img-responsive" /></a>
+                                <a asp-action="ChiTiet" asp-controller="Hanghoa" asp-route-mahh="@item.Mahh" class="product-image"><img src="~/Hanghoa/@item.Hinh" alt=" " class="img-responsive" /></a>
                                 <div class="new-collections-grid1-image-pos products-right-grids-pos">
-                                    <a asp-action="ChiTiet" asp-controller="HangHoa" asp-route-mahh="@item.MaHh">Xem chi tiết</a>
+                                    <a asp-action="ChiTiet" asp-controller="Hanghoa" asp-route-mahh="@item.Mahh">Xem chi tiết</a>
                                 </div>
                                 @{
-                                    List<SanPhamKho> sanPhamKhos = db.SanPhamKho.Where(p => p.MaHh == item.MaHh).ToList();
+                                    List<SanPhamKho> sanPhamKhos = db.SanPhamKho.Where(p => p.Mahh == item.Mahh).ToList();
                                     var soluong = sanPhamKhos.Sum(x => x.SoLuong);
                                     if (soluong > 10)
                                     {
-                                        double gg = item.GiamGia * 100;
+                                        double gg = item.Giamgia * 100;
                                         <div class="new-one">
                                             <p>-@gg%</p>
                                         </div>
@@ -543,7 +543,7 @@
                                 <div class="new-collections-grid1-right products-right-grids-pos-right">
                                     <div class="rating">
                                         @{
-                                            List<YeuThich> yts = db.YeuThich.Where(p => p.MaHh == item.MaHh).ToList();
+                                            List<YeuThich> yts = db.YeuThich.Where(p => p.Mahh == item.Mahh).ToList();
                                             double diemyt = 0;
                                             if (yts.Count > 0)
                                             {
@@ -581,12 +581,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <h4><a asp-action="ChiTiet" asp-controller="HangHoa" asp-route-mahh="@item.MaHh">@item.TenHh</a></h4>
+                            <h4><a asp-action="ChiTiet" asp-controller="Hanghoa" asp-route-mahh="@item.Mahh">@item.Tenhh</a></h4>
                             @{
-                                double giaban = item.DonGia * (1 - item.GiamGia);
+                                double giaban = item.Dongia * (1 - item.Giamgia);
                             }
                             <div class="new-collections-grid1-left simpleCart_shelfItem">
-                                <p><i>@item.DonGia.ToString("#,##0") đ</i> <span class="item_price">@giaban.ToString("#,##0") đ</span></p>
+                                <p><i>@item.Dongia.ToString("#,##0") đ</i> <span class="item_price">@giaban.ToString("#,##0") đ</span></p>
                             </div>
                         </div>
                     </div>
@@ -640,7 +640,7 @@
     <div class="all-item animated wow slideInUp" data-wow-delay=".5s">
         <div class="row">
             <div class="col-md-12">
-                <a asp-controller="HangHoa" asp-action="Index">Xem tất cả sản phẩm</a>
+                <a asp-controller="Hanghoa" asp-action="Index">Xem tất cả sản phẩm</a>
             </div>
         </div>
     </div>
