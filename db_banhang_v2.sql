@@ -202,3 +202,5 @@ into ChiTietHD (MaCT, MaHD, MaHH, DonGia, GiamGia, SoLuong, KichCo) values  (30,
 into ChiTietHD (MaCT, MaHD, MaHH, DonGia, GiamGia, SoLuong, KichCo) values  (31, 20, 19, 320000, 0.2, 3, N'M')
 into ChiTietHD (MaCT, MaHD, MaHH, DonGia, GiamGia, SoLuong, KichCo) values  (32, 22, 7, 350000, 0.15, 1, N'S')
 SELECT * FROM dual;
+
+COMMIT;
