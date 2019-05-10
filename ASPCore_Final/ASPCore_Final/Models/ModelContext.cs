@@ -1,8 +1,6 @@
 ﻿using System;
-using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Configuration;
 
 namespace ASPCore_Final.Models
 {
@@ -31,12 +29,6 @@ namespace ASPCore_Final.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                // IConfigurationRoot configuration = new ConfigurationBuilder()
-                //.SetBasePath(Directory.GetCurrentDirectory())
-                //.AddJsonFile("appsettings.json")
-                //.Build();
-                // var connectionString = configuration.GetConnectionString("ESHOP");
-                // optionsBuilder.UseOracle(connectionString);
                 optionsBuilder.UseOracle("User Id=nva;Password=123456;Data Source=localhost:1521/db12c;");
             }
         }
@@ -472,6 +464,18 @@ namespace ASPCore_Final.Models
             modelBuilder.HasSequence("ISEQ$$_78413");
 
             modelBuilder.HasSequence("ISEQ$$_78416");
+
+            modelBuilder.HasSequence("ISEQ$$_78475");
+
+            modelBuilder.HasSequence("ISEQ$$_78478");
+
+            modelBuilder.HasSequence("ISEQ$$_78481");
+
+            modelBuilder.HasSequence("ISEQ$$_78484");
+
+            modelBuilder.HasSequence("ISEQ$$_78489");
+
+            modelBuilder.HasSequence("ISEQ$$_78492");
         }
     }
 }
