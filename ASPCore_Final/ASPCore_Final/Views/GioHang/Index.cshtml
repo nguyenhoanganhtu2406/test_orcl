@@ -121,8 +121,8 @@
                                     soluong += currentItem['soLuong'];
                                     $("ul.dschitiet").append("<li>" + currentItem['tenHh'] + "<i>-</i><span>" + currentItem['soLuong'] + "<i>x</i>" + currentItem['giaBan'].toLocaleString() + " đ</span></li>");
                                 }
-                                $("ul.dschitiet").append('<li style="color:seagreen;border-top:groove;font-size:15px;"> <form asp-action="CheckVoucher" asp-controller="GioHang" method="post"><input type="submit" name="check" value="Nhập lại" class="btn btn-primary" /><br /><span id="voucherif"></span><br/><input type="hidden" name="tongtien" value="@tongtien"/></form></li>');
-                                $("ul.dschitiet").append('<li style="color:seagreen;border-top:groove;font-size:15px;">TỔNG ĐƠN HÀNG<i></i><span>' + tongtien.toLocaleString() + ' đ</span><br/><br/>GIẢM GIÁ<i></i><span></span><br /><br />PHÍ VẬN CHUYỂN : <i></i><span>@phivanchuyen.ToString("#,##0") đ</span></li>');
+                                @*$("ul.dschitiet").append('<li style="color:seagreen;border-top:groove;font-size:15px;"> <form asp-action="CheckVoucher" asp-controller="GioHang" method="post"><input type="submit" name="check" value="Nhập lại" class="btn btn-primary" /><br /><span id="voucherif"></span><br/><input type="hidden" name="tongtien" value="@tongtien"/></form></li>');*@
+                                @*$("ul.dschitiet").append('<li style="color:seagreen;border-top:groove;font-size:15px;">TỔNG ĐƠN HÀNG<i></i><span>' + tongtien.toLocaleString() + ' đ</span><br/><br/>GIẢM GIÁ<i></i><span></span><br /><br />PHÍ VẬN CHUYỂN : <i></i><span>@phivanchuyen.ToString("#,##0") đ</span></li>');*@
                                 tongtien += 35000;
                                 $("ul.dschitiet").append('<li style="color:seagreen;border-top:groove;font-size:20px;">TỔNG THANH TOÁN <i>-</i><span>' + tongtien.toLocaleString() + ' đ</span></li>');
                                 $("div.total span.tong").html(tongtien.toLocaleString() + ' đ');
