@@ -69,7 +69,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaNcc,TenCongTy,Email,DienThoai,DiaChi,MoTa")] Nhacungcap nhaCungCap)
+        public async Task<IActionResult> Create([Bind("Mancc,Tencongty,Email,Dienthoai,Diachi,Mota")] Nhacungcap nhaCungCap)
         {
             if (ModelState.IsValid)
             {
@@ -101,7 +101,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("MaNcc,TenCongTy,Email,DienThoai,DiaChi,MoTa")] Nhacungcap nhaCungCap)
+        public async Task<IActionResult> Edit(string id, [Bind("Mancc,Tencongty,Email,Dienthoai,Diachi,Mota")] Nhacungcap nhaCungCap)
         {
          
 

@@ -65,8 +65,8 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         [HttpGet("/admin/HangHoas/Create")]
         public IActionResult Create()
         {
-            ViewData["MaLoai"] = new SelectList(_context.Loai, "Maloai", "Maloai");
-            ViewData["MaNcc"] = new SelectList(_context.Nhacungcap, "Mancc", "Mancc");
+            ViewData["Maloai"] = new SelectList(_context.Loai, "Maloai", "Maloai");
+            ViewData["Mancc"] = new SelectList(_context.Nhacungcap, "Mancc", "Mancc");
             return View();
         }
 
@@ -75,7 +75,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaHh,TenHh,MaLoai,Hinh,DonGia,GiamGia,MoTa,MaNcc,SoLuongHang")] Hanghoa hangHoa, IFormFile fHinh)
+        public async Task<IActionResult> Create([Bind("Mahh,Tenhh,Maloai,Hinh,Dongia,Giamgia,Mota,Mancc,Soluonghang")] Hanghoa hangHoa, IFormFile fHinh)
         {
             if (ModelState.IsValid)
             {
@@ -92,8 +92,8 @@ namespace ASPCore_Final.Areas.Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaLoai"] = new SelectList(_context.Loai, "Maloai", "Maloai", hangHoa.Maloai);
-            ViewData["MaNcc"] = new SelectList(_context.Nhacungcap, "Mancc", "Mancc", hangHoa.Mancc);
+            ViewData["Maloai"] = new SelectList(_context.Loai, "Maloai", "Maloai", hangHoa.Maloai);
+            ViewData["Mancc"] = new SelectList(_context.Nhacungcap, "Mancc", "Mancc", hangHoa.Mancc);
             return View(hangHoa);
         }
 
@@ -111,8 +111,8 @@ namespace ASPCore_Final.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["MaLoai"] = new SelectList(_context.Loai, "Maloai", "Maloai", hangHoa.Maloai);
-            ViewData["MaNcc"] = new SelectList(_context.Nhacungcap, "Mancc", "Mancc", hangHoa.Mancc);
+            ViewData["Maloai"] = new SelectList(_context.Loai, "Maloai", "Maloai", hangHoa.Maloai);
+            ViewData["Mancc"] = new SelectList(_context.Nhacungcap, "Mancc", "Mancc", hangHoa.Mancc);
             return View(hangHoa);
         }
 
@@ -121,7 +121,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaHh,TenHh,MaLoai,Hinh,DonGia,GiamGia,MoTa,MaNcc,SoLuongHang")] Hanghoa hangHoa, IFormFile fHinh)
+        public async Task<IActionResult> Edit(int id, [Bind("Mahh,Tenhh,Maloai,Hinh,Dongia,Giamgia,Mota,Mancc,Soluonghang")] Hanghoa hangHoa, IFormFile fHinh)
         {
           
             if (ModelState.IsValid)
@@ -153,8 +153,8 @@ namespace ASPCore_Final.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaLoai"] = new SelectList(_context.Loai, "Maloai", "Maloai", hangHoa.Maloai);
-            ViewData["MaNcc"] = new SelectList(_context.Nhacungcap, "Mancc", "Mancc", hangHoa.Mancc);
+            ViewData["Maloai"] = new SelectList(_context.Loai, "Maloai", "Maloai", hangHoa.Maloai);
+            ViewData["Mancc"] = new SelectList(_context.Nhacungcap, "Mancc", "Mancc", hangHoa.Mancc);
             return View(hangHoa);
         }
         // DELETE: api/HangHoas/5

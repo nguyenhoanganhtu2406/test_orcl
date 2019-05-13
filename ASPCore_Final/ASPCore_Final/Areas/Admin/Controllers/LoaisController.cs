@@ -23,7 +23,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
 
         // GET: Admin/Loais
         [HttpGet("/admin/Loais")]
-        public async Task<IActionResult> Index(string searchString, int page = 1, string sortExpression = "GioiTinh")
+        public async Task<IActionResult> Index(string searchString, int page = 1, string sortExpression = "Gioitinh")
         {
             var eSHOPContext = _context.Loai.AsNoTracking().AsQueryable();
             if (!string.IsNullOrEmpty(searchString))
@@ -68,7 +68,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaLoai,GioiTinh,TenLoai")] Loai loai)
+        public async Task<IActionResult> Create([Bind("Maloai,Gioitinh,Tenloai")] Loai loai)
         {
             if (ModelState.IsValid)
             {
@@ -101,7 +101,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("MaLoai,GioiTinh,TenLoai")] Loai loai)
+        public async Task<IActionResult> Edit(string id, [Bind("Maloai,Gioitinh,Tenloai")] Loai loai)
         {
             if (id != loai.Maloai)
             {
