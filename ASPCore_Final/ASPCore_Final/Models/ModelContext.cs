@@ -29,7 +29,7 @@ namespace ASPCore_Final.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseOracle("User Id=nva;Password=123456;Data Source=localhost:1521/db12c;");
+                optionsBuilder.UseOracle("User Id=nva;Password=123456;Data Source=localhost:1521/oracle12cr2;");
             }
         }
 

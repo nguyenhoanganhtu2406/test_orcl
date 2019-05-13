@@ -64,7 +64,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         [HttpGet("/admin/NhanViens/Create")]
         public IActionResult Create()
         {
-            ViewData["MaPq"] = new SelectList(_context.Phanquyen, "Mapq", "Mapq");
+            ViewData["Mapq"] = new SelectList(_context.Phanquyen, "Mapq", "Mapq");
             return View();
         }
 
@@ -73,16 +73,17 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaNv,HoTen,Email,MatKhau,MaPq,TrangThaiHd")] Nhanvien nhanVien)
+        public async Task<IActionResult> Create([Bind("Manv,Hoten,Email,Matkhau,Mapq,Trangthaihd")] Nhanvien nhanVien)
         {
             if (ModelState.IsValid)
             {
+                if (string.IsNullOrEmpty(nhanVien.Matkhau)) return null;
                 nhanVien.Matkhau = Encryptor.MD5Hash(nhanVien.Matkhau);
                 _context.Add(nhanVien);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaPq"] = new SelectList(_context.Phanquyen, "Mapq", "Mapq", nhanVien.Mapq);
+            ViewData["Mapq"] = new SelectList(_context.Phanquyen, "Mapq", "Mapq", nhanVien.Mapq);
             return View(nhanVien);
         }
 
@@ -109,7 +110,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaNv,HoTen,Email,MatKhau,MaPq,TrangThaiHd")] Nhanvien nhanVien)
+        public async Task<IActionResult> Edit(int id, [Bind("Manv,Hoten,Email,Matkhau,Mapq,Trangthaihd")] Nhanvien nhanVien)
         {
 
             
@@ -134,7 +135,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaPq"] = new SelectList(_context.Phanquyen, "Mapq", "Mapq", nhanVien.Mapq);
+            ViewData["Mapq"] = new SelectList(_context.Phanquyen, "Mapq", "Mapq", nhanVien.Mapq);
             return View(nhanVien);
         }
 

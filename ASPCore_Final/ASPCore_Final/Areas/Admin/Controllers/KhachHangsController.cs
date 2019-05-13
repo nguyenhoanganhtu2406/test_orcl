@@ -68,7 +68,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaKh,TaiKhoan,MatKhau,HoTen,GioiTinh,NgaySinh,DiaChi,DienThoai,Email,Hinh,TrangThaiHd")] Khachhang khachHang)
+        public async Task<IActionResult> Create([Bind("Makh,Taikhoan,Matkhau,Hoten,Gioitinh,Ngaysinh,Diachi,Dienthoai,Email,Hinh,Trangthaihd")] Khachhang khachHang)
         {
             if (ModelState.IsValid)
             {
@@ -102,7 +102,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaKh,TaiKhoan,MatKhau,HoTen,GioiTinh,NgaySinh,DiaChi,DienThoai,Email,Hinh,TrangThaiHd")] Khachhang khachHang)
+        public async Task<IActionResult> Edit(int id, [Bind("Makh,Taikhoan,Matkhau,Hoten,Gioitinh,Ngaysinh,Diachi,Dienthoai,Email,Hinh,Trangthaihd")] Khachhang khachHang)
         {
            
             if (ModelState.IsValid)
