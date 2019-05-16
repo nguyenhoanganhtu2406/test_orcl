@@ -12,11 +12,18 @@
                     <a asp-action="ChiTiet" asp-controller="Hanghoa" asp-route-mahh="@item.Mahh">Xem chi tiết</a>
                 </div>
                 @{
-                    if (item.Giamgia > 0)
+                    var soluong = db.Sanphamkho.Where(p => p.Mahh == item.Mahh).Sum(x => x.Soluong);
+                    if (item.Giamgia > 0 && soluong >= 5)
                     {
                         double gg = Convert.ToDouble(item.Giamgia * 100);
                         <div class="new-one">
                             <p>-@gg%</p>
+                        </div>
+                    }
+                    else if (soluong < 5)
+                    {
+                        <div class="new-one">
+                            <p>Tạm hết hàng</p>
                         </div>
                     }
                 }

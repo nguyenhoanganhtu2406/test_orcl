@@ -132,7 +132,26 @@ namespace ASPCore_Final.Controllers
 
                     db.Chitiethd.Add(cthd);
                     db.SaveChanges();
-                    
+                    // trừ sản phẩm từ kho
+                    Sanphamkho spk = db.Sanphamkho.SingleOrDefault(p => p.Mahh == cthd.Mahh && p.Kichco == cthd.Kichco);
+                    if (spk.Soluong >= cthd.Soluong)
+                    {
+                        if (HttpContext.Session.Get<string>("ErrorGH") != null)
+                        {
+                            HttpContext.Session.Remove("ErrorGH");
+                        }
+                        spk.Soluong = spk.Soluong - cthd.Soluong;
+                    }
+                    else
+                    {
+                        Hanghoa hangHoa = db.Hanghoa.SingleOrDefault(p => p.Mahh == cthd.Mahh);
+                        string loi = "Hàng hóa có mã " + hangHoa.Tenhh + " chỉ còn : " + spk.Soluong + " sản phẩm";
+                        HttpContext.Session.Set("ErrorGH", loi);
+                        db.Chitiethd.Remove(cthd);
+                        db.Hoadon.Remove(hd);
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
                 }
                 hd.Tongtienhang = Convert.ToDecimal(tongtienhang);
                 hd.Tongthucthu = Convert.ToDecimal(tongthucthu);
@@ -185,6 +204,26 @@ namespace ASPCore_Final.Controllers
               
                 db.Chitiethd.Add(cthd);
                 db.SaveChanges();
+                // trừ sản phẩm từ kho
+                Sanphamkho spk = db.Sanphamkho.SingleOrDefault(p => p.Mahh == cthd.Mahh && p.Kichco == cthd.Kichco);
+                if (spk.Soluong >= cthd.Soluong)
+                {
+                    if (HttpContext.Session.Get<string>("ErrorGH") != null)
+                    {
+                        HttpContext.Session.Remove("ErrorGH");
+                    }
+                    spk.Soluong = spk.Soluong - cthd.Soluong;
+                }
+                else
+                {
+                    Hanghoa hangHoa = db.Hanghoa.SingleOrDefault(p => p.Mahh == cthd.Mahh);
+                    string loi = "Hàng hóa có mã " + hangHoa.Tenhh + " chỉ còn : " + spk.Soluong + " sản phẩm";
+                    HttpContext.Session.Set("ErrorGH", loi);
+                    db.Chitiethd.Remove(cthd);
+                    db.Hoadon.Remove(hd);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
             hd.Tongtienhang = Convert.ToDecimal(tongtienhang);
             hd.Tongthucthu = Convert.ToDecimal(tongthucthu);

@@ -84,10 +84,23 @@
                     </div>
                     <div class="clearfix"> </div>
                     <br />
-                    <div class="occasion-cart">
-                        <button type="submit" name="btnAddtoCart" class="btn btn-success">Thêm vào giỏ</button>
-                    </div>
-                    
+                    @{
+                        List<Sanphamkho> sanPhamKhos = db.Sanphamkho.Where(p => p.Mahh == Model.Mahh).ToList();
+                        var soluong = sanPhamKhos.Sum(x => x.Soluong);
+                        @if (soluong > 0)
+                        {
+                            <div class="occasion-cart">
+                                <button type="submit" name="btnAddtoCart" class="btn btn-success">Thêm vào giỏ</button>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="occasion-cart">
+                                <p class="label label-danger">Tạm hết hàng</p>
+                            </div>
+                        }
+                    }
+
                 </form>
                 <div class="social">
                     <div class="social-left">

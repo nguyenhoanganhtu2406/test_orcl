@@ -40,6 +40,8 @@ namespace ASPCore_Final.Controllers
             List<Chitiethd> listCT_Xoa = db.Chitiethd.Where(p => p.Mahd == mahd).ToList();
             foreach (var item in listCT_Xoa)
             {
+                Sanphamkho spk = db.Sanphamkho.SingleOrDefault(p => p.Mahh == item.Mahh && p.Kichco == item.Kichco);
+                spk.Soluong += item.Soluong;
                 db.Chitiethd.Remove(item);
             }
             db.SaveChanges();
@@ -53,8 +55,10 @@ namespace ASPCore_Final.Controllers
         public IActionResult XoaCTHD(int mact)
         {
             Chitiethd ct = db.Chitiethd.Find(mact);
-            if(ct != null)
+            Sanphamkho spk = db.Sanphamkho.SingleOrDefault(p => p.Mahh == ct.Mahh && p.Kichco == ct.Kichco);
+            if (spk != null)
             {
+                spk.Soluong += ct.Soluong;
                 db.Chitiethd.Remove(ct);
             }
             db.SaveChanges();
