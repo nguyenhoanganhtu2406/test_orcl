@@ -78,7 +78,7 @@ namespace ASPCore_Final.Controllers
                                              hh => hh.Mahh,
                                              cthd => cthd.Mahh,
                                              (hh, cthd) => new { HHoa = hh, CTiet = cthd })
-                                       .Join(db.Hoadon.Where(hd => (DateTime.Now - hd.Ngaydat).TotalDays <= 30),
+                                       .Join(db.Hoadon.Where(hd => (DateTime.Now.Date - hd.Ngaydat.Date).TotalDays <= 30),
                                              hhcthd => hhcthd.CTiet.Mahd,
                                              hd => hd.Mahd,
                                              (hhcthd, hd) => new { HHCTHD = hhcthd, HDon = hd })
@@ -164,7 +164,7 @@ namespace ASPCore_Final.Controllers
                                              hh => hh.Mahh,
                                              cthd => cthd.Mahh,
                                              (hh, cthd) => new { HHoa = hh, CTiet = cthd })
-                                       .Join(db.Hoadon.Where(hd => (DateTime.Now - hd.Ngaydat).TotalDays <= 30),
+                                       .Join(db.Hoadon.Where(hd => (DateTime.Now.Date - hd.Ngaydat.Date).TotalDays <= 30),
                                              hhcthd => hhcthd.CTiet.Mahd,
                                              hd => hd.Mahd,
                                              (hhcthd, hd) => new { HHCTHD = hhcthd, HDon = hd })

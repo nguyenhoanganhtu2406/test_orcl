@@ -23,13 +23,14 @@ namespace ASPCore_Final.Models
         public virtual DbSet<Nhacungcap> Nhacungcap { get; set; }
         public virtual DbSet<Nhanvien> Nhanvien { get; set; }
         public virtual DbSet<Phanquyen> Phanquyen { get; set; }
+        public virtual DbSet<Sanphamkho> Sanphamkho { get; set; }
         public virtual DbSet<Trangthai> Trangthai { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseOracle("User Id=nva;Password=123456;Data Source=localhost:1521/oracle12cr2;");
+                optionsBuilder.UseOracle("User Id=nva;Password=123456;Data Source=localhost:1521/db12c;");
             }
         }
 
@@ -375,6 +376,33 @@ namespace ASPCore_Final.Models
                 entity.Property(e => e.Xoa).HasColumnName("XOA");
             });
 
+            modelBuilder.Entity<Sanphamkho>(entity =>
+            {
+                entity.HasKey(e => e.MaspKho);
+
+                entity.ToTable("SANPHAMKHO");
+
+                entity.HasIndex(e => e.MaspKho)
+                    .HasName("PK_MASP_KHO")
+                    .IsUnique();
+
+                entity.Property(e => e.MaspKho).HasColumnName("MASP_KHO");
+
+                entity.Property(e => e.Kichco)
+                    .HasColumnName("KICHCO")
+                    .HasColumnType("VARCHAR2(10)");
+
+                entity.Property(e => e.Mahh).HasColumnName("MAHH");
+
+                entity.Property(e => e.Soluong).HasColumnName("SOLUONG");
+
+                entity.HasOne(d => d.MahhNavigation)
+                    .WithMany(p => p.Sanphamkho)
+                    .HasForeignKey(d => d.Mahh)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_SPK_HH");
+            });
+
             modelBuilder.Entity<Trangthai>(entity =>
             {
                 entity.HasKey(e => e.Matrangthai);
@@ -476,6 +504,8 @@ namespace ASPCore_Final.Models
             modelBuilder.HasSequence("ISEQ$$_78489");
 
             modelBuilder.HasSequence("ISEQ$$_78492");
+
+            modelBuilder.HasSequence("ISEQ$$_79245");
         }
     }
 }

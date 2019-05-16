@@ -9,6 +9,7 @@ namespace ASPCore_Final.Models
         public Hanghoa()
         {
             Chitiethd = new HashSet<Chitiethd>();
+            Sanphamkho = new HashSet<Sanphamkho>();
         }
         [Display(Name = "Mã HH")]
         public int Mahh { get; set; }
@@ -31,5 +32,6 @@ namespace ASPCore_Final.Models
         [Display(Name = "Mã NCC")]
         public Nhacungcap ManccNavigation { get; set; }
         public ICollection<Chitiethd> Chitiethd { get; set; }
+        public ICollection<Sanphamkho> Sanphamkho { get; set; }
     }
 }
