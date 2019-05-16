@@ -18,19 +18,27 @@ namespace ASPCore_Final.Controllers
         }
         public async Task<IActionResult> Index(int page = 1, string sortExpression = "MaHd")
         {
+            try
+            {
 
-            if (HttpContext.Session.Get<Khachhang>("user") != null)
-            {
-                Khachhang kh = HttpContext.Session.Get<Khachhang>("user");
-                var eSHOPContext = db.Hoadon.Where(p => p.Makh == kh.Makh).OrderByDescending(p=>p.Ngaydat).AsNoTracking().AsQueryable();
-                var model = await PagingList.CreateAsync(eSHOPContext, 5, page, sortExpression, "Mahd");
-                return View(model);
+                if (HttpContext.Session.Get<Khachhang>("user") != null)
+                {
+                    Khachhang kh = HttpContext.Session.Get<Khachhang>("user");
+                    var eSHOPContext = db.Hoadon.Where(p => p.Makh == kh.Makh).OrderByDescending(p=>p.Ngaydat).AsNoTracking().AsQueryable();
+                    var model = await PagingList.CreateAsync(eSHOPContext, 5, page, sortExpression, "Mahd");
+                    return View(model);
+                }
+                else
+                {
+                    var eSHOPContexts = db.Hoadon.Where(p => p.Makh == 0).AsNoTracking().AsQueryable();
+                    var models = await PagingList.CreateAsync(eSHOPContexts, 5, page, sortExpression, "Mahd");
+                    return View(models);
+                }                
             }
-            else
+            catch (Exception er)
             {
-                var eSHOPContexts = db.Hoadon.Where(p => p.Makh == 0).AsNoTracking().AsQueryable();
-                var models = await PagingList.CreateAsync(eSHOPContexts, 5, page, sortExpression, "Mahd");
-                return View(models);
+                Console.WriteLine(er);
+                return View();
             }
         }
 
