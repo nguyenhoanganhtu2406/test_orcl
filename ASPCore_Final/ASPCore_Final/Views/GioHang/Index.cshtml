@@ -142,46 +142,7 @@
                             tongtien = tongtien + item.ThanhTien;
                             <br />
                         }
-                         <li style="color:seagreen;border-top:groove;font-size:15px;">
-                            <form asp-action="CheckVoucher" asp-controller="GioHang" method="post">
-                                <input type="text" id="magiamgia" name="magiamgia" value="" style="padding:5px;" placeholder="Mã giảm giá..." />
-                                @{
-                                    if (Context.Session.Get<string>("voucherIf") != null)
-                                    {
-                                        string voucherIf = Context.Session.Get<string>("voucherIf");
-                                        <input type="submit" name="check" value="Kiểm tra" class="btn btn-primary" /><br /><span id="voucherif">@voucherIf</span><br /><br/>
-                                    }
-                                    else
-                                    {
-                                        <input type="submit" name="check" value="Kiểm tra" class="btn btn-primary" /><br /><span id="voucherif"></span><br />
-                                    }
-                                }
-                                <input type="hidden" name="tongtien" value="@tongtien" />
-                            </form>
-                        </li>
-                        @if (Context.Session.Get<string>("SoTienGiam") != null)
-                        {
-                            double tiengiam = Context.Session.Get<double>("SoTienGiam");
-                            double phantramgiam = Context.Session.Get<double>("PhanTramGiam");
-                            if (tongtien == tiengiam / phantramgiam)
-                            {
-                                double tongthanhtoan = tongtien - tiengiam;
-                                Context.Session.Remove("SoTienGiam");
-                                Context.Session.Remove("PhanTramGiam");
-                                Context.Session.Remove("voucherIf");
-                                <li style="color:seagreen;border-top:groove;font-size:15px;">TỔNG ĐƠN HÀNG <i></i><span>@tongtien.ToString("#,##0") đ</span><br /><br />GIẢM GIÁ : <i></i><span>@tiengiam.ToString("#,##0") đ</span><br /><br />PHÍ VẬN CHUYỂN : <i></i><span>@phivanchuyen.ToString("#,##0") đ</span></li>
-                                tongthanhtoan += phivanchuyen;
-                                <li style="color:seagreen;border-top:groove;font-size:15px;">TỔNG THANH TOÁN : <i></i><span>@tongthanhtoan.ToString("#,##0") đ</span></li>
-                            }
-                            else
-                            {
-                                <li style="color:seagreen;border-top:groove;font-size:15px;">TỔNG ĐƠN HÀNG <i></i><span>@tongtien.ToString("#,##0") đ</span><br /><br />GIẢM GIÁ : <i></i><span id="giamgia"></span><br /><br />PHÍ VẬN CHUYỂN : <i></i><span>@phivanchuyen.ToString("#,##0") đ</span></li>
-                                tongtien += phivanchuyen;
-                                <li style="color:seagreen;border-top:groove;font-size:15px;">TỔNG THANH TOÁN : <i></i><span>@tongtien.ToString("#,##0") đ</span></li>
-                            }
-                        }
-                        else
-                        {
+                        @{
                             
                              <li style="color:seagreen;border-top:groove;font-size:15px;">TỔNG ĐƠN HÀNG <i></i><span>@tongtien.ToString("#,##0") đ</span><br /><br />GIẢM GIÁ : <i></i><span id="giamgia"></span><br /><br />PHÍ VẬN CHUYỂN : <i></i><span>@phivanchuyen.ToString("#,##0") đ</span></li>
                             tongtien += phivanchuyen;
@@ -214,15 +175,6 @@
                             {
                                 Khachhang kh = Context.Session.Get<Khachhang>("user");
                                 <form asp-action="TaoHoaDon" asp-controller="GioHang" method="post">
-                                    @if (Context.Session.Get<string>("mavc") != null)
-                                    {
-                                        string mavc = Context.Session.Get<string>("mavc");
-                                        <input type="hidden" name="magiamgia" value="@mavc" class="form-control" />
-                                    }
-                                    else
-                                    {
-                                        <input type="hidden" name="magiamgia" value="" class="form-control" />
-                                    }
                                     <input type="hidden" name="makh" value="@kh.Makh" class="form-control" />
                                     <br />
 
@@ -265,16 +217,6 @@
                             else
                             {
                                 <form asp-action="TaoHoaDonBT" asp-controller="GioHang" method="post">
-                                    @if (Context.Session.Get<string>("mavc") != null)
-                                    {
-                                        string mavc = Context.Session.Get<string>("mavc");
-                                        <input type="hidden" name="magiamgia" value="@mavc" class="form-control" />
-                                    }
-                                    else
-                                    {
-                                        <input type="hidden" name="magiamgia" value="" class="form-control" />
-                                    }
-
                                     <div style="display:inline">
                                         <label>Email</label>
                                         <input type="text" name="email" value="" class="form-control" required />

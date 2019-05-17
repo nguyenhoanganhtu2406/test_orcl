@@ -83,17 +83,17 @@ namespace ASPCore_Final.Controllers
             HttpContext.Session.Set("GioHang", giohang);
             return giohang;
         }
-        public IActionResult TaoHoaDonBT(string email,string hoten_ngnhan, string dc_nguoinhan, string ghichu, string sdt, string magiamgia)
+        public IActionResult TaoHoaDonBT(string email,string hoten_ngnhan, string dc_nguoinhan, string ghichu, string sdt)
         {
 
-            Khachhang kh = new Khachhang();
-            kh.Hoten = hoten_ngnhan;
-            kh.Diachi = dc_nguoinhan;
-            kh.Dienthoai = sdt;
+            //Khachhang kh = new Khachhang();
+            //kh.Hoten = hoten_ngnhan;
+            //kh.Diachi = dc_nguoinhan;
+            //kh.Dienthoai = sdt;
 
-            kh.Email = email;
-            db.Khachhang.Add(kh);
-            db.SaveChanges();
+            //kh.Email = email;
+            //db.Khachhang.Add(kh);
+            //db.SaveChanges();
             // tạo hóa đơn
             var getKH = db.Khachhang.Where(p => p.Email == email).OrderByDescending(p => p.Makh).Take(1); 
             foreach(var titem in getKH)
@@ -153,6 +153,7 @@ namespace ASPCore_Final.Controllers
                         return RedirectToAction("Index");
                     }
                 }
+                tongthucthu = tongtienhang + 35000;
                 hd.Tongtienhang = Convert.ToDecimal(tongtienhang);
                 hd.Tongthucthu = Convert.ToDecimal(tongthucthu);
                 db.SaveChanges();
@@ -166,7 +167,7 @@ namespace ASPCore_Final.Controllers
 
         }
 
-        public IActionResult TaoHoaDon(int makh,string hotenkh,string diachi,string hoten_ngnhan,string dc_nguoinhan,string ghichu,string sdt,string magiamgia)
+        public IActionResult TaoHoaDon(int makh,string hotenkh,string diachi,string hoten_ngnhan,string dc_nguoinhan,string ghichu,string sdt)
         {
             // tạo hóa đơn
             Hoadon hd = new Hoadon
