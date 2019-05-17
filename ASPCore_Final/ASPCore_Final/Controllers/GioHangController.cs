@@ -86,14 +86,14 @@ namespace ASPCore_Final.Controllers
         public IActionResult TaoHoaDonBT(string email,string hoten_ngnhan, string dc_nguoinhan, string ghichu, string sdt)
         {
 
-            //Khachhang kh = new Khachhang();
-            //kh.Hoten = hoten_ngnhan;
-            //kh.Diachi = dc_nguoinhan;
-            //kh.Dienthoai = sdt;
+            Khachhang kh = new Khachhang();
+            kh.Hoten = hoten_ngnhan;
+            kh.Diachi = dc_nguoinhan;
+            kh.Dienthoai = sdt;
 
-            //kh.Email = email;
-            //db.Khachhang.Add(kh);
-            //db.SaveChanges();
+            kh.Email = email;
+            db.Khachhang.Add(kh);
+            db.SaveChanges();
             // tạo hóa đơn
             var getKH = db.Khachhang.Where(p => p.Email == email).OrderByDescending(p => p.Makh).Take(1); 
             foreach(var titem in getKH)
