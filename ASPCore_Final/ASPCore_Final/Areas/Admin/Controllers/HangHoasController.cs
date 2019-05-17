@@ -30,7 +30,7 @@ namespace ASPCore_Final.Areas.Admin.Controllers
             var eSHOPContext = _context.Hanghoa.AsNoTracking().Include(h => h.MaloaiNavigation).Include(h => h.ManccNavigation).AsQueryable();
             if (!string.IsNullOrEmpty(searchString))
             {
-                eSHOPContext = eSHOPContext.Where(p => p.Tenhh.Contains(searchString) || p.Mancc.Contains(searchString) || p.Maloai.Contains(searchString));
+                eSHOPContext = eSHOPContext.Where(p => p.Tenhh.Contains(searchString.ToUpper()) || p.Mancc.Contains(searchString) || p.Maloai.Contains(searchString));
             }
             var model = await PagingList.CreateAsync(eSHOPContext, 5, page, sortExpression, "Mahh");
             model.RouteValue = new RouteValueDictionary {

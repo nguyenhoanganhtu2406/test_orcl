@@ -93,7 +93,6 @@ namespace ASPCore_Final.Controllers
 
             kh.Email = email;
             db.Khachhang.Add(kh);
-            db.SaveChanges();
             // tạo hóa đơn
             var getKH = db.Khachhang.Where(p => p.Email == email).OrderByDescending(p => p.Makh).Take(1); 
             foreach(var titem in getKH)
@@ -131,7 +130,6 @@ namespace ASPCore_Final.Controllers
                     };
 
                     db.Chitiethd.Add(cthd);
-                    db.SaveChanges();
                     // trừ sản phẩm từ kho
                     Sanphamkho spk = db.Sanphamkho.SingleOrDefault(p => p.Mahh == cthd.Mahh && p.Kichco == cthd.Kichco);
                     if (spk.Soluong >= cthd.Soluong)
@@ -204,7 +202,7 @@ namespace ASPCore_Final.Controllers
                 };
               
                 db.Chitiethd.Add(cthd);
-                db.SaveChanges();
+                
                 // trừ sản phẩm từ kho
                 Sanphamkho spk = db.Sanphamkho.SingleOrDefault(p => p.Mahh == cthd.Mahh && p.Kichco == cthd.Kichco);
                 if (spk.Soluong >= cthd.Soluong)
